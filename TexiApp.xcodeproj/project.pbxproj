@@ -1,0 +1,568 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		323E484B5584CF628CD150DF /* Pods_TexiApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6605D35AEB4235574BA2102 /* Pods_TexiApp.framework */; };
+		F7447DF02025926F009FA72A /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7447DEF2025926F009FA72A /* UIViewExt.swift */; };
+		F7447DF22025A0A0009FA72A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7447DF12025A0A0009FA72A /* LoginVC.swift */; };
+		F7447DF42025A1FE009FA72A /* RoundedCornerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7447DF32025A1FE009FA72A /* RoundedCornerTextField.swift */; };
+		F766B214202E180F00176408 /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F766B213202E180F00176408 /* UpdateService.swift */; };
+		F766B216202ED58E00176408 /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F766B215202ED58E00176408 /* DriverAnnotation.swift */; };
+		F77B14E320285C0900ECD53E /* LeanCloudModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B14E220285C0900ECD53E /* LeanCloudModel.swift */; };
+		F77F656620231606008925A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F656520231606008925A8 /* AppDelegate.swift */; };
+		F77F656820231606008925A8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F656720231606008925A8 /* HomeVC.swift */; };
+		F77F656B20231606008925A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77F656920231606008925A8 /* Main.storyboard */; };
+		F77F656D20231606008925A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F77F656C20231606008925A8 /* Assets.xcassets */; };
+		F77F657020231606008925A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77F656E20231606008925A8 /* LaunchScreen.storyboard */; };
+		F77F659920239DFD008925A8 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F659820239DFD008925A8 /* GradientView.swift */; };
+		F77F659B2023A196008925A8 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F659A2023A196008925A8 /* RoundImageView.swift */; };
+		F77F659D2023A2C7008925A8 /* RoundedShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F659C2023A2C7008925A8 /* RoundedShadowView.swift */; };
+		F77F659F2023A3DA008925A8 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F659E2023A3DA008925A8 /* CircleView.swift */; };
+		F77F65A12023A73F008925A8 /* RoundedShadowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F65A02023A73F008925A8 /* RoundedShadowButton.swift */; };
+		F77F65A320244642008925A8 /* LeftSidePanelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F65A220244642008925A8 /* LeftSidePanelVC.swift */; };
+		F77F65A5202446BE008925A8 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F65A4202446BE008925A8 /* ContainerVC.swift */; };
+		F77F65A820244A5C008925A8 /* CenterVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F65A720244A5C008925A8 /* CenterVCDelegate.swift */; };
+		F7815803204050CD008C268A /* PassengerAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7815802204050CD008C268A /* PassengerAnnotation.swift */; };
+		F781580520407D78008C268A /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F781580420407D78008C268A /* UIViewControllerExt.swift */; };
+		F79FCD452026160900171051 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FCD442026160900171051 /* DataService.swift */; };
+		F79FCD4B2027821400171051 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F79FCD4A2027821400171051 /* GoogleService-Info.plist */; };
+		F7F40E6120459EEF0021907C /* PickupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F40E6020459EEF0021907C /* PickupVC.swift */; };
+		F7F40E6320459FE30021907C /* RoundMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F40E6220459FE30021907C /* RoundMapView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1402BE61C0641B1ADA3F62C5 /* Pods-TexiApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TexiApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TexiApp/Pods-TexiApp.debug.xcconfig"; sourceTree = "<group>"; };
+		B2418D5FFA6F82C5E2CC7E27 /* Pods-TexiApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TexiApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-TexiApp/Pods-TexiApp.release.xcconfig"; sourceTree = "<group>"; };
+		B6605D35AEB4235574BA2102 /* Pods_TexiApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TexiApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7447DEF2025926F009FA72A /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
+		F7447DF12025A0A0009FA72A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		F7447DF32025A1FE009FA72A /* RoundedCornerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerTextField.swift; sourceTree = "<group>"; };
+		F766B213202E180F00176408 /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
+		F766B215202ED58E00176408 /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
+		F77B14E220285C0900ECD53E /* LeanCloudModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeanCloudModel.swift; sourceTree = "<group>"; };
+		F77F656220231606008925A8 /* TexiApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TexiApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F77F656520231606008925A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F77F656720231606008925A8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		F77F656A20231606008925A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F77F656C20231606008925A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F77F656F20231606008925A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F77F657120231606008925A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F77F659820239DFD008925A8 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		F77F659A2023A196008925A8 /* RoundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
+		F77F659C2023A2C7008925A8 /* RoundedShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedShadowView.swift; sourceTree = "<group>"; };
+		F77F659E2023A3DA008925A8 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		F77F65A02023A73F008925A8 /* RoundedShadowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedShadowButton.swift; sourceTree = "<group>"; };
+		F77F65A220244642008925A8 /* LeftSidePanelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftSidePanelVC.swift; sourceTree = "<group>"; };
+		F77F65A4202446BE008925A8 /* ContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
+		F77F65A720244A5C008925A8 /* CenterVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterVCDelegate.swift; sourceTree = "<group>"; };
+		F7815802204050CD008C268A /* PassengerAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerAnnotation.swift; sourceTree = "<group>"; };
+		F781580420407D78008C268A /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
+		F79FCD442026160900171051 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		F79FCD4A2027821400171051 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F7F40E6020459EEF0021907C /* PickupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupVC.swift; sourceTree = "<group>"; };
+		F7F40E6220459FE30021907C /* RoundMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundMapView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F77F655F20231606008925A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				323E484B5584CF628CD150DF /* Pods_TexiApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8D9A9226EF3141672361FA48 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1402BE61C0641B1ADA3F62C5 /* Pods-TexiApp.debug.xcconfig */,
+				B2418D5FFA6F82C5E2CC7E27 /* Pods-TexiApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AC6D2BCC28B8EF7DB6A590F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6605D35AEB4235574BA2102 /* Pods_TexiApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F7447DEE202591D7009FA72A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F7447DEF2025926F009FA72A /* UIViewExt.swift */,
+				F781580420407D78008C268A /* UIViewControllerExt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F77F655920231606008925A8 = {
+			isa = PBXGroup;
+			children = (
+				F77F656420231606008925A8 /* TexiApp */,
+				F77F656320231606008925A8 /* Products */,
+				8D9A9226EF3141672361FA48 /* Pods */,
+				AC6D2BCC28B8EF7DB6A590F1 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F77F656320231606008925A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F77F656220231606008925A8 /* TexiApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F77F656420231606008925A8 /* TexiApp */ = {
+			isa = PBXGroup;
+			children = (
+				F79FCD43202615EC00171051 /* Services */,
+				F7447DEE202591D7009FA72A /* Extensions */,
+				F77F65A620244A40008925A8 /* Protocols */,
+				F77F659720239DCC008925A8 /* Model */,
+				F77F659620239DC5008925A8 /* View */,
+				F77F659520239DB0008925A8 /* Controller */,
+				F77F656520231606008925A8 /* AppDelegate.swift */,
+				F77F656920231606008925A8 /* Main.storyboard */,
+				F77F656C20231606008925A8 /* Assets.xcassets */,
+				F77F656E20231606008925A8 /* LaunchScreen.storyboard */,
+				F77F657120231606008925A8 /* Info.plist */,
+				F79FCD4A2027821400171051 /* GoogleService-Info.plist */,
+			);
+			path = TexiApp;
+			sourceTree = "<group>";
+		};
+		F77F659520239DB0008925A8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F77F656720231606008925A8 /* HomeVC.swift */,
+				F77F65A220244642008925A8 /* LeftSidePanelVC.swift */,
+				F77F65A4202446BE008925A8 /* ContainerVC.swift */,
+				F7447DF12025A0A0009FA72A /* LoginVC.swift */,
+				F7F40E6020459EEF0021907C /* PickupVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F77F659620239DC5008925A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F77F659820239DFD008925A8 /* GradientView.swift */,
+				F77F659A2023A196008925A8 /* RoundImageView.swift */,
+				F77F659C2023A2C7008925A8 /* RoundedShadowView.swift */,
+				F77F659E2023A3DA008925A8 /* CircleView.swift */,
+				F77F65A02023A73F008925A8 /* RoundedShadowButton.swift */,
+				F7447DF32025A1FE009FA72A /* RoundedCornerTextField.swift */,
+				F766B215202ED58E00176408 /* DriverAnnotation.swift */,
+				F7815802204050CD008C268A /* PassengerAnnotation.swift */,
+				F7F40E6220459FE30021907C /* RoundMapView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F77F659720239DCC008925A8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F77B14E220285C0900ECD53E /* LeanCloudModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F77F65A620244A40008925A8 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F77F65A720244A5C008925A8 /* CenterVCDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		F79FCD43202615EC00171051 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F79FCD442026160900171051 /* DataService.swift */,
+				F766B213202E180F00176408 /* UpdateService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F77F656120231606008925A8 /* TexiApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F77F657420231606008925A8 /* Build configuration list for PBXNativeTarget "TexiApp" */;
+			buildPhases = (
+				B8CAF0EF4014F93360662EB6 /* [CP] Check Pods Manifest.lock */,
+				F77F655E20231606008925A8 /* Sources */,
+				F77F655F20231606008925A8 /* Frameworks */,
+				F77F656020231606008925A8 /* Resources */,
+				24ED7A6F745601B2EFF2D66B /* [CP] Embed Pods Frameworks */,
+				582D14E9EDDE96AE160EB768 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TexiApp;
+			productName = TexiApp;
+			productReference = F77F656220231606008925A8 /* TexiApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F77F655A20231606008925A8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = mlch911;
+				TargetAttributes = {
+					F77F656120231606008925A8 = {
+						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F77F655D20231606008925A8 /* Build configuration list for PBXProject "TexiApp" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F77F655920231606008925A8;
+			productRefGroup = F77F656320231606008925A8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F77F656120231606008925A8 /* TexiApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F77F656020231606008925A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F77F657020231606008925A8 /* LaunchScreen.storyboard in Resources */,
+				F79FCD4B2027821400171051 /* GoogleService-Info.plist in Resources */,
+				F77F656D20231606008925A8 /* Assets.xcassets in Resources */,
+				F77F656B20231606008925A8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		24ED7A6F745601B2EFF2D66B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TexiApp/Pods-TexiApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/JHSpinner/JHSpinner.framework",
+				"${BUILT_PRODUCTS_DIR}/LeanCloud/LeanCloud.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Sparrow/Sparrow.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JHSpinner.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LeanCloud.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparrow.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TexiApp/Pods-TexiApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		582D14E9EDDE96AE160EB768 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TexiApp/Pods-TexiApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B8CAF0EF4014F93360662EB6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TexiApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F77F655E20231606008925A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F77F65A820244A5C008925A8 /* CenterVCDelegate.swift in Sources */,
+				F7815803204050CD008C268A /* PassengerAnnotation.swift in Sources */,
+				F79FCD452026160900171051 /* DataService.swift in Sources */,
+				F766B214202E180F00176408 /* UpdateService.swift in Sources */,
+				F766B216202ED58E00176408 /* DriverAnnotation.swift in Sources */,
+				F77F65A12023A73F008925A8 /* RoundedShadowButton.swift in Sources */,
+				F77B14E320285C0900ECD53E /* LeanCloudModel.swift in Sources */,
+				F7447DF22025A0A0009FA72A /* LoginVC.swift in Sources */,
+				F77F65A320244642008925A8 /* LeftSidePanelVC.swift in Sources */,
+				F77F659F2023A3DA008925A8 /* CircleView.swift in Sources */,
+				F77F65A5202446BE008925A8 /* ContainerVC.swift in Sources */,
+				F7447DF02025926F009FA72A /* UIViewExt.swift in Sources */,
+				F77F656820231606008925A8 /* HomeVC.swift in Sources */,
+				F77F659B2023A196008925A8 /* RoundImageView.swift in Sources */,
+				F7F40E6120459EEF0021907C /* PickupVC.swift in Sources */,
+				F7F40E6320459FE30021907C /* RoundMapView.swift in Sources */,
+				F781580520407D78008C268A /* UIViewControllerExt.swift in Sources */,
+				F77F659D2023A2C7008925A8 /* RoundedShadowView.swift in Sources */,
+				F7447DF42025A1FE009FA72A /* RoundedCornerTextField.swift in Sources */,
+				F77F656620231606008925A8 /* AppDelegate.swift in Sources */,
+				F77F659920239DFD008925A8 /* GradientView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F77F656920231606008925A8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F77F656A20231606008925A8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F77F656E20231606008925A8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F77F656F20231606008925A8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F77F657220231606008925A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F77F657320231606008925A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F77F657520231606008925A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1402BE61C0641B1ADA3F62C5 /* Pods-TexiApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 98R958M4DW;
+				INFOPLIST_FILE = TexiApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tech.mluoc.TexiApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F77F657620231606008925A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2418D5FFA6F82C5E2CC7E27 /* Pods-TexiApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 98R958M4DW;
+				INFOPLIST_FILE = TexiApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tech.mluoc.TexiApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F77F655D20231606008925A8 /* Build configuration list for PBXProject "TexiApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F77F657220231606008925A8 /* Debug */,
+				F77F657320231606008925A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F77F657420231606008925A8 /* Build configuration list for PBXNativeTarget "TexiApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F77F657520231606008925A8 /* Debug */,
+				F77F657620231606008925A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F77F655A20231606008925A8 /* Project object */;
+}
