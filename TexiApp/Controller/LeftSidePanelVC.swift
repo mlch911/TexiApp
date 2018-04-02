@@ -227,17 +227,20 @@ class LeftSidePanelVC: UIViewController {
                 }
             })
         }
-        if let user = LCUser.current {
-            user.set("isPickupModeEnable", value: self.pickUpModeSwitch.isOn)
-            user.save { result in
-                switch result {
-                case .success:
-                    UserDefaults.standard.set(self.pickUpModeSwitch.isOn, forKey: "isPickupModeEnable")
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
+        
+//        if let user = LCUser.current {
+//            user.set("isPickupModeEnable", value: self.pickUpModeSwitch.isOn)
+//            user.save { result in
+//                switch result {
+//                case .success:
+//                    UserDefaults.standard.set(self.pickUpModeSwitch.isOn, forKey: "isPickupModeEnable")
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
+        
+        UserDefaults.standard.set(!(UserDefaults.standard.value(forKey: "isPickupModeEnable")as! Bool), forKey: "isPickupModeEnable")
         
     }
     

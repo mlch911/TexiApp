@@ -21,14 +21,14 @@ class PickupVC: UIViewController {
         
     }
     
-    var route: MKRoute!
+    var route1: MKRoute!
+    var route2: MKRoute!
     var selectedLocationPlacemark: MKPlacemark? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
-    
 }
 
 extension PickupVC: MKMapViewDelegate {
@@ -72,13 +72,11 @@ extension PickupVC: MKMapViewDelegate {
         zoom(toFitAnntationsFromMapView: pickupMapView)
     }
     
-    func dropPinFor(placemark: MKPlacemark) {
+    func dropPinFor(placemark: MKPlacemark, placemarkType: Int) {
         selectedLocationPlacemark = placemark
         
         for annotation in pickupMapView.annotations {
-            if annotation.isKind(of: MKPointAnnotation.self) {
                 pickupMapView.removeAnnotation(annotation)
-            }
         }
         
         let annotation = MKPointAnnotation()
@@ -87,7 +85,7 @@ extension PickupVC: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let lineRenderer = MKPolylineRenderer(polyline: route.polyline)
+        let lineRenderer = MKPolylineRenderer(polyline: route1.polyline)
         lineRenderer.strokeColor = UIColor(red: 216/255, green: 71/255, blue: 30/255, alpha: 0.75)
         lineRenderer.lineWidth = 1
         
@@ -109,9 +107,9 @@ extension PickupVC: MKMapViewDelegate {
                 print(error.debugDescription)
                 return
             }
-            self.route = response.routes[0]
+            self.route1 = response.routes[0]
             
-            self.pickupMapView.add(self.route.polyline)
+            self.pickupMapView.add(self.route1.polyline)
             
 //            for subview in self.view.subviews {
 //                if subview.tag == 1006 {

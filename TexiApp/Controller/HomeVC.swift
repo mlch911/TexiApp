@@ -82,11 +82,8 @@ class HomeVC: UIViewController {
         destinationTextField.delegate = self
         centerMapOnUserLocation()
         
-//        FirebaseDataService.FRinstance.REF_DRIVERS.observe(.value) { (snapshot) in
-//            self.loadDriverAnnotations()
-//        }
-        
-        loadDriverAnnotations()
+//        loadDriverAnnotations()
+//        var timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(loadDriverAnnotations), userInfo: nil, repeats: true)
         
         self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = .heartBeat
@@ -102,7 +99,7 @@ class HomeVC: UIViewController {
         }
     }
     
-    func loadDriverAnnotations() {
+    @objc func loadDriverAnnotations() {
         FirebaseDataService.FRinstance.REF_DRIVERS.observeSingleEvent(of: .value, with: { snapshot in
             if let driverSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for driver in driverSnapshot {
@@ -153,7 +150,10 @@ class HomeVC: UIViewController {
             SPRequestPermission.dialog.interactive.present(on: self, with: [.locationWhenInUse])
         }
         checkLocationAuthStatus()
-        loadDriverAnnotations()
+//        loadDriverAnnotations()
+        FirebaseDataService.FRinstance.REF_DRIVERS.observe(.value) { (snapshot) in
+            self.loadDriverAnnotations()
+        }
     }
 }
 

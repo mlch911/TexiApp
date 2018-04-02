@@ -237,11 +237,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         emailField.returnKeyType = .next
         passwordField.returnKeyType = .join
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return UIStatusBarAnimation.slide
