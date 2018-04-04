@@ -25,6 +25,29 @@ class HomeVC: UIViewController {
     
     @IBAction func actionBtnPressed(_ sender: Any) {
         actionBtn.animateButton(shouldLoad: true, withMessage: nil)
+        if let hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool {
+            if hasUserData {
+                if let isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool {
+                    if isDriver {
+                        actionBtn.animateButton(shouldLoad: false, withMessage: "You're A Driver")
+                    } else {
+                        
+                        FirebaseDataService.FRinstance.REF_TRIPS.updateChildValues(<#T##values: [AnyHashable : Any]##[AnyHashable : Any]#>)
+                        
+                    }
+                }
+            } else {
+                menuBtnPressed(self)
+                let banner = NotificationBanner(title: "请登录或注册。", subtitle: "点击下方Sign in/Login来登录或注册账号。", style: .warning)
+                banner.show()
+            }
+        }
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.actionBtn.animateButton(shouldLoad: false, withMessage: "Request Ride")
+        }
+        
     }
     
     @IBAction func centerBtnPressed(_ sender: Any) {

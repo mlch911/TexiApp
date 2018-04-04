@@ -68,4 +68,29 @@ class UpdateService {
             }
         }
     }
+    
+    func updateTripWithCoordinatesUponRequest() {
+        FirebaseDataService.FRinstance.REF_PASSENGER.observeSingleEvent(of: .value) { (snapshot) in
+            if let userSnapshot = snapshot .children.allObjects as? [DataSnapshot] {
+                for user in userSnapshot {
+                    if user.key == Auth.auth().currentUser?.uid {
+                        if !user.hasChild("userIsDriver") {
+                            if let userDict = user.value as? Dictionary<String, AnyObject> {
+                                let pickupArray = userDict["coordinate"] as! NSArray
+                                let destinationArray = userDict["tripCoordinate"] as! NSArray
+                                
+                                FirebaseDataService.FRinstance.REF_TRIPS.child(user.key).updateChildValues(
+                                    [
+                                        "pickupCoordinate": [pickupArray[0], pickupArray[1]],
+                                        "destinationCoordinate": [destinationArray[0], destinationArray[1]],
+                                        "passengerKey": user.key,
+                                        "tripIsAccepted": false
+                                    ])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

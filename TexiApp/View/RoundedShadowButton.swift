@@ -50,7 +50,6 @@ class RoundedShadowButton: UIButton {
             })
             self.isUserInteractionEnabled = false
         } else {
-            self.isUserInteractionEnabled = true
             for subview in self.subviews {
                 if subview.tag == 1001{
                     subview.removeFromSuperview()
@@ -60,7 +59,10 @@ class RoundedShadowButton: UIButton {
                 self.layer.cornerRadius = 5.0
                 self.frame = self.originalSize!
                 self.setupButtonView()
-                self.setTitle(message, for: .normal)
+                self.isUserInteractionEnabled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.setTitle(message, for: .normal)
+                }
             })
         }
     }
