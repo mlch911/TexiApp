@@ -9,6 +9,12 @@
 import UIKit
 import MapKit
 
+enum annotationType {
+    case driver
+    case passenger
+    case destination
+}
+
 class PickupVC: UIViewController {
     
     @IBOutlet weak var pickupMapView: RoundMapView!
@@ -24,10 +30,39 @@ class PickupVC: UIViewController {
     var route1: MKRoute!
     var route2: MKRoute!
     var selectedLocationPlacemark: MKPlacemark? = nil
+    var passengerCoordinate: CLLocationCoordinate2D!
+    var destinationCoordinate: CLLocationCoordinate2D!
+    var currentCoordinate: CLLocationCoordinate2D!
+    var passengerKey: String!
+    var driverKey: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        pickupMapView.delegate = self
+        let passengerPlacemark = MKPlacemark(coordinate: passengerCoordinate)
+        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+        let currentPlacemark = MKPlacemark(coordinate: currentCoordinate)
+        dropPinFor(placemarks: [passengerPlacemark: .passenger, destinationPlacemark: .destination, currentPlacemark: .driver])
+        let passengerMapItem = MKMapItem(placemark: passengerPlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        let currentMapItem = MKMapItem(placemark: currentPlacemark)
+        searchMapKitForResultsWithPolyline(forSourceLocation: passengerMapItem, forDestinationLocation: destinationMapItem) { (route) in
+            self.route1 = route
+            self.pickupMapView.add(self.route1.polyline)
+        }
+//        searchMapKitForResultsWithPolyline(forSourceLocation: currentMapItem, forDestinationLocation: passengerMapItem) { (route) in
+//            self.route2 = route
+//            self.pickupMapView.add(self.route2.polyline)
+//        }
+    }
+    
+    func initData(passengerCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, currentCoordinate: CLLocationCoordinate2D, passengerKey: String, driverKey: String) {
+        self.passengerCoordinate = passengerCoordinate
+        self.destinationCoordinate = destinationCoordinate
+        self.currentCoordinate = currentCoordinate
+        self.passengerKey = passengerKey
+        self.driverKey = driverKey
     }
 }
 
@@ -72,20 +107,30 @@ extension PickupVC: MKMapViewDelegate {
         zoom(toFitAnntationsFromMapView: pickupMapView)
     }
     
-    func dropPinFor(placemark: MKPlacemark, placemarkType: Int) {
-        selectedLocationPlacemark = placemark
-        
+    func dropPinFor(placemarks: Dictionary<MKPlacemark, annotationType>) {
         for annotation in pickupMapView.annotations {
-                pickupMapView.removeAnnotation(annotation)
+            pickupMapView.removeAnnotation(annotation)
         }
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = placemark.coordinate
-        pickupMapView.addAnnotation(annotation)
+        for placemark in placemarks {
+            selectedLocationPlacemark = placemark.key
+            
+            switch placemark.value {
+            case .destination:
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = placemark.key.coordinate
+                pickupMapView.addAnnotation(annotation)
+            case .driver:
+                let annotation = DriverAnnotation(coordinate: placemark.key.coordinate, withKey: passengerKey)
+                pickupMapView.addAnnotation(annotation)
+            case .passenger:
+                let annotation = PassengerAnnotation(coordinate: placemark.key.coordinate, withKey: driverKey)
+                pickupMapView.addAnnotation(annotation)
+            }
+        }
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let lineRenderer = MKPolylineRenderer(polyline: route1.polyline)
+        let lineRenderer = MKPolylineRenderer(overlay: overlay)
         lineRenderer.strokeColor = UIColor(red: 216/255, green: 71/255, blue: 30/255, alpha: 0.75)
         lineRenderer.lineWidth = 1
         
@@ -94,7 +139,7 @@ extension PickupVC: MKMapViewDelegate {
         return lineRenderer
     }
     
-    func searchMapKitForResultsWithPolyline(forPassengerLocation sourceLocation: MKMapItem, forDestinationLocation destinationLocation: MKMapItem) {
+    func searchMapKitForResultsWithPolyline(forSourceLocation sourceLocation: MKMapItem, forDestinationLocation destinationLocation: MKMapItem, handler: @escaping(_ route: MKRoute) -> Void) {
         let request = MKDirectionsRequest()
         request.source = sourceLocation
         request.destination = destinationLocation
@@ -107,15 +152,7 @@ extension PickupVC: MKMapViewDelegate {
                 print(error.debugDescription)
                 return
             }
-            self.route1 = response.routes[0]
-            
-            self.pickupMapView.add(self.route1.polyline)
-            
-//            for subview in self.view.subviews {
-//                if subview.tag == 1006 {
-//                    subview.removeFromSuperview()
-//                }
-//            }
+            handler(response.routes[0])
         }
     }
     
@@ -136,3 +173,4 @@ extension PickupVC: MKMapViewDelegate {
         mapView.setRegion(region, animated: true)
     }
 }
+

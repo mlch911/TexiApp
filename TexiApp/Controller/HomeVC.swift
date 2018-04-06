@@ -31,9 +31,18 @@ class HomeVC: UIViewController {
                     if isDriver {
                         actionBtn.animateButton(shouldLoad: false, withMessage: "You're A Driver")
                     } else {
-                        
-                        FirebaseDataService.FRinstance.REF_TRIPS.updateChildValues(<#T##values: [AnyHashable : Any]##[AnyHashable : Any]#>)
-                        
+                        var hasDestination = false
+                        for annotation in mapView.annotations {
+                            if annotation.isKind(of: MKPointAnnotation.self) {
+                                UpdateService.instance.updateTripWithCoordinatesUponRequest()
+                                destinationTextField.isUserInteractionEnabled = false
+                                hasDestination = true
+                            }
+                        }
+                        guard hasDestination else {
+                            actionBtn.animateButton(shouldLoad: false, withMessage: "Destination Required")
+                            return
+                        }
                     }
                 }
             } else {
@@ -76,6 +85,11 @@ class HomeVC: UIViewController {
     }
     
     @IBAction func menuBtnPressed(_ sender: Any) {
+        view.endEditing(true)
+        delegate?.toggleLeftPanel()
+    }
+    
+    @IBAction func userImagePressed(_ sender: Any) {
         delegate?.toggleLeftPanel()
     }
     
@@ -83,7 +97,10 @@ class HomeVC: UIViewController {
     
     var manager: CLLocationManager?
     
-    var regionRadius: CLLocationDistance = 500
+    let queue_UserInteractive = DispatchQueue.init(label: "tech.mluoc.queueUserInteractive", qos: .userInteractive, attributes: .concurrent)
+    let queue_UserInitiated = DispatchQueue.init(label: "tech.mluoc.queueUserInitiated", qos: .userInitiated, attributes: .concurrent)
+    let queue_Utility = DispatchQueue.init(label: "tech.mluoc.queueUtility", qos: .utility, attributes: .concurrent)
+    let queue_Background = DispatchQueue.init(label: "tech.mluoc.queueBackground", qos: .background, attributes: .concurrent)
     
     var tableView = UITableView()
     var matchingLocations: [MKMapItem] = [MKMapItem]()
@@ -91,6 +108,8 @@ class HomeVC: UIViewController {
     let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "launchScreenIcon"), iconInitialSize: CGSize.init(width: 100, height: 100), backgroundColor: UIColor.white)
     
     var selectedLocationPlacemark: MKPlacemark? = nil
+    
+    var regionRadius: CLLocationDistance = 500
     
     var route: MKRoute!
     
@@ -103,16 +122,64 @@ class HomeVC: UIViewController {
         manager?.delegate = self
         mapView.delegate = self
         destinationTextField.delegate = self
-        centerMapOnUserLocation()
         
-//        loadDriverAnnotations()
-//        var timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(loadDriverAnnotations), userInfo: nil, repeats: true)
-        
-        self.view.addSubview(revealingSplashView)
-        revealingSplashView.animationType = .heartBeat
-//        revealingSplashView.animationType = .woobleAndZoomOut
-        revealingSplashView.startAnimation()
-        revealingSplashView.heartAttack = true
+        queue_UserInitiated.async{
+            self.centerMapOnUserLocation()
+        }
+        self.view.addSubview(self.revealingSplashView)
+        self.revealingSplashView.animationType = .heartBeat
+        self.revealingSplashView.startAnimation()
+        self.revealingSplashView.heartAttack = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+            SPRequestPermission.dialog.interactive.present(on: self, with: [.locationWhenInUse])
+        }
+        checkLocationAuthStatus()
+        queue_Background.async {
+            FirebaseDataService.FRinstance.REF_DRIVERS.observe(.value) { (snapshot) in
+                self.loadDriverAnnotations()
+            }
+            if let hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool {
+                guard hasUserData else {
+                    self.removeFromMapView()
+                    return
+                }
+            }
+        }
+        if let isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool {
+            if isDriver {
+                if let driverIsOnTrip = UserDefaults.standard.value(forKey: "driverIsOnTrip") as? Bool {
+                    guard driverIsOnTrip else {
+                        if let isPickupModeEnable = UserDefaults.standard.value(forKey: "isPickupModeEnable") as? Bool {
+                            if isPickupModeEnable {
+                                queue_Background.async {
+                                    UpdateService.instance.observeTrips(handler: { (tripDict) in
+                                        if let tripDict = tripDict {
+                                            let pickupCoordinateArray = tripDict["pickupCoordinate"] as! NSArray
+                                            let destinationCoordinateArray = tripDict["destinationCoordinate"] as! NSArray
+                                            let tripKey = tripDict["passengerKey"] as! String
+                                            let tripIsAccepted = tripDict["tripIsAccepted"] as! Bool
+                                            
+                                            guard tripIsAccepted else {
+                                                let currentCoordinate = self.mapView.userLocation.coordinate
+                                                let pickupVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PickupVC") as? PickupVC
+                                                pickupVC?.initData(passengerCoordinate: CLLocationCoordinate2D(latitude: pickupCoordinateArray[0] as! CLLocationDegrees, longitude: pickupCoordinateArray[1] as! CLLocationDegrees), destinationCoordinate: CLLocationCoordinate2D(latitude: destinationCoordinateArray[0] as! CLLocationDegrees, longitude: destinationCoordinateArray[1] as! CLLocationDegrees), currentCoordinate: currentCoordinate, passengerKey: tripKey, driverKey: (Auth.auth().currentUser?.uid)!)
+                                                self.present(pickupVC!, animated: true, completion: nil)
+                                                return
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                        return
+                    }
+                }
+            }
+        }
     }
     
     func checkLocationAuthStatus() {
@@ -122,7 +189,7 @@ class HomeVC: UIViewController {
         }
     }
     
-    @objc func loadDriverAnnotations() {
+    func loadDriverAnnotations() {
         FirebaseDataService.FRinstance.REF_DRIVERS.observeSingleEvent(of: .value, with: { snapshot in
             if let driverSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for driver in driverSnapshot {
@@ -163,20 +230,6 @@ class HomeVC: UIViewController {
                 }
             }
         })
-        
-        
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
-            SPRequestPermission.dialog.interactive.present(on: self, with: [.locationWhenInUse])
-        }
-        checkLocationAuthStatus()
-//        loadDriverAnnotations()
-        FirebaseDataService.FRinstance.REF_DRIVERS.observe(.value) { (snapshot) in
-            self.loadDriverAnnotations()
-        }
     }
 }
 
@@ -201,6 +254,7 @@ extension HomeVC: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if let isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool {
             if isDriver {
+                
                 UpdateService.instance.updateDriverLocation(withCoordinate: userLocation.coordinate)
             } else {
                 UpdateService.instance.updatePassengerLocation(withCoordinate: userLocation.coordinate)
@@ -403,32 +457,40 @@ extension HomeVC: UITextFieldDelegate {
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            self.destinationTextField.endEditing(true)
-//            self.centerMapOnUserLocation()
-//            self.matchingLocations = []
-//            self.tableView.reloadData()
-        }
-        self.centerMapOnUserLocation()
-        self.matchingLocations = []
-        self.tableView.reloadData()
-        UserDefaults.standard.set([], forKey: "tripCoordinate")
-        mapView.removeOverlays(mapView.overlays)
-        for annotation in mapView.annotations {
-            if annotation.isKind(of: PassengerAnnotation.self) {
-                mapView.removeAnnotation(annotation)
-            } else if let annotation = annotation as? MKPointAnnotation {
-                mapView.removeAnnotation(annotation)
-            }
-        }
-        if let _ = Auth.auth().currentUser {
-            FirebaseDataService.FRinstance.REF_PASSENGER.child((Auth.auth().currentUser?.uid)!).child("tripCoordinate").removeValue { (error, reference) in
-                if error != nil {
-                    print(error.debugDescription)
+        cancel()
+        removeFromMapView()
+        centerMapOnUserLocation()
+        queue_Background.async {
+            if let _ = Auth.auth().currentUser {
+                FirebaseDataService.FRinstance.REF_PASSENGER.child((Auth.auth().currentUser?.uid)!).child("tripCoordinate").removeValue { (error, reference) in
+                    if error != nil {
+                        print(error.debugDescription)
+                    }
                 }
             }
         }
         return true
+    }
+    
+    func cancel() {
+        matchingLocations = []
+        tableView.reloadData()
+        UserDefaults.standard.set([], forKey: "tripCoordinate")
+    }
+    
+    func removeFromMapView() {
+        
+        
+                mapView.removeOverlays(mapView.overlays)
+                for annotation in mapView.annotations {
+                    if annotation.isKind(of: PassengerAnnotation.self) {
+                        mapView.removeAnnotation(annotation)
+                    } else if let annotation = annotation as? MKPointAnnotation {
+                        mapView.removeAnnotation(annotation)
+                    }
+                }
+            
+        
     }
     
     func animateTableView(shouldShow: Bool) {
@@ -485,33 +547,60 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         }
         if let hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool {
             guard hasUserData else {
+                destinationTextField.text = ""
                 view.endEditing(true)
+                cancel()
                 menuBtnPressed(self)
                 let banner = NotificationBanner(title: "请登录或注册。", subtitle: "点击下方Sign in/Login来登录或注册账号。", style: .warning)
                 banner.show()
                 return
             }
         }
+        if let isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool {
+            if isDriver {
+                view.endEditing(true)
+                let banner = NotificationBanner(title: "You're a Driver.", subtitle: "Driver can't request for a ride.", style: .warning)
+                banner.show()
+                
+                let passengerCoordinate = mapView.userLocation.coordinate
+                let passengerAnnotation = PassengerAnnotation(coordinate: passengerCoordinate, withKey: (Auth.auth().currentUser?.uid)!)
+                mapView.addAnnotation(passengerAnnotation)
+                destinationTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
+                let selectedLocation = matchingLocations[indexPath.row]
+                dropPinFor(placemark: selectedLocation.placemark)
+                searchMapKitForResultsWithPolyline(forMapLocation: selectedLocation)
+                destinationTextField.endEditing(true)
+                animateTableView(shouldShow: false)
+                return
+            }
+        }
         
         let passengerCoordinate = mapView.userLocation.coordinate
-        let passengerAnnotation = PassengerAnnotation(coordinate: passengerCoordinate, key: (Auth.auth().currentUser?.uid)!)
+        let passengerAnnotation = PassengerAnnotation(coordinate: passengerCoordinate, withKey: (Auth.auth().currentUser?.uid)!)
         mapView.addAnnotation(passengerAnnotation)
-        
         destinationTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
         let selectedLocation = matchingLocations[indexPath.row]
-        FirebaseDataService.FRinstance.REF_PASSENGER.child((Auth.auth().currentUser?.uid)!).updateChildValues(["tripCoordinate": [selectedLocation.placemark.coordinate.latitude, selectedLocation.placemark.coordinate.longitude]])
-        UserDefaults.standard.set([selectedLocation.placemark.coordinate.latitude, selectedLocation.placemark.coordinate.longitude], forKey: "tripCoordinate")
         
-        dropPinFor(placemark: selectedLocation.placemark)
-        searchMapKitForResultsWithPolyline(forMapLocation: selectedLocation)
-        
-        destinationTextField.endEditing(true)
-        animateTableView(shouldShow: false)
-        
-        let spinner = JHSpinnerView.showOnView(view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
-        spinner.tag = 1006
-        view.addSubview(spinner)
-//        shouldPresentLoadingView(true)
+        DispatchQueue.main.async {
+            let spinner = JHSpinnerView.showOnView(self.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
+            spinner.tag = 1006
+            self.view.addSubview(spinner)
+        }
+        queue_Background.async {
+            FirebaseDataService.FRinstance.REF_PASSENGER.child((Auth.auth().currentUser?.uid)!).updateChildValues(["tripCoordinate": [selectedLocation.placemark.coordinate.latitude, selectedLocation.placemark.coordinate.longitude]]) { (error, reference) in
+                if error == nil {
+                    UserDefaults.standard.set([selectedLocation.placemark.coordinate.latitude, selectedLocation.placemark.coordinate.longitude], forKey: "tripCoordinate")
+                    
+                    self.dropPinFor(placemark: selectedLocation.placemark)
+                    self.searchMapKitForResultsWithPolyline(forMapLocation: selectedLocation)
+                    
+                    self.destinationTextField.endEditing(true)
+                    self.animateTableView(shouldShow: false)
+                } else {
+                    print(error.debugDescription)
+                }
+            }
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

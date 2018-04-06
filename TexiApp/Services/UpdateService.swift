@@ -69,12 +69,31 @@ class UpdateService {
         }
     }
     
+    func observeTrips(handler: @escaping(_ coordinateDict: Dictionary<String, AnyObject>?) -> Void) {
+        FirebaseDataService.FRinstance.REF_TRIPS.observe(.value) { (snapshot) in
+            if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                for trip in tripSnapshot {
+                    if trip.hasChild("passengerKey") && trip.hasChild("tripIsAccepted") {
+                        if let tripIsAccepted = trip.childSnapshot(forPath: "tripIsAccepted").value as? Bool {
+                            guard tripIsAccepted else {
+                                if let tripDict = trip.value as? Dictionary<String, AnyObject> {
+                                    handler(tripDict)
+                                }
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func updateTripWithCoordinatesUponRequest() {
         FirebaseDataService.FRinstance.REF_PASSENGER.observeSingleEvent(of: .value) { (snapshot) in
-            if let userSnapshot = snapshot .children.allObjects as? [DataSnapshot] {
+            if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for user in userSnapshot {
                     if user.key == Auth.auth().currentUser?.uid {
-                        if !user.hasChild("userIsDriver") {
+                        if !user.hasChild("isDriver") {
                             if let userDict = user.value as? Dictionary<String, AnyObject> {
                                 let pickupArray = userDict["coordinate"] as! NSArray
                                 let destinationArray = userDict["tripCoordinate"] as! NSArray

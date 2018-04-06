@@ -251,7 +251,7 @@ class LeftSidePanelVC: UIViewController {
             } catch(let error) {
                 print(error.localizedDescription)
             }
-            LCUser.logOut()
+//            LCUser.logOut()
             pickUpModeSwitch.isOn = false
             pickUpModeSwitch.isHidden = true
             pickUpModeLabel.isHidden = true
@@ -260,6 +260,10 @@ class LeftSidePanelVC: UIViewController {
             userImageView.isHidden = true
             loginBtn.setTitle("Sign Up / Login", for: .normal)
             UserDefaults.standard.set(false, forKey: "hasUserData")
+            let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                homeVC?.cancel()
+            }
         } else {
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC

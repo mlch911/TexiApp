@@ -167,6 +167,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                         UserDefaults.standard.set(true, forKey: "hasUserData")
                         print("Firebase登录成功")
                         self.authBtn.animateButton(shouldLoad: false, withMessage: "登录成功")
+                        DispatchQueue.main.async {
+                            let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+                            homeVC?.delegate?.toggleLeftPanel()
+                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             self.dismiss(animated: true, completion: nil)
                         }
@@ -212,6 +216,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                                 UserDefaults.standard.set(true, forKey: "hasUserData")
                                 print("Firebase注册成功")
                                 self.authBtn.animateButton(shouldLoad: false, withMessage: "注册成功")
+                                DispatchQueue.main.async {
+                                    let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+                                    homeVC?.delegate?.toggleLeftPanel()
+                                }
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                     self.dismiss(animated: true, completion: nil)
                                 }
