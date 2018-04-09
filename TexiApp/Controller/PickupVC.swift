@@ -24,7 +24,11 @@ class PickupVC: UIViewController {
     }
     
     @IBAction func acceptTripBtnPressed(_ sender: Any) {
-        
+        UpdateService.instance.acceptTrip(withPassengerKey: passengerKey, withDriverKey: driverKey)
+        self.dismiss(animated: true) {
+            let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+            homeVC?.spinner.animate()
+        }
     }
     
     var route1: MKRoute!
@@ -55,6 +59,16 @@ class PickupVC: UIViewController {
 //            self.route2 = route
 //            self.pickupMapView.add(self.route2.polyline)
 //        }
+        
+        UpdateService.instance.trips.child(passengerKey).observe(.value) { (snapshot) in
+            if snapshot.exists() {
+                if snapshot.childSnapshot(forPath: "tripIsAccepted").value as? Bool == true {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     func initData(passengerCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, currentCoordinate: CLLocationCoordinate2D, passengerKey: String, driverKey: String) {

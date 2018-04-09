@@ -34,7 +34,7 @@ class HomeVC: UIViewController {
                         var hasDestination = false
                         for annotation in mapView.annotations {
                             if annotation.isKind(of: MKPointAnnotation.self) {
-                                UpdateService.instance.updateTripWithCoordinatesUponRequest()
+                                UpdateService.instance.updateTripForPassengerRequest()
                                 destinationTextField.isUserInteractionEnabled = false
                                 hasDestination = true
                             }
@@ -107,6 +107,8 @@ class HomeVC: UIViewController {
     
     let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "launchScreenIcon"), iconInitialSize: CGSize.init(width: 100, height: 100), backgroundColor: UIColor.white)
     
+    var spinner = JHSpinnerView()
+    
     var selectedLocationPlacemark: MKPlacemark? = nil
     
     var regionRadius: CLLocationDistance = 500
@@ -139,9 +141,7 @@ class HomeVC: UIViewController {
         }
         checkLocationAuthStatus()
         queue_Background.async {
-            FirebaseDataService.FRinstance.REF_DRIVERS.observe(.value) { (snapshot) in
-                self.loadDriverAnnotations()
-            }
+            self.loadDriverAnnotations()
             if let hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool {
                 guard hasUserData else {
                     self.removeFromMapView()
@@ -190,10 +190,10 @@ class HomeVC: UIViewController {
     }
     
     func loadDriverAnnotations() {
-        FirebaseDataService.FRinstance.REF_DRIVERS.observeSingleEvent(of: .value, with: { snapshot in
+        FirebaseDataService.FRinstance.REF_DRIVERS.observe(.value, with: { snapshot in
             if let driverSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for driver in driverSnapshot {
-                    if driver.childSnapshot(forPath: "isPickupModeEnable").value as? Bool == true {
+                    if driver.childSnapshot(forPath: "isPickupModeEnable").value as? Bool == true && driver.childSnapshot(forPath: "driverIsOnTrip").value as? Bool == false {
                         if driver.hasChild("coordinate") {
                             if let driverDict = driver.value as? Dictionary<String, AnyObject> {
                                 let coordinateArray = driverDict["coordinate"] as! NSArray
@@ -368,7 +368,8 @@ extension HomeVC: MKMapViewDelegate {
             
             for subview in self.view.subviews {
                 if subview.tag == 1006 {
-                    subview.removeFromSuperview()
+//                    subview.removeFromSuperview()
+                    self.spinner.dismiss()
                 }
             }
         }
@@ -462,7 +463,7 @@ extension HomeVC: UITextFieldDelegate {
         centerMapOnUserLocation()
         queue_Background.async {
             if let _ = Auth.auth().currentUser {
-                FirebaseDataService.FRinstance.REF_PASSENGER.child((Auth.auth().currentUser?.uid)!).child("tripCoordinate").removeValue { (error, reference) in
+                FirebaseDataService.FRinstance.REF_PASSENGERS.child((Auth.auth().currentUser?.uid)!).child("tripCoordinate").removeValue { (error, reference) in
                     if error != nil {
                         print(error.debugDescription)
                     }
@@ -580,14 +581,14 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         mapView.addAnnotation(passengerAnnotation)
         destinationTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
         let selectedLocation = matchingLocations[indexPath.row]
-        
+
         DispatchQueue.main.async {
-            let spinner = JHSpinnerView.showOnView(self.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
-            spinner.tag = 1006
-            self.view.addSubview(spinner)
+            self.spinner = JHSpinnerView.showOnView(self.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
+            self.spinner.tag = 1006
+            self.view.addSubview(self.spinner)
         }
         queue_Background.async {
-            FirebaseDataService.FRinstance.REF_PASSENGER.child((Auth.auth().currentUser?.uid)!).updateChildValues(["tripCoordinate": [selectedLocation.placemark.coordinate.latitude, selectedLocation.placemark.coordinate.longitude]]) { (error, reference) in
+            FirebaseDataService.FRinstance.REF_PASSENGERS.child((Auth.auth().currentUser?.uid)!).updateChildValues(["tripCoordinate": [selectedLocation.placemark.coordinate.latitude, selectedLocation.placemark.coordinate.longitude]]) { (error, reference) in
                 if error == nil {
                     UserDefaults.standard.set([selectedLocation.placemark.coordinate.latitude, selectedLocation.placemark.coordinate.longitude], forKey: "tripCoordinate")
                     

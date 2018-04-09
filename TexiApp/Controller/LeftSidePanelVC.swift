@@ -132,7 +132,7 @@ class LeftSidePanelVC: UIViewController {
     //MARK:  /**********Firebase**********/
     func observeFirebaseUser() {
         if let user = Auth.auth().currentUser {
-            FirebaseDataService.FRinstance.REF_PASSENGER.observeSingleEvent(of: .value, with: { (snapshot) in
+            FirebaseDataService.FRinstance.REF_PASSENGERS.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                     for snap in snapshot {
                         if snap.key == user.uid {
@@ -174,7 +174,7 @@ class LeftSidePanelVC: UIViewController {
                 Auth.auth().signIn(withEmail: username, password: password, completion: { (user, error) in
                     if error == nil {
                         if let user = user {
-                            FirebaseDataService.FRinstance.REF_PASSENGER.observeSingleEvent(of: .value, with: { (snapshot) in
+                            FirebaseDataService.FRinstance.REF_PASSENGERS.observeSingleEvent(of: .value, with: { (snapshot) in
                                 if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                                     for snap in snapshot {
                                         if snap.key == user.uid {

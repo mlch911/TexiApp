@@ -15,15 +15,15 @@ class FirebaseDataService {
     static let FRinstance = FirebaseDataService()
 
     private var _REF_BASE = DB_BASE
-    private var _REF_PASSENGER = DB_BASE.child("passenger")
+    private var _REF_PASSENGERS = DB_BASE.child("passenger")
     private var _REF_DRIVERS = DB_BASE.child("driver")
     private var _REF_TRIPS = DB_BASE.child("trip")
 
     var REF_BASE :DatabaseReference {
         return _REF_BASE
     }
-    var REF_PASSENGER :DatabaseReference {
-        return _REF_PASSENGER
+    var REF_PASSENGERS :DatabaseReference {
+        return _REF_PASSENGERS
     }
     var REF_DRIVERS :DatabaseReference {
         return _REF_DRIVERS

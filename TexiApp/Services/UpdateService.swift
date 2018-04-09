@@ -11,17 +11,22 @@ import UIKit
 import MapKit
 import Firebase
 import LeanCloud
+import NotificationBannerSwift
 
 class UpdateService {
     static var instance = UpdateService()
     
+    let drivers = FirebaseDataService.FRinstance.REF_DRIVERS
+    let passengers = FirebaseDataService.FRinstance.REF_PASSENGERS
+    let trips = FirebaseDataService.FRinstance.REF_TRIPS
+    
     func updatePassengerLocation(withCoordinate coordinate: CLLocationCoordinate2D) {
         if Auth.auth().currentUser != nil {
-            FirebaseDataService.FRinstance.REF_PASSENGER.observeSingleEvent(of: .value, with: { (snapshot) in
+            passengers.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                     for user in userSnapshot {
                         if user.key == Auth.auth().currentUser?.uid {
-                            FirebaseDataService.FRinstance.REF_PASSENGER.child(user.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
+                            self.passengers.child(user.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
                         }
                     }
                 }
@@ -43,12 +48,14 @@ class UpdateService {
     
     func updateDriverLocation(withCoordinate coordinate: CLLocationCoordinate2D) {
         if Auth.auth().currentUser != nil {
-            FirebaseDataService.FRinstance.REF_DRIVERS.observeSingleEvent(of: .value, with: { (snapshot) in
-                if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                    for user in userSnapshot {
-                        if user.key == Auth.auth().currentUser?.uid {
-                            if user.childSnapshot(forPath: "isPickupModeEnable").value as! Bool {
-                                FirebaseDataService.FRinstance.REF_DRIVERS.child(user.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
+            drivers.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let driverSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                    for driver in driverSnapshot {
+                        if driver.key == Auth.auth().currentUser?.uid {
+                            if driver.childSnapshot(forPath: "isPickupModeEnable").value as! Bool {
+                                if driver.childSnapshot(forPath: "driverIsOnTrip").value as! Bool {
+                                    self.drivers.child(driver.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
+                                }
                             }
                         }
                     }
@@ -70,7 +77,7 @@ class UpdateService {
     }
     
     func observeTrips(handler: @escaping(_ coordinateDict: Dictionary<String, AnyObject>?) -> Void) {
-        FirebaseDataService.FRinstance.REF_TRIPS.observe(.value) { (snapshot) in
+        trips.observe(.value) { (snapshot) in
             if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for trip in tripSnapshot {
                     if trip.hasChild("passengerKey") && trip.hasChild("tripIsAccepted") {
@@ -88,8 +95,8 @@ class UpdateService {
         }
     }
     
-    func updateTripWithCoordinatesUponRequest() {
-        FirebaseDataService.FRinstance.REF_PASSENGER.observeSingleEvent(of: .value) { (snapshot) in
+    func updateTripForPassengerRequest() {
+        passengers.observeSingleEvent(of: .value) { (snapshot) in
             if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for user in userSnapshot {
                     if user.key == Auth.auth().currentUser?.uid {
@@ -98,18 +105,78 @@ class UpdateService {
                                 let pickupArray = userDict["coordinate"] as! NSArray
                                 let destinationArray = userDict["tripCoordinate"] as! NSArray
                                 
-                                FirebaseDataService.FRinstance.REF_TRIPS.child(user.key).updateChildValues(
+                                self.trips.child(user.key).updateChildValues(
                                     [
                                         "pickupCoordinate": [pickupArray[0], pickupArray[1]],
                                         "destinationCoordinate": [destinationArray[0], destinationArray[1]],
                                         "passengerKey": user.key,
                                         "tripIsAccepted": false
-                                    ])
+                                ]) { (error, reference) in
+                                    if let error = error {
+                                        self.errorPresent(withError: error)
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+    
+    func acceptTrip(withPassengerKey passengerkey: String, withDriverKey driverKey: String) {
+        if let tripIsAccepted = trips.child(passengerkey).value(forKey: "tripIsAccepted") as? Bool {
+            guard tripIsAccepted else {
+                trips.child(passengerkey).updateChildValues(["driverKey": driverKey, "tripIsAccepted": true]) { (error, reference) in
+                    if let error = error {
+                        self.errorPresent(withError: error)
+                    }
+                }
+                drivers.child(driverKey).updateChildValues(["driverIsOnTrip": true]) { (error, reference) in
+                    if let error = error {
+                        self.errorPresent(withError: error)
+                    }
+                }
+                return
+            }
+        }
+    }
+    
+    func cancelTrip(withPassengerKey passengerkey: String) {
+        trips.child(passengerkey).removeValue { (error, reference) in
+            if let error = error {
+                self.errorPresent(withError: error)
+            }
+        }
+        passengers.child(passengerkey).child("tripCoordinate").removeValue { (error, reference) in
+            if let error = error {
+                self.errorPresent(withError: error)
+            }
+        }
+    }
+    
+    func cancelTrip(withPassengerKey passengerkey: String,withDriverKey driverKey: String) {
+        trips.child(passengerkey).removeValue { (error, reference) in
+            if let error = error {
+                self.errorPresent(withError: error)
+            }
+        }
+        passengers.child(passengerkey).child("tripCoordinate").removeValue { (error, reference) in
+            if let error = error {
+                self.errorPresent(withError: error)
+            }
+        }
+        drivers.child(driverKey).child("driverIsOnTrip").setValue(false) { (error, reference) in
+            if let error = error {
+                self.errorPresent(withError: error)
+            }
+        }
+    }
+    
+    //MARK:  /**********errorPresent**********/
+    func errorPresent(withError error: Error) {
+        let banner = NotificationBanner(title: "Error!", subtitle: error.localizedDescription, style: .danger)
+        banner.show()
+        print(error.localizedDescription)
     }
 }

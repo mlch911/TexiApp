@@ -45,12 +45,6 @@ it, simply add the following line to your Podfile:
 pod 'NotificationBannerSwift'
 ```
 
-#### Swift 3.x
-
-```ruby
-pod 'NotificationBannerSwift', '~> 1.4.4'
-```
-
 Then add `import NotificationBannerSwift` at the top of each file you use NotificationBanner in your project.
 
 ### Carthage
@@ -60,11 +54,6 @@ To use NotificationBanner via Carthage simply add this line to your `Cartfile`:
 #### Swift 4
 ```swift
 github "Daltron/NotificationBanner" "master"
-```
-
-#### Swift 3.x
-```swift
-github "Daltron/NotificationBanner" "1.4.4"
 ```
 
 Then add `NotificationBanner.framework` and the dependencies `SnapKit.framework` and `MarqueeLabelSwift.framework` in your project.
@@ -108,7 +97,7 @@ banner.dismiss()
 To show a banner infinitely until it is manually dismissed, simply:
 
 ```swift
-banner.autoDimiss = false
+banner.autoDismiss = false
 ```
 
 NotificationBanner has five prebuilt styles that you can choose from:
@@ -136,7 +125,7 @@ Its as easy as creating a custom banner colors class:
 ```swift
 class CustomBannerColors: BannerColorsProtocol {
 
-    internal override func color(for style: BannerStyle) -> UIColor {
+    internal func color(for style: BannerStyle) -> UIColor {
         switch style {
             case .danger:   // Your custom .danger color
             case .info:     // Your custom .info color
@@ -246,7 +235,13 @@ banner.haptic = .heavy
 
 ## Banner Queue
 
-By default, each notification banner is placed onto a `NotificationBannerQueue`. This allows an infinite amount of banners to be de displayed without one hiding the other. By default, each notification banner is placed on the back of the queue. If you would rather place the banner in the front and show it immediately no matter how many banners are in the queue, simply state it in the `show()` method:
+By default, each notification banner is placed onto a singleton of an auto-managed `NotificationBannerQueue`. This allows an infinite amount of banners to be displayed without one hiding the other. If you have multiple controllers within your navigation stack that need to be managed by a seperate queue (like a tab bar controller), simply create an instance of a `NotificationBannerQueue` and pass it in to the show function:
+
+```swift
+banner.show(queue: customQueue)
+```
+
+By default, each notification banner is placed on the back of the queue. If you would rather place the banner in the front and show it immediately no matter how many banners are in the queue, simply state it in the `show()` method:
 
 ```swift
 banner.show(queuePosition: .front)
