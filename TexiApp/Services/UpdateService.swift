@@ -125,19 +125,26 @@ class UpdateService {
     }
     
     func acceptTrip(withPassengerKey passengerkey: String, withDriverKey driverKey: String) {
-        if let tripIsAccepted = trips.child(passengerkey).value(forKey: "tripIsAccepted") as? Bool {
-            guard tripIsAccepted else {
-                trips.child(passengerkey).updateChildValues(["driverKey": driverKey, "tripIsAccepted": true]) { (error, reference) in
-                    if let error = error {
-                        self.errorPresent(withError: error)
+        trips.child(passengerkey).observeSingleEvent(of: .value) { (snapshot) in
+            if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                for trip in tripSnapshot {
+                    if trip.key == "tripIsAccepted" {
+                        guard trip.value as! Bool else {
+                            self.trips.child(passengerkey).updateChildValues(["driverKey": driverKey, "tripIsAccepted": true]) { (error, reference) in
+                                if let error = error {
+                                    self.errorPresent(withError: error)
+                                }
+                            }
+                            self.drivers.child(driverKey).updateChildValues(["driverIsOnTrip": true]) { (error, reference) in
+                                if let error = error {
+                                    self.errorPresent(withError: error)
+                                }
+                                UserDefaults.standard.set(true, forKey: "driverIsOnTrip")
+                            }
+                            return
+                        }
                     }
                 }
-                drivers.child(driverKey).updateChildValues(["driverIsOnTrip": true]) { (error, reference) in
-                    if let error = error {
-                        self.errorPresent(withError: error)
-                    }
-                }
-                return
             }
         }
     }
@@ -171,6 +178,10 @@ class UpdateService {
                 self.errorPresent(withError: error)
             }
         }
+    }
+    
+    func finishTrip() {
+        
     }
     
     //MARK:  /**********errorPresent**********/

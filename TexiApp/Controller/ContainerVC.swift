@@ -108,6 +108,7 @@ extension ContainerVC: CenterVCDelegate {
                     self.leftVC = nil
                     if let hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool {
                         guard hasUserData else {
+                            
                             self.homeVC.removeFromMapView()
                             return
                         }

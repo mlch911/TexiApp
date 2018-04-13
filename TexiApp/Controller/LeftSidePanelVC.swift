@@ -18,6 +18,8 @@ class LeftSidePanelVC: UIViewController {
     @IBOutlet weak var pickUpModeSwitch: UISwitch!
     @IBOutlet weak var pickUpModeLabel: UILabel!
     
+    var myContext = NSObject()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +30,7 @@ class LeftSidePanelVC: UIViewController {
         userTypeLabel.isHidden = true
         userImageView.isHidden = true
         loginBtn.setTitle("Sign Up / Login", for: .normal)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +46,14 @@ class LeftSidePanelVC: UIViewController {
             userTypeLabel.isHidden = true
             userImageView.isHidden = true
             loginBtn.setTitle("Sign Up / Login", for: .normal)
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if context == &myContext {
+            print("Observe found change")
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
     
@@ -241,6 +252,8 @@ class LeftSidePanelVC: UIViewController {
 //        }
         
         UserDefaults.standard.set(!(UserDefaults.standard.value(forKey: "isPickupModeEnable")as! Bool), forKey: "isPickupModeEnable")
+        let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+        homeVC?.observeRideRequest()
         
     }
     
@@ -260,10 +273,7 @@ class LeftSidePanelVC: UIViewController {
             userImageView.isHidden = true
             loginBtn.setTitle("Sign Up / Login", for: .normal)
             UserDefaults.standard.set(false, forKey: "hasUserData")
-            let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                homeVC?.cancel()
-            }
+            UserDefaults.standard.set(true, forKey: "requireClean")
         } else {
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC

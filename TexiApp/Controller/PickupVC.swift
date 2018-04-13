@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import JHSpinner
 
 enum annotationType {
     case driver
@@ -26,8 +27,10 @@ class PickupVC: UIViewController {
     @IBAction func acceptTripBtnPressed(_ sender: Any) {
         UpdateService.instance.acceptTrip(withPassengerKey: passengerKey, withDriverKey: driverKey)
         self.dismiss(animated: true) {
-            let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-            homeVC?.spinner.animate()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+                homeVC?.spinner = JHSpinnerView.showOnView(homeVC!.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
+            })
         }
     }
     
@@ -42,6 +45,11 @@ class PickupVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let queue_UserInteractive = DispatchQueue.init(label: "tech.mluoc.queueUserInteractive", qos: .userInteractive, attributes: .concurrent)
+//        let queue_UserInitiated = DispatchQueue.init(label: "tech.mluoc.queueUserInitiated", qos: .userInitiated, attributes: .concurrent)
+//        let queue_Utility = DispatchQueue.init(label: "tech.mluoc.queueUtility", qos: .utility, attributes: .concurrent)
+        let queue_Background = DispatchQueue.init(label: "tech.mluoc.queueBackground", qos: .background, attributes: .concurrent)
         
         pickupMapView.delegate = self
         let passengerPlacemark = MKPlacemark(coordinate: passengerCoordinate)
@@ -59,16 +67,25 @@ class PickupVC: UIViewController {
 //            self.route2 = route
 //            self.pickupMapView.add(self.route2.polyline)
 //        }
-        
-        UpdateService.instance.trips.child(passengerKey).observe(.value) { (snapshot) in
-            if snapshot.exists() {
-                if snapshot.childSnapshot(forPath: "tripIsAccepted").value as? Bool == true {
+        queue_Background.async {
+            UpdateService.instance.trips.child(self.passengerKey).observe(.value) { (snapshot) in
+                if snapshot.exists() {
+                    if snapshot.childSnapshot(forPath: "tripIsAccepted").value as? Bool == true {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                } else {
                     self.dismiss(animated: true, completion: nil)
                 }
-            } else {
-                self.dismiss(animated: true, completion: nil)
             }
+            UpdateService.instance.drivers.child(self.driverKey).observe(.value, with: { (snapshot) in
+                guard !(snapshot.childSnapshot(forPath: "driverIsOnTrip").value as! Bool) && snapshot.childSnapshot(forPath: "isPickupModeEnable").value as! Bool else {
+                    self.dismiss(animated: true, completion: nil)
+                    return
+                }
+            })
         }
+        
+        
     }
     
     func initData(passengerCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, currentCoordinate: CLLocationCoordinate2D, passengerKey: String, driverKey: String) {
