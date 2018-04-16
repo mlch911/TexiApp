@@ -110,7 +110,7 @@ class HomeVC: UIViewController {
     let queue_Background = DispatchQueue.init(label: "tech.mluoc.queueBackground", qos: .background, attributes: .concurrent)
     
     let isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool
-    let driverIsOnTrip = UserDefaults.standard.value(forKey: "driverIsOnTrip") as? Bool
+    let isOnTrip = UserDefaults.standard.value(forKey: "isOnTrip") as? Bool
     let isPickupModeEnable = UserDefaults.standard.value(forKey: "isPickupModeEnable") as? Bool
     let hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool
     let requireClean = UserDefaults.standard.value(forKey: "requireClean") as? Bool
@@ -151,9 +151,6 @@ class HomeVC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
-            SPRequestPermission.dialog.interactive.present(on: self, with: [.locationWhenInUse])
-        }
         checkLocationAuthStatus()
         queue_Background.async {
             self.loadDriverAnnotations()
@@ -161,10 +158,10 @@ class HomeVC: UIViewController {
                 self.removeFromMapView()
                 return
             }
-            if self.hasUserData == true {
-                if self.isDriver == true && self.driverIsOnTrip == true {
+            if self.hasUserData == true && self.isDriver == true && self.isOnTrip == true {
+                self.queue_Background.asyncAfter(deadline: .now() + 0.5, execute: {
                     self.showWayToPassenger(wayTo: .passenger)
-                }
+                })
             }
             if self.requireClean == true {
                 self.removeFromMapView()
@@ -178,6 +175,8 @@ class HomeVC: UIViewController {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             manager?.desiredAccuracy = kCLLocationAccuracyBest
             manager?.startUpdatingLocation()
+        } else {
+            SPRequestPermission.dialog.interactive.present(on: self, with: [.locationWhenInUse])
         }
     }
     
@@ -185,7 +184,7 @@ class HomeVC: UIViewController {
         FirebaseDataService.FRinstance.REF_DRIVERS.observe(.value, with: { snapshot in
             if let driverSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for driver in driverSnapshot {
-                    if driver.childSnapshot(forPath: "isPickupModeEnable").value as? Bool == true && driver.childSnapshot(forPath: "driverIsOnTrip").value as? Bool == false {
+                    if driver.childSnapshot(forPath: "isPickupModeEnable").value as? Bool == true && driver.childSnapshot(forPath: "isOnTrip").value as? Bool == false {
                         if driver.hasChild("coordinate") {
                             if let driverDict = driver.value as? Dictionary<String, AnyObject> {
                                 let coordinateArray = driverDict["coordinate"] as! NSArray
@@ -226,7 +225,7 @@ class HomeVC: UIViewController {
     
     func observeRideRequest() {
         if isDriver == true {
-            if driverIsOnTrip == false {
+            if isOnTrip == false {
                 if isPickupModeEnable == true {
                     queue_Background.async {
                         UpdateService.instance.observeTrips(handler: { (tripDict) in
@@ -279,7 +278,22 @@ class HomeVC: UIViewController {
 //                            self.dropPinFor(placemarks: [pickupPlacemark: .passenger, destinationPlacemark: .destination])
                             self.searchMapKitForResultsWithPolyline(forMapLocation: MKMapItem(placemark: destinationPlacemark))
                         case .driver:
-                            break
+                            self.queue_Background.async {
+                                FirebaseDataService.FRinstance.REF_DRIVERS.child(trip.childSnapshot(forPath: "driverKey").value as! String).observe(.value, with: { (snapshot) in
+                                    if let driverCoordinateArray = snapshot.childSnapshot(forPath: "coordinate").value as? NSArray {
+                                        self.mapView.removeAnnotations(self.mapView.annotations)
+                                        self.mapView.removeOverlays(self.mapView.overlays)
+                                        let driverCoordinate = CLLocationCoordinate2D(latitude: driverCoordinateArray[0] as! CLLocationDegrees, longitude: driverCoordinateArray[1] as! CLLocationDegrees)
+                                        let driverPlacemark = MKPlacemark(coordinate: driverCoordinate)
+                                        self.dropPinFor(placemarks: [driverPlacemark: .driver])
+                                        self.searchMapKitForResultsWithPolyline(forMapLocation: MKMapItem(placemark: driverPlacemark))
+                                    }
+                                }, withCancel: { (error) in
+                                    let banner = NotificationBanner(title: "Error!", subtitle: error.localizedDescription, style: .danger)
+                                    banner.show()
+                                    print(error.localizedDescription)
+                                })
+                            }
                         }
                     }
                 }
@@ -291,9 +305,7 @@ class HomeVC: UIViewController {
         }
     }
     
-    @IBAction func closeToHome(segue: UIStoryboardSegue) {
-        
-    }
+    @IBAction func closeToHome(segue: UIStoryboardSegue) {}
 }
 
 //MARK:  /**********CLLocationManagerDelegate**********/

@@ -56,7 +56,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 //                            let user = LCUser.current!
 //                            user.set("isDriver", value: true)
 //                            user.email = LCString(email)
-//                            user.set("driverIsOnTrip", value: false)
+//                            user.set("isOnTrip", value: false)
 //                            user.set("isPickUpModeEnable", value: false)
 //                            user.save { result in
 //                                switch result {
@@ -65,7 +65,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 //                                    print("LeanCloud上传数据成功")
 //                                    UserDefaults.standard.set(true, forKey: "isDriver")
 //                                    UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-//                                    UserDefaults.standard.set(false, forKey: "driverIsOnTrip")
+//                                    UserDefaults.standard.set(false, forKey: "isOnTrip")
 //                                    UserDefaults.standard.set(email, forKey: "name")
 //                                    UserDefaults.standard.set(password, forKey: "password")
 //                                case .failure(let error):
@@ -105,7 +105,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 //                                    let user = LCUser.current!
 //                                    user.set("isDriver", value: true)
 //                                    user.email = LCString(email)
-//                                    user.set("driverIsOnTrip", value: false)
+//                                    user.set("isOnTrip", value: false)
 //                                    user.set("isPickUpModeEnable", value: false)
 //                                    user.save { result in
 //                                        switch result {
@@ -113,7 +113,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 //                                            print("LeanCloud上传数据成功")
 //                                            UserDefaults.standard.set(true, forKey: "isDriver")
 //                                            UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-//                                            UserDefaults.standard.set(false, forKey: "driverIsOnTrip")
+//                                            UserDefaults.standard.set(false, forKey: "isOnTrip")
 //                                            UserDefaults.standard.set(email, forKey: "name")
 //                                            UserDefaults.standard.set(password, forKey: "password")
 //                                        case .failure(let error):
@@ -151,15 +151,16 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     if error == nil {
                         if let user = user {
                             if self.segmentControl.selectedSegmentIndex == 0 {
-                                let userData = ["name": email] as [String: Any]
+                                let userData = ["name": email, "isOnTrip": false] as [String: Any]
                                 FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
                                 UserDefaults.standard.set(false, forKey: "isDriver")
+                                UserDefaults.standard.set(false, forKey: "isOnTrip")
                             } else {
-                                let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "driverIsOnTrip": false] as [String: Any]
+                                let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "isOnTrip": false] as [String: Any]
                                 FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
                                 UserDefaults.standard.set(true, forKey: "isDriver")
                                 UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-                                UserDefaults.standard.set(false, forKey: "driverIsOnTrip")
+                                UserDefaults.standard.set(false, forKey: "isOnTrip")
                             }
                         }
                         UserDefaults.standard.set(email, forKey: "name")
@@ -200,15 +201,16 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                             } else {
                                 if let user = user {
                                     if self.segmentControl.selectedSegmentIndex == 0 {
-                                        let userData = ["name": email] as [String: Any]
+                                        let userData = ["name": email, "isOnTrip": false] as [String: Any]
                                         FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
                                         UserDefaults.standard.set(false, forKey: "isDriver")
+                                        UserDefaults.standard.set(false, forKey: "isOnTrip")
                                     } else {
-                                        let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "driverIsOnTrip": false] as [String: Any]
+                                        let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "isOnTrip": false] as [String: Any]
                                         FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
                                         UserDefaults.standard.set(true, forKey: "isDriver")
                                         UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-                                        UserDefaults.standard.set(false, forKey: "driverIsOnTrip")
+                                        UserDefaults.standard.set(false, forKey: "isOnTrip")
                                     }
                                 }
                                 UserDefaults.standard.set(email, forKey: "name")

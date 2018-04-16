@@ -19,15 +19,17 @@ enum annotationType {
 class PickupVC: UIViewController {
     
     @IBOutlet weak var pickupMapView: RoundMapView!
+    @IBOutlet weak var acceptBtn: RoundedShadowButton!
     
     @IBAction func acceptTripBtnPressed(_ sender: Any) {
-        UpdateService.instance.acceptTrip(withPassengerKey: passengerKey, withDriverKey: driverKey)
-        let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-        homeVC?.actionBtn.animateButton(shouldLoad: true, withMessage: nil)
-//        homeVC?.spinner = JHSpinnerView.showOnView(homeVC!.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
-//        homeVC?.view.addSubview((homeVC?.spinner)!)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            let _ = JHSpinnerView.showOnView((self.presentingViewController?.view)!, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
+        acceptBtn.animateButton(shouldLoad: true, withMessage: nil)
+        UpdateService.instance.acceptTrip(withPassengerKey: passengerKey, withDriverKey: driverKey) { (finished) in
+            if finished {
+                self.acceptBtn.animateButton(shouldLoad: false, withMessage: "Successful Accepted")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+                    self.performSegue(withIdentifier: "acceptTrip", sender: self)
+                })
+            }
         }
     }
     
@@ -75,14 +77,12 @@ class PickupVC: UIViewController {
                 }
             }
             UpdateService.instance.drivers.child(self.driverKey).observe(.value, with: { (snapshot) in
-                guard !(snapshot.childSnapshot(forPath: "driverIsOnTrip").value as! Bool) && snapshot.childSnapshot(forPath: "isPickupModeEnable").value as! Bool else {
+                guard !(snapshot.childSnapshot(forPath: "isOnTrip").value as! Bool) && snapshot.childSnapshot(forPath: "isPickupModeEnable").value as! Bool else {
                     self.dismiss(animated: true, completion: nil)
                     return
                 }
             })
         }
-        
-        
     }
     
     func initData(passengerCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, currentCoordinate: CLLocationCoordinate2D, passengerKey: String, driverKey: String) {
@@ -95,9 +95,14 @@ class PickupVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "acceptTrip" {
-            let homeVC = segue.destination as! HomeVC
-            <#Add the Task#>
+            if let dest = segue.destination as? HomeVC {
+                dest.actionBtn.animateButton(shouldLoad: true, withMessage: nil)
+                dest.showWayToPassenger(wayTo: .passenger)
+//                dest.spinner = JHSpinnerView.showOnView(dest.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
+            }
         }
+//        print(segue.destination,segue.source)mlch1995123
+        
     }
 }
 

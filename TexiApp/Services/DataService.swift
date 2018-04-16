@@ -49,10 +49,10 @@ class FirebaseDataService {
         }
     }
     
-    func driverIsOnTrip(driverKey: String, handler: @escaping (_ status: Bool?, _ driverKey: String?, _ tripKey: String?) ->Void) {
+    func isOnTrip(driverKey: String, handler: @escaping (_ status: Bool?, _ driverKey: String?, _ tripKey: String?) ->Void) {
         REF_DRIVERS.child(driverKey).observeSingleEvent(of: .value) { (snapshot) in
-            if let driverIsOnTrip = snapshot.childSnapshot(forPath: "driverIsOnTrip").value as? Bool {
-                if driverIsOnTrip {
+            if let isOnTrip = snapshot.childSnapshot(forPath: "isOnTrip").value as? Bool {
+                if isOnTrip {
                     self.REF_TRIPS.observeSingleEvent(of: .value, with: { (snapshot) in
                         if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                             for trip in tripSnapshot {
@@ -91,12 +91,12 @@ class FirebaseDataService {
     func checkUserStatus() {
         if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
             if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
-                FirebaseDataService.FRinstance.REF_DRIVERS.child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                FirebaseDataService.FRinstance.REF_DRIVERS.child(Auth.auth().currentUser!.uid).observe(.value, with: { (snapshot) in
                     if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                         for userProperty in userSnapshot {
                             switch userProperty.key {
-                            case "driverIsOnTrip":
-                                UserDefaults.standard.set(userProperty.value, forKey: "driverIsOnTrip")
+                            case "isOnTrip":
+                                UserDefaults.standard.set(userProperty.value, forKey: "isOnTrip")
                             case "isDriver":
                                 UserDefaults.standard.set(userProperty.value, forKey: "isDriver")
                             case "isPickupModeEnable":
@@ -109,6 +109,21 @@ class FirebaseDataService {
                 }, withCancel: { (error) in
                     self.errorPresent(withError: error)
                 })
+            } else {
+                FirebaseDataService.FRinstance.REF_PASSENGERS.child(Auth.auth().currentUser!.uid).observe(.value, with: { (snapshot) in
+                    if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                        for userProperty in userSnapshot {
+                            switch userProperty.key {
+                            case "isOnTrip":
+                                UserDefaults.standard.set(userProperty.value, forKey: "isOnTrip")
+                            default:
+                                break
+                            }
+                        }
+                    }
+                }) { (error) in
+                    self.errorPresent(withError: error)
+                }
             }
         }
     }

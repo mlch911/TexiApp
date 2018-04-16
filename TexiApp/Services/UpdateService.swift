@@ -53,7 +53,7 @@ class UpdateService {
                     for driver in driverSnapshot {
                         if driver.key == Auth.auth().currentUser?.uid {
                             if driver.childSnapshot(forPath: "isPickupModeEnable").value as! Bool {
-                                if driver.childSnapshot(forPath: "driverIsOnTrip").value as! Bool {
+                                if driver.childSnapshot(forPath: "isOnTrip").value as! Bool {
                                     self.drivers.child(driver.key).updateChildValues(["coordinate": [coordinate.latitude, coordinate.longitude]])
                                 }
                             }
@@ -124,7 +124,7 @@ class UpdateService {
         }
     }
     
-    func acceptTrip(withPassengerKey passengerkey: String, withDriverKey driverKey: String) {
+    func acceptTrip(withPassengerKey passengerkey: String, withDriverKey driverKey: String, handler: @escaping(_ finished: Bool) -> Void) {
         trips.child(passengerkey).observeSingleEvent(of: .value) { (snapshot) in
             if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for trip in tripSnapshot {
@@ -135,22 +135,19 @@ class UpdateService {
                                     self.errorPresent(withError: error)
                                 }
                             }
-                            self.drivers.child(driverKey).updateChildValues(["driverIsOnTrip": true]) { (error, reference) in
+                            self.drivers.child(driverKey).updateChildValues(["isOnTrip": true]) { (error, reference) in
                                 if let error = error {
                                     self.errorPresent(withError: error)
                                 }
                             }
-                            UserDefaults.standard.set(true, forKey: "driverIsOnTrip")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-//                                let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-//                                homeVC?.actionBtn.animateButton(shouldLoad: false, withMessage: "Successfully Accepted")
-                            })
+                            UserDefaults.standard.set(true, forKey: "isOnTrip")
                             return
                         }
                     }
                 }
             }
         }
+        handler(true)
     }
     
     func cancelTrip(withPassengerKey passengerkey: String) {
@@ -177,7 +174,7 @@ class UpdateService {
                 self.errorPresent(withError: error)
             }
         }
-        drivers.child(driverKey).child("driverIsOnTrip").setValue(false) { (error, reference) in
+        drivers.child(driverKey).child("isOnTrip").setValue(false) { (error, reference) in
             if let error = error {
                 self.errorPresent(withError: error)
             }
