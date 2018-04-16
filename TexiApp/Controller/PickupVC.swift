@@ -20,17 +20,14 @@ class PickupVC: UIViewController {
     
     @IBOutlet weak var pickupMapView: RoundMapView!
     
-    @IBAction func cancelBtnPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func acceptTripBtnPressed(_ sender: Any) {
         UpdateService.instance.acceptTrip(withPassengerKey: passengerKey, withDriverKey: driverKey)
-        self.dismiss(animated: true) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-                homeVC?.spinner = JHSpinnerView.showOnView(homeVC!.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
-            })
+        let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+        homeVC?.actionBtn.animateButton(shouldLoad: true, withMessage: nil)
+//        homeVC?.spinner = JHSpinnerView.showOnView(homeVC!.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
+//        homeVC?.view.addSubview((homeVC?.spinner)!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let _ = JHSpinnerView.showOnView((self.presentingViewController?.view)!, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
         }
     }
     
@@ -94,6 +91,13 @@ class PickupVC: UIViewController {
         self.currentCoordinate = currentCoordinate
         self.passengerKey = passengerKey
         self.driverKey = driverKey
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "acceptTrip" {
+            let homeVC = segue.destination as! HomeVC
+            <#Add the Task#>
+        }
     }
 }
 

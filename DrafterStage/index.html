@@ -1,0 +1,3531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draft Stage</title>
+    <script id="data">
+        DrafterData = [
+  {
+    "super" : "LCObject",
+    "name" : "Driver",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DD30D301D1453C39A4BE18369D04C960A" : {
+        "name" : "objectClassName",
+        "invokes" : [
+
+        ],
+        "id" : "DD30D301D1453C39A4BE18369D04C960A",
+        "params" : [
+
+        ],
+        "returnType" : "String",
+        "classId" : "D48CF24486D9A8E65A142B25682F19949",
+        "static" : true,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D48CF24486D9A8E65A142B25682F19949",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "",
+    "name" : "UIStoryboard",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DB92EDFB2BA179C4167AD998D256885AD" : {
+        "name" : "leftViewController",
+        "invokes" : [
+          {
+            "formatedName" : "mainStoryboard().instantiateViewController(withIdentifier:)"
+          }
+        ],
+        "id" : "DB92EDFB2BA179C4167AD998D256885AD",
+        "params" : [
+
+        ],
+        "returnType" : "LeftSidePanelVC",
+        "classId" : "D03FC11EA3F9924672B7DECAC21309EEA",
+        "static" : true,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D46789CCD2BDE7B2B82DF6FE873B5586C" : {
+        "name" : "mainStoryboard",
+        "invokes" : [
+          {
+            "formatedName" : "UIStoryboard(name:, bundle:)"
+          }
+        ],
+        "id" : "D46789CCD2BDE7B2B82DF6FE873B5586C",
+        "params" : [
+
+        ],
+        "returnType" : "UIStoryboard",
+        "classId" : "D03FC11EA3F9924672B7DECAC21309EEA",
+        "static" : true,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DCE368EEE5D6BB114844B0796FC71A0D1" : {
+        "name" : "homeVC",
+        "invokes" : [
+          {
+            "formatedName" : "mainStoryboard().instantiateViewController(withIdentifier:)"
+          }
+        ],
+        "id" : "DCE368EEE5D6BB114844B0796FC71A0D1",
+        "params" : [
+
+        ],
+        "returnType" : "HomeVC",
+        "classId" : "D03FC11EA3F9924672B7DECAC21309EEA",
+        "static" : true,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D03FC11EA3F9924672B7DECAC21309EEA",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIView",
+    "name" : "CircleView",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "D2B4A85C5C1E1AFCAEC150CAFCB1BD451" : {
+        "name" : "awakeFromNib",
+        "invokes" : [
+          {
+            "classId" : "D04E9BDC8422D65EE9A60AAB5BCA57B9A",
+            "methodId" : "D536A6E8374895655A827C0D9B7572957"
+          }
+        ],
+        "id" : "D2B4A85C5C1E1AFCAEC150CAFCB1BD451",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D04E9BDC8422D65EE9A60AAB5BCA57B9A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D536A6E8374895655A827C0D9B7572957" : {
+        "name" : "setupCircle",
+        "invokes" : [
+
+        ],
+        "id" : "D536A6E8374895655A827C0D9B7572957",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D04E9BDC8422D65EE9A60AAB5BCA57B9A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D04E9BDC8422D65EE9A60AAB5BCA57B9A",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "NSObject",
+    "name" : "DriverAnnotation",
+    "protocols" : [
+      {
+        "id" : "D04213495D24181B422BA1ECE687C675E",
+        "name" : "MKAnnotation"
+      }
+    ],
+    "methods" : {
+      "DA0AB3D0291E70C21358F3352818B9E25" : {
+        "name" : "init",
+        "invokes" : [
+
+        ],
+        "id" : "DA0AB3D0291E70C21358F3352818B9E25",
+        "params" : [
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "coordinate",
+            "sel" : "coordinate"
+          },
+          {
+            "type" : "String",
+            "name" : "key",
+            "sel" : "withKey"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D047F075B46A151C1C59F2E7F682EE7B7",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DD9F2A5320CB28B5808B8B0CB879D3084" : {
+        "name" : "update",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:)"
+          }
+        ],
+        "id" : "DD9F2A5320CB28B5808B8B0CB879D3084",
+        "params" : [
+          {
+            "type" : "DriverAnnotation",
+            "name" : "annotation",
+            "sel" : "annotationPosition"
+          },
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "coordinate",
+            "sel" : "withCoordinate"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D047F075B46A151C1C59F2E7F682EE7B7",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D047F075B46A151C1C59F2E7F682EE7B7",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIResponder",
+    "name" : "AppDelegate",
+    "protocols" : [
+      {
+        "id" : "D06581EBB8BF0C17C42945799730CF16E",
+        "name" : "UIApplicationDelegate"
+      }
+    ],
+    "methods" : {
+      "D2DDDDFDD4118DF16F2AF00E1133E84D5" : {
+        "name" : "applicationWillTerminate",
+        "invokes" : [
+
+        ],
+        "id" : "D2DDDDFDD4118DF16F2AF00E1133E84D5",
+        "params" : [
+          {
+            "type" : "UIApplication",
+            "name" : "application",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D6B972B4D8BD2A07F893120CFEDD43D2B",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D0EAD3F8C5F901986536C02C41FD59142" : {
+        "name" : "applicationWillResignActive",
+        "invokes" : [
+
+        ],
+        "id" : "D0EAD3F8C5F901986536C02C41FD59142",
+        "params" : [
+          {
+            "type" : "UIApplication",
+            "name" : "application",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D6B972B4D8BD2A07F893120CFEDD43D2B",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DE2D68B983AC01D67D95D4EC23D1B3D1F" : {
+        "name" : "applicationDidEnterBackground",
+        "invokes" : [
+
+        ],
+        "id" : "DE2D68B983AC01D67D95D4EC23D1B3D1F",
+        "params" : [
+          {
+            "type" : "UIApplication",
+            "name" : "application",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D6B972B4D8BD2A07F893120CFEDD43D2B",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DEC07887F9C31AA46875E42BA6B87FCFC" : {
+        "name" : "applicationWillEnterForeground",
+        "invokes" : [
+
+        ],
+        "id" : "DEC07887F9C31AA46875E42BA6B87FCFC",
+        "params" : [
+          {
+            "type" : "UIApplication",
+            "name" : "application",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D6B972B4D8BD2A07F893120CFEDD43D2B",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D4860BB3A281CB86EAADA95503CC7EA11" : {
+        "name" : "applicationDidBecomeActive",
+        "invokes" : [
+
+        ],
+        "id" : "D4860BB3A281CB86EAADA95503CC7EA11",
+        "params" : [
+          {
+            "type" : "UIApplication",
+            "name" : "application",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D6B972B4D8BD2A07F893120CFEDD43D2B",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D085AEB56D138531F20389E2E0CBB6D3B" : {
+        "name" : "application",
+        "invokes" : [
+          {
+            "formatedName" : "configure()"
+          },
+          {
+            "formatedName" : "sharedManager()"
+          },
+          {
+            "formatedName" : "makeKeyAndVisible()"
+          }
+        ],
+        "id" : "D085AEB56D138531F20389E2E0CBB6D3B",
+        "params" : [
+          {
+            "type" : "UIApplication",
+            "name" : "application",
+            "sel" : "_"
+          },
+          {
+            "type" : "[UIApplicationLaunchOptionsKey:Any]",
+            "name" : "launchOptions",
+            "sel" : "didFinishLaunchingWithOptions"
+          }
+        ],
+        "returnType" : "Bool",
+        "classId" : "D6B972B4D8BD2A07F893120CFEDD43D2B",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D6B972B4D8BD2A07F893120CFEDD43D2B",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIViewController",
+    "name" : "LeftSidePanelVC",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DCC3EBA42A57FAC660466A280AF9E8CBE" : {
+        "name" : "viewWillAppear",
+        "invokes" : [
+          {
+            "formatedName" : "viewWillAppear(_:)"
+          },
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+            "methodId" : "DD36018F2D6393FB5EA5364A910E09378"
+          },
+          {
+            "formatedName" : "setTitle(_:, for:)"
+          }
+        ],
+        "id" : "DCC3EBA42A57FAC660466A280AF9E8CBE",
+        "params" : [
+          {
+            "type" : "Bool",
+            "name" : "animated",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D12BCCE7A95AEA81BF230AC2449C8B410" : {
+        "name" : "pickUpModeSwitchPressed",
+        "invokes" : [
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "observeSingleEvent(of:, with:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "formatedName" : "UIStoryboard(name:, bundle:).instantiateViewController(withIdentifier:)"
+          },
+          {
+            "formatedName" : "observeRideRequest()"
+          },
+          {
+            "formatedName" : "child(_:)"
+          },
+          {
+            "formatedName" : "updateChildValues(_:)"
+          },
+          {
+            "formatedName" : "value(forKey:)"
+          }
+        ],
+        "id" : "D12BCCE7A95AEA81BF230AC2449C8B410",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D8BC9A61E351D012A13FDA99E328BAC6C" : {
+        "name" : "loginBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "formatedName" : "auth().signOut()"
+          },
+          {
+            "formatedName" : "catch(_:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "setTitle(_:, for:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "formatedName" : "UIStoryboard(name:, bundle:)"
+          },
+          {
+            "formatedName" : "instantiateViewController(withIdentifier:)"
+          },
+          {
+            "formatedName" : "present(_:, animated:, completion:)"
+          }
+        ],
+        "id" : "D8BC9A61E351D012A13FDA99E328BAC6C",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DA676D36B45E4842CDC68394CBF6F5BF5" : {
+        "name" : "observeLeanCloudUser",
+        "invokes" : [
+          {
+            "formatedName" : "get(_:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "formatedName" : "setTitle(_:, for:)"
+          },
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "formatedName" : "logIn(username:, password:)"
+          },
+          {
+            "formatedName" : "success(_:)"
+          },
+          {
+            "formatedName" : "failure(_:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          }
+        ],
+        "id" : "DA676D36B45E4842CDC68394CBF6F5BF5",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DCF781890A262171CAB19531771DE2E61" : {
+        "name" : "observeFirebaseUser",
+        "invokes" : [
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "observeSingleEvent(of:, with:)"
+          },
+          {
+            "formatedName" : "setTitle(_:, for:)"
+          },
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "formatedName" : "auth().signIn(withEmail:, password:, completion:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "formatedName" : "childSnapshot(forPath:)"
+          },
+          {
+            "formatedName" : "child(_:)"
+          }
+        ],
+        "id" : "DCF781890A262171CAB19531771DE2E61",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DD36018F2D6393FB5EA5364A910E09378" : {
+        "name" : "observeLocalUser",
+        "invokes" : [
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "formatedName" : "setTitle(_:, for:)"
+          },
+          {
+            "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+            "methodId" : "DCF781890A262171CAB19531771DE2E61"
+          },
+          {
+            "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+            "methodId" : "DA676D36B45E4842CDC68394CBF6F5BF5"
+          }
+        ],
+        "id" : "DD36018F2D6393FB5EA5364A910E09378",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DEC102AA6819950F77B5804CAEC3B4236" : {
+        "name" : "viewDidLoad",
+        "invokes" : [
+          {
+            "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+            "methodId" : "DEC102AA6819950F77B5804CAEC3B4236"
+          },
+          {
+            "formatedName" : "setTitle(_:, for:)"
+          }
+        ],
+        "id" : "DEC102AA6819950F77B5804CAEC3B4236",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D27B6E22454256404DE9526025E9D5D60" : {
+        "name" : "observeValue",
+        "invokes" : [
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+            "methodId" : "D27B6E22454256404DE9526025E9D5D60"
+          }
+        ],
+        "id" : "D27B6E22454256404DE9526025E9D5D60",
+        "params" : [
+          {
+            "type" : "String",
+            "name" : "keyPath",
+            "sel" : "forKeyPath"
+          },
+          {
+            "type" : "Any",
+            "name" : "object",
+            "sel" : "of"
+          },
+          {
+            "type" : "[NSKeyValueChangeKey:Any]",
+            "name" : "change",
+            "sel" : "change"
+          },
+          {
+            "type" : "UnsafeMutableRawPointer",
+            "name" : "context",
+            "sel" : "context"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D887A5C8F291C91DB94340E48A97DA712",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D887A5C8F291C91DB94340E48A97DA712",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "LCObject",
+    "name" : "Passenger",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "D5F54D3E31E59AC8785BCE08E7579EBB3" : {
+        "name" : "objectClassName",
+        "invokes" : [
+
+        ],
+        "id" : "D5F54D3E31E59AC8785BCE08E7579EBB3",
+        "params" : [
+
+        ],
+        "returnType" : "String",
+        "classId" : "DBF2528A296ADB62D041A7519AA77F248",
+        "static" : true,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "DBF2528A296ADB62D041A7519AA77F248",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "",
+    "name" : "UIView",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "D63DB7C60199467E1E99988BE96F24E48" : {
+        "name" : "fadeTo",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:)"
+          }
+        ],
+        "id" : "D63DB7C60199467E1E99988BE96F24E48",
+        "params" : [
+          {
+            "type" : "CGFloat",
+            "name" : "alphaValue",
+            "sel" : "alphaValue"
+          },
+          {
+            "type" : "TimeInterval",
+            "name" : "duration",
+            "sel" : "withDuration"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D02EAEBC8A33E00488C45DF2FCF852D90",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D02EAEBC8A33E00488C45DF2FCF852D90",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "",
+    "name" : "FirebaseDataService",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "D63364E8D7039CE7D34142689895846C8" : {
+        "name" : "driverIsOnTrip",
+        "invokes" : [
+          {
+            "formatedName" : "child(_:).observeSingleEvent(of:)"
+          },
+          {
+            "formatedName" : "childSnapshot(forPath:)"
+          },
+          {
+            "formatedName" : "observeSingleEvent(of:, with:)"
+          },
+          {
+            "formatedName" : "handler(_:, _:, _:)"
+          }
+        ],
+        "id" : "D63364E8D7039CE7D34142689895846C8",
+        "params" : [
+          {
+            "type" : "String",
+            "name" : "driverKey",
+            "sel" : "driverKey"
+          },
+          {
+            "type" : "(_status:Bool,_driverKey:String,_tripKey:String)->Void",
+            "name" : "handler",
+            "sel" : "handler"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D77D8476CAB1B22B159B8E6FE3303D43F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D909A10864576D6C590B609B20D95F3F2" : {
+        "name" : "errorPresent",
+        "invokes" : [
+          {
+            "formatedName" : "NotificationBanner(title:, subtitle:, style:)"
+          },
+          {
+            "formatedName" : "show()"
+          },
+          {
+            "formatedName" : "print(_:)"
+          }
+        ],
+        "id" : "D909A10864576D6C590B609B20D95F3F2",
+        "params" : [
+          {
+            "type" : "Error",
+            "name" : "error",
+            "sel" : "withError"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D77D8476CAB1B22B159B8E6FE3303D43F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D12EAF9D7D3239CC3DF9C7B76FBEA1118" : {
+        "name" : "createFirebaseDBUser",
+        "invokes" : [
+          {
+            "formatedName" : "child(_:).child(_:).updateChildValues(_:, withCompletionBlock:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          }
+        ],
+        "id" : "D12EAF9D7D3239CC3DF9C7B76FBEA1118",
+        "params" : [
+          {
+            "type" : "String",
+            "name" : "uid",
+            "sel" : "uid"
+          },
+          {
+            "type" : "Dictionary",
+            "name" : "userData",
+            "sel" : "userData"
+          },
+          {
+            "type" : "Bool",
+            "name" : "isDriver",
+            "sel" : "isDriver"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D77D8476CAB1B22B159B8E6FE3303D43F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D633F0E69C1BD9B113641747FAC5B8BBD" : {
+        "name" : "checkUserStatus",
+        "invokes" : [
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "formatedName" : "child(_:).observeSingleEvent(of:, with:, withCancel:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "classId" : "D77D8476CAB1B22B159B8E6FE3303D43F",
+            "methodId" : "D909A10864576D6C590B609B20D95F3F2"
+          }
+        ],
+        "id" : "D633F0E69C1BD9B113641747FAC5B8BBD",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D77D8476CAB1B22B159B8E6FE3303D43F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D77D8476CAB1B22B159B8E6FE3303D43F",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIView",
+    "name" : "GradientView",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DD1B053801CAECFA340989655E3D6BF76" : {
+        "name" : "setupGradientView",
+        "invokes" : [
+          {
+            "formatedName" : "CGPoint(x:, y:)"
+          },
+          {
+            "formatedName" : "addSublayer(_:)"
+          }
+        ],
+        "id" : "DD1B053801CAECFA340989655E3D6BF76",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D24DE42553AAEFD179AF0498A573CF714",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D565D51CA428502292B4BB3036BDA58AD" : {
+        "name" : "awakeFromNib",
+        "invokes" : [
+          {
+            "classId" : "D24DE42553AAEFD179AF0498A573CF714",
+            "methodId" : "DD1B053801CAECFA340989655E3D6BF76"
+          }
+        ],
+        "id" : "D565D51CA428502292B4BB3036BDA58AD",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D24DE42553AAEFD179AF0498A573CF714",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D24DE42553AAEFD179AF0498A573CF714",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "MKMapView",
+    "name" : "RoundMapView",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DB0A674A7E09F482404DE9D6DA1B35682" : {
+        "name" : "awakeFromNib",
+        "invokes" : [
+          {
+            "classId" : "D512D30A7AB9E69DF4D3AEFAE24D59870",
+            "methodId" : "D6C7D73E70904BF63382FAAFFC3AC885F"
+          }
+        ],
+        "id" : "DB0A674A7E09F482404DE9D6DA1B35682",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D512D30A7AB9E69DF4D3AEFAE24D59870",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D6C7D73E70904BF63382FAAFFC3AC885F" : {
+        "name" : "setupView",
+        "invokes" : [
+
+        ],
+        "id" : "D6C7D73E70904BF63382FAAFFC3AC885F",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D512D30A7AB9E69DF4D3AEFAE24D59870",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D512D30A7AB9E69DF4D3AEFAE24D59870",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIButton",
+    "name" : "RoundedShadowButton",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "D5FBBDD6F40756C4D608D77DA30A3AC6E" : {
+        "name" : "awakeFromNib",
+        "invokes" : [
+          {
+            "classId" : "DC5290E12195FE9C51A7FF1AEB93000E1",
+            "methodId" : "D05C0C0D79964DB8B5A26F853BD699F04"
+          }
+        ],
+        "id" : "D5FBBDD6F40756C4D608D77DA30A3AC6E",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "DC5290E12195FE9C51A7FF1AEB93000E1",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D05C0C0D79964DB8B5A26F853BD699F04" : {
+        "name" : "setupButtonView",
+        "invokes" : [
+
+        ],
+        "id" : "D05C0C0D79964DB8B5A26F853BD699F04",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "DC5290E12195FE9C51A7FF1AEB93000E1",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DDEB9C478CB26D9BB3BE043BBAF8997D3" : {
+        "name" : "animateButton",
+        "invokes" : [
+          {
+            "formatedName" : "UIActivityIndicatorView()"
+          },
+          {
+            "formatedName" : "addSubview(_:)"
+          },
+          {
+            "formatedName" : "setTitle(_:, for:)"
+          },
+          {
+            "formatedName" : "animate(withDuration:, animations:, completion:)"
+          },
+          {
+            "formatedName" : "removeFromSuperview()"
+          },
+          {
+            "formatedName" : "animate(withDuration:, animations:)"
+          },
+          {
+            "formatedName" : "CGRect(x:, y:, width:, height:)"
+          },
+          {
+            "formatedName" : "startAnimating()"
+          },
+          {
+            "formatedName" : "CGPoint(x:, y:)"
+          },
+          {
+            "formatedName" : "fadeTo(alphaValue:, withDuration:)"
+          },
+          {
+            "classId" : "DC5290E12195FE9C51A7FF1AEB93000E1",
+            "methodId" : "D05C0C0D79964DB8B5A26F853BD699F04"
+          },
+          {
+            "formatedName" : "asyncAfter(deadline:)"
+          }
+        ],
+        "id" : "DDEB9C478CB26D9BB3BE043BBAF8997D3",
+        "params" : [
+          {
+            "type" : "Bool",
+            "name" : "shouldLoad",
+            "sel" : "shouldLoad"
+          },
+          {
+            "type" : "String",
+            "name" : "message",
+            "sel" : "withMessage"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "DC5290E12195FE9C51A7FF1AEB93000E1",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "DC5290E12195FE9C51A7FF1AEB93000E1",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIViewController",
+    "name" : "LoginVC",
+    "protocols" : [
+      {
+        "id" : "DE2F8777582B3BBE804BC908678AFC45B",
+        "name" : "UITextFieldDelegate"
+      }
+    ],
+    "methods" : {
+      "DCA74A35585925614164D89952406DDEA" : {
+        "name" : "authBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "animateButton(shouldLoad:, withMessage:)"
+          },
+          {
+            "formatedName" : "endEditing(_:)"
+          },
+          {
+            "formatedName" : "auth().signIn(withEmail:, password:, completion:)"
+          },
+          {
+            "formatedName" : "createFirebaseDBUser(uid:, userData:, isDriver:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "UIStoryboard(name:, bundle:)"
+          },
+          {
+            "formatedName" : "instantiateViewController(withIdentifier:)"
+          },
+          {
+            "formatedName" : "toggleLeftPanel()"
+          },
+          {
+            "formatedName" : "asyncAfter(deadline:)"
+          },
+          {
+            "formatedName" : "dismiss(animated:, completion:)"
+          },
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "createUser(withEmail:, password:, completion:)"
+          }
+        ],
+        "id" : "DCA74A35585925614164D89952406DDEA",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DCF55B7160547015D352664EF8729FDC3" : {
+        "name" : "viewDidLoad",
+        "invokes" : [
+          {
+            "classId" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+            "methodId" : "DCF55B7160547015D352664EF8729FDC3"
+          },
+          {
+            "formatedName" : "addObserver(_:, selector:, name:, object:)"
+          },
+          {
+            "formatedName" : "selector(_:)"
+          }
+        ],
+        "id" : "DCF55B7160547015D352664EF8729FDC3",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DFF1600DB6DE03192C66E2B8A0A3DDFCE" : {
+        "name" : "hideStatusBar",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:, delay:, usingSpringWithDamping:, initialSpringVelocity:, options:, animations:)"
+          },
+          {
+            "formatedName" : "setNeedsStatusBarAppearanceUpdate()"
+          }
+        ],
+        "id" : "DFF1600DB6DE03192C66E2B8A0A3DDFCE",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D741977BBA2681D68A1E3112AA1A5510C" : {
+        "name" : "textFieldShouldReturn",
+        "invokes" : [
+          {
+            "formatedName" : "becomeFirstResponder()"
+          },
+          {
+            "formatedName" : "resignFirstResponder()"
+          },
+          {
+            "formatedName" : "animateButton(shouldLoad:, withMessage:)"
+          },
+          {
+            "formatedName" : "asyncAfter(deadline:)"
+          },
+          {
+            "formatedName" : "authBtnPressed(_:)"
+          },
+          {
+            "formatedName" : "now()"
+          }
+        ],
+        "id" : "D741977BBA2681D68A1E3112AA1A5510C",
+        "params" : [
+          {
+            "type" : "UITextField",
+            "name" : "textField",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "Bool",
+        "classId" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D54594EC850B63D5041FEF2D2E94470CC" : {
+        "name" : "cancelBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "dismiss(animated:, completion:)"
+          }
+        ],
+        "id" : "D54594EC850B63D5041FEF2D2E94470CC",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D81F95FF2943AAAD36257182FEB2679B9" : {
+        "name" : "showStatusBar",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:, delay:, usingSpringWithDamping:, initialSpringVelocity:, options:, animations:)"
+          },
+          {
+            "formatedName" : "setNeedsStatusBarAppearanceUpdate()"
+          }
+        ],
+        "id" : "D81F95FF2943AAAD36257182FEB2679B9",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D60FB2348B962BD9ADBD750D0B1FBD40F",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIViewController",
+    "name" : "HomeVC",
+    "protocols" : [
+      {
+        "id" : "D5DDF8B103316B12822E24BFC9BE83939",
+        "name" : "CLLocationManagerDelegate"
+      },
+      {
+        "id" : "DF81342FD89DFF7A969843B91C372536B",
+        "name" : "MKMapViewDelegate"
+      },
+      {
+        "id" : "DE2F8777582B3BBE804BC908678AFC45B",
+        "name" : "UITextFieldDelegate"
+      },
+      {
+        "id" : "D7BF6F37D51C530867384D36F8CAD6139",
+        "name" : "UITableViewDelegate"
+      },
+      {
+        "id" : "D1CA6F15EEA08A23AD4904669C6DF3E99",
+        "name" : "UITableViewDataSource"
+      }
+    ],
+    "methods" : {
+      "D71E506FB5805AF5D191E8F0AAD635358" : {
+        "name" : "zoom",
+        "invokes" : [
+          {
+            "formatedName" : "CLLocationCoordinate2D(latitude:, longitude:)"
+          },
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "formatedName" : "fmin(_:, _:)"
+          },
+          {
+            "formatedName" : "fmax(_:, _:)"
+          },
+          {
+            "formatedName" : "MKCoordinateRegion(center:, span:)"
+          },
+          {
+            "formatedName" : "regionThatFits(_:)"
+          },
+          {
+            "formatedName" : "setRegion(_:, animated:)"
+          },
+          {
+            "formatedName" : "CLLocationCoordinate2DMake(_:, _:)"
+          },
+          {
+            "formatedName" : "MKCoordinateSpan(latitudeDelta:, longitudeDelta:)"
+          }
+        ],
+        "id" : "D71E506FB5805AF5D191E8F0AAD635358",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "toFitAnntationsFromMapView"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D6B5A4D6D5B873C4CA8861C40A5AD0267" : {
+        "name" : "removeFromMapView",
+        "invokes" : [
+          {
+            "formatedName" : "removeOverlays(_:)"
+          },
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "formatedName" : "removeAnnotation(_:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          }
+        ],
+        "id" : "D6B5A4D6D5B873C4CA8861C40A5AD0267",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D4DFD3C3628FC2F3461930F526BE46B58" : {
+        "name" : "textFieldDidEndEditing",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:, animations:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D732E0D33C7B5AA5DC1A41C0BD8197D3C"
+          }
+        ],
+        "id" : "D4DFD3C3628FC2F3461930F526BE46B58",
+        "params" : [
+          {
+            "type" : "UITextField",
+            "name" : "textField",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D5A15A3C8603A7B52E40D83AE24D83CAE" : {
+        "name" : "centerMapOnUserLocation",
+        "invokes" : [
+          {
+            "formatedName" : "MKCoordinateRegionMakeWithDistance(_:, _:, _:)"
+          },
+          {
+            "formatedName" : "setRegion(_:, animated:)"
+          }
+        ],
+        "id" : "D5A15A3C8603A7B52E40D83AE24D83CAE",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DE9D3F7A2E60CE58AC1A093339BA9DC33" : {
+        "name" : "menuBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "endEditing(_:)"
+          },
+          {
+            "formatedName" : "toggleLeftPanel()"
+          }
+        ],
+        "id" : "DE9D3F7A2E60CE58AC1A093339BA9DC33",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D5CE1D8EA3987FF7F2404F6F827645BAA" : {
+        "name" : "dropPinFor",
+        "invokes" : [
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "formatedName" : "removeAnnotation(_:)"
+          },
+          {
+            "formatedName" : "MKPointAnnotation()"
+          },
+          {
+            "formatedName" : "addAnnotation(_:)"
+          },
+          {
+            "formatedName" : "DriverAnnotation(coordinate:, withKey:)"
+          },
+          {
+            "formatedName" : "PassengerAnnotation(coordinate:, withKey:)"
+          }
+        ],
+        "id" : "D5CE1D8EA3987FF7F2404F6F827645BAA",
+        "params" : [
+          {
+            "type" : "Dictionary",
+            "name" : "placemarks",
+            "sel" : "placemarks"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D0BA41D7103328D519E87BF007AF7867F" : {
+        "name" : "textFieldDidBeginEditing",
+        "invokes" : [
+          {
+            "formatedName" : "CGRect(x:, y:, width:, height:)"
+          },
+          {
+            "formatedName" : "register(_:, forCellReuseIdentifier:)"
+          },
+          {
+            "formatedName" : "addSubview(_:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D732E0D33C7B5AA5DC1A41C0BD8197D3C"
+          },
+          {
+            "formatedName" : "animate(withDuration:, animations:)"
+          }
+        ],
+        "id" : "D0BA41D7103328D519E87BF007AF7867F",
+        "params" : [
+          {
+            "type" : "UITextField",
+            "name" : "textField",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D4C6CBE2A3EAB8BC9F52C9E7E32606FE8" : {
+        "name" : "textField",
+        "invokes" : [
+          {
+            "formatedName" : "asyncAfter(deadline:)"
+          },
+          {
+            "formatedName" : "reloadData()"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "DD82C3F00565591EE3B0D69AA1D2014E9"
+          },
+          {
+            "formatedName" : "now()"
+          }
+        ],
+        "id" : "D4C6CBE2A3EAB8BC9F52C9E7E32606FE8",
+        "params" : [
+          {
+            "type" : "UITextField",
+            "name" : "textField",
+            "sel" : "_"
+          },
+          {
+            "type" : "NSRange",
+            "name" : "range",
+            "sel" : "shouldChangeCharactersIn"
+          },
+          {
+            "type" : "String",
+            "name" : "string",
+            "sel" : "replacementString"
+          }
+        ],
+        "returnType" : "Bool",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D72132BA651E688CC93EC8343D1416793" : {
+        "name" : "checkLocationAuthStatus",
+        "invokes" : [
+          {
+            "formatedName" : "authorizationStatus()"
+          },
+          {
+            "formatedName" : "startUpdatingLocation()"
+          }
+        ],
+        "id" : "D72132BA651E688CC93EC8343D1416793",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D80A469F0A0F201C65791962D1355AB88" : {
+        "name" : "observeRideRequest",
+        "invokes" : [
+          {
+            "formatedName" : "observeTrips(handler:)"
+          },
+          {
+            "formatedName" : "UIStoryboard(name:, bundle:)"
+          },
+          {
+            "formatedName" : "instantiateViewController(withIdentifier:)"
+          },
+          {
+            "formatedName" : "initData(passengerCoordinate:, destinationCoordinate:, currentCoordinate:, passengerKey:, driverKey:)"
+          },
+          {
+            "formatedName" : "present(_:, animated:, completion:)"
+          }
+        ],
+        "id" : "D80A469F0A0F201C65791962D1355AB88",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D78F708C2EC00AF3E5BA079C2983E9553" : {
+        "name" : "textFieldShouldClear",
+        "invokes" : [
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D070757B118AF5BA9E3F97B3924C4FA2D"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D6B5A4D6D5B873C4CA8861C40A5AD0267"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D5A15A3C8603A7B52E40D83AE24D83CAE"
+          },
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "child(_:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          }
+        ],
+        "id" : "D78F708C2EC00AF3E5BA079C2983E9553",
+        "params" : [
+          {
+            "type" : "UITextField",
+            "name" : "textField",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "Bool",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D740CCFF85A496F435B1BAC9AED44C305" : {
+        "name" : "showWayToPassenger",
+        "invokes" : [
+          {
+            "formatedName" : "observeSingleEvent(of:, with:)"
+          },
+          {
+            "formatedName" : "NotificationBanner(title:, subtitle:, style:)"
+          },
+          {
+            "formatedName" : "show()"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "childSnapshot(forPath:)"
+          },
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "CLLocationCoordinate2D(latitude:, longitude:)"
+          },
+          {
+            "formatedName" : "MKPlacemark(coordinate:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D5CE1D8EA3987FF7F2404F6F827645BAA"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "DCCE15870C40F429477FAB240F9B24AC8"
+          },
+          {
+            "formatedName" : "child(_:)"
+          },
+          {
+            "formatedName" : "updateChildValues(_:, withCompletionBlock:)"
+          }
+        ],
+        "id" : "D740CCFF85A496F435B1BAC9AED44C305",
+        "params" : [
+          {
+            "type" : "annotationType",
+            "name" : "wayTo",
+            "sel" : "wayTo"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D83B0BB5969738D51B5D80E0A74B9D7E7" : {
+        "name" : "mapView",
+        "invokes" : [
+          {
+            "formatedName" : "updateDriverLocation(withCoordinate:)"
+          },
+          {
+            "formatedName" : "updatePassengerLocation(withCoordinate:)"
+          }
+        ],
+        "id" : "D83B0BB5969738D51B5D80E0A74B9D7E7",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "_"
+          },
+          {
+            "type" : "MKUserLocation",
+            "name" : "userLocation",
+            "sel" : "didUpdate"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D3782226B6733D358599A8DCFDB36FECB" : {
+        "name" : "mapView",
+        "invokes" : [
+          {
+            "formatedName" : "fadeTo(alphaValue:, withDuration:)"
+          }
+        ],
+        "id" : "D3782226B6733D358599A8DCFDB36FECB",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "_"
+          },
+          {
+            "type" : "Bool",
+            "name" : "animated",
+            "sel" : "regionWillChangeAnimated"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DE768DC1333A6AF28AEBF2EC679B4483E" : {
+        "name" : "viewDidAppear",
+        "invokes" : [
+          {
+            "formatedName" : "viewDidAppear(_:)"
+          },
+          {
+            "formatedName" : "authorizationStatus()"
+          },
+          {
+            "formatedName" : "present(on:, with:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D72132BA651E688CC93EC8343D1416793"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "DAADD4EF608F07C851BAEB09EFA598430"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D6B5A4D6D5B873C4CA8861C40A5AD0267"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D740CCFF85A496F435B1BAC9AED44C305"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D80A469F0A0F201C65791962D1355AB88"
+          }
+        ],
+        "id" : "DE768DC1333A6AF28AEBF2EC679B4483E",
+        "params" : [
+          {
+            "type" : "Bool",
+            "name" : "animated",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DC2C7AC13218CA939BD6C91ABF8AF5BC1" : {
+        "name" : "viewDidLoad",
+        "invokes" : [
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "DC2C7AC13218CA939BD6C91ABF8AF5BC1"
+          },
+          {
+            "formatedName" : "setNeedsUpdateOfHomeIndicatorAutoHidden()"
+          },
+          {
+            "formatedName" : "CLLocationManager()"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D5A15A3C8603A7B52E40D83AE24D83CAE"
+          },
+          {
+            "formatedName" : "checkUserStatus()"
+          },
+          {
+            "formatedName" : "addSubview(_:)"
+          },
+          {
+            "formatedName" : "startAnimation()"
+          }
+        ],
+        "id" : "DC2C7AC13218CA939BD6C91ABF8AF5BC1",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D3E34E5FFB98C37CD5EB83265162F4A74" : {
+        "name" : "userImagePressed",
+        "invokes" : [
+          {
+            "formatedName" : "toggleLeftPanel()"
+          }
+        ],
+        "id" : "D3E34E5FFB98C37CD5EB83265162F4A74",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D732E0D33C7B5AA5DC1A41C0BD8197D3C" : {
+        "name" : "animateTableView",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:, animations:)"
+          },
+          {
+            "formatedName" : "animate(withDuration:, animations:, completion:)"
+          },
+          {
+            "formatedName" : "CGRect(x:, y:, width:, height:)"
+          },
+          {
+            "formatedName" : "removeFromSuperview()"
+          }
+        ],
+        "id" : "D732E0D33C7B5AA5DC1A41C0BD8197D3C",
+        "params" : [
+          {
+            "type" : "Bool",
+            "name" : "shouldShow",
+            "sel" : "shouldShow"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DB5FE91E8D45335DE2A517C6AB8606AA1" : {
+        "name" : "actionBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "animateButton(shouldLoad:, withMessage:)"
+          },
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D740CCFF85A496F435B1BAC9AED44C305"
+          },
+          {
+            "formatedName" : "finishTrip()"
+          },
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "formatedName" : "updateTripForPassengerRequest()"
+          },
+          {
+            "formatedName" : "menuBtnPressed(_:)"
+          },
+          {
+            "formatedName" : "NotificationBanner(title:, subtitle:, style:)"
+          },
+          {
+            "formatedName" : "show()"
+          },
+          {
+            "formatedName" : "asyncAfter(deadline:)"
+          },
+          {
+            "formatedName" : "now()"
+          }
+        ],
+        "id" : "DB5FE91E8D45335DE2A517C6AB8606AA1",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D83133E58177003C5A6A4ED38D96665B3" : {
+        "name" : "scrollViewWillBeginDragging",
+        "invokes" : [
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D732E0D33C7B5AA5DC1A41C0BD8197D3C"
+          }
+        ],
+        "id" : "D83133E58177003C5A6A4ED38D96665B3",
+        "params" : [
+          {
+            "type" : "UIScrollView",
+            "name" : "scrollView",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DA17A6B7D3FFA87FF5FCBDC80AC664CC4" : {
+        "name" : "scrollViewDidScroll",
+        "invokes" : [
+          {
+            "formatedName" : "endEditing(_:)"
+          }
+        ],
+        "id" : "DA17A6B7D3FFA87FF5FCBDC80AC664CC4",
+        "params" : [
+          {
+            "type" : "UIScrollView",
+            "name" : "scrollView",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DD82C3F00565591EE3B0D69AA1D2014E9" : {
+        "name" : "performSearch",
+        "invokes" : [
+          {
+            "formatedName" : "removeAll()"
+          },
+          {
+            "formatedName" : "MKLocalSearchRequest()"
+          },
+          {
+            "formatedName" : "MKLocalSearch(request:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "append(_:)"
+          },
+          {
+            "formatedName" : "reloadData()"
+          }
+        ],
+        "id" : "DD82C3F00565591EE3B0D69AA1D2014E9",
+        "params" : [
+          {
+            "type" : "String",
+            "name" : "searchWord",
+            "sel" : "searchWord"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D0FC63DB171CA7C9124B011D008619E6D" : {
+        "name" : "tableView",
+        "invokes" : [
+          {
+            "formatedName" : "UITableViewCell(style:, reuseIdentifier:)"
+          }
+        ],
+        "id" : "D0FC63DB171CA7C9124B011D008619E6D",
+        "params" : [
+          {
+            "type" : "UITableView",
+            "name" : "tableView",
+            "sel" : "_"
+          },
+          {
+            "type" : "IndexPath",
+            "name" : "indexPath",
+            "sel" : "cellForRowAt"
+          }
+        ],
+        "returnType" : "UITableViewCell",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D8796E3183C91CE12C0A09D5CF3C8EB2D" : {
+        "name" : "textFieldShouldReturn",
+        "invokes" : [
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "DD82C3F00565591EE3B0D69AA1D2014E9"
+          },
+          {
+            "formatedName" : "endEditing(_:)"
+          }
+        ],
+        "id" : "D8796E3183C91CE12C0A09D5CF3C8EB2D",
+        "params" : [
+          {
+            "type" : "UITextField",
+            "name" : "textField",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "Bool",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DE19496830EEE919F2F1B3C4874F41355" : {
+        "name" : "mapView",
+        "invokes" : [
+          {
+            "formatedName" : "MKPolylineRenderer(polyline:)"
+          },
+          {
+            "formatedName" : "UIColor(red:, green:, blue:, alpha:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D71E506FB5805AF5D191E8F0AAD635358"
+          }
+        ],
+        "id" : "DE19496830EEE919F2F1B3C4874F41355",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "_"
+          },
+          {
+            "type" : "MKOverlay",
+            "name" : "overlay",
+            "sel" : "rendererFor"
+          }
+        ],
+        "returnType" : "MKOverlayRenderer",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D070757B118AF5BA9E3F97B3924C4FA2D" : {
+        "name" : "cancel",
+        "invokes" : [
+          {
+            "formatedName" : "reloadData()"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          }
+        ],
+        "id" : "D070757B118AF5BA9E3F97B3924C4FA2D",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D7F675E89B15A4583025350C985163AD2" : {
+        "name" : "locationManager",
+        "invokes" : [
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D72132BA651E688CC93EC8343D1416793"
+          }
+        ],
+        "id" : "D7F675E89B15A4583025350C985163AD2",
+        "params" : [
+          {
+            "type" : "CLLocationManager",
+            "name" : "manager",
+            "sel" : "_"
+          },
+          {
+            "type" : "CLAuthorizationStatus",
+            "name" : "status",
+            "sel" : "didChangeAuthorization"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D5C919F11F5D2EF674038E448B0A1A3E4" : {
+        "name" : "numberOfSections",
+        "invokes" : [
+
+        ],
+        "id" : "D5C919F11F5D2EF674038E448B0A1A3E4",
+        "params" : [
+          {
+            "type" : "UITableView",
+            "name" : "tableView",
+            "sel" : "in"
+          }
+        ],
+        "returnType" : "Int",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DAADD4EF608F07C851BAEB09EFA598430" : {
+        "name" : "loadDriverAnnotations",
+        "invokes" : [
+          {
+            "formatedName" : "observe(_:, with:)"
+          },
+          {
+            "formatedName" : "childSnapshot(forPath:)"
+          },
+          {
+            "formatedName" : "hasChild(_:)"
+          },
+          {
+            "formatedName" : "CLLocationCoordinate2D(latitude:, longitude:)"
+          },
+          {
+            "formatedName" : "DriverAnnotation(coordinate:, withKey:)"
+          },
+          {
+            "formatedName" : "contains(where:)"
+          },
+          {
+            "formatedName" : "addAnnotation(_:)"
+          },
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "formatedName" : "removeAnnotation(_:)"
+          }
+        ],
+        "id" : "DAADD4EF608F07C851BAEB09EFA598430",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DB6B7A619B0A53A233A604D8F9AB27AB1" : {
+        "name" : "mapView",
+        "invokes" : [
+          {
+            "formatedName" : "dequeueReusableAnnotationView(withIdentifier:)"
+          },
+          {
+            "formatedName" : "MKAnnotationView(annotation:, reuseIdentifier:)"
+          },
+          {
+            "formatedName" : "imageLiteral(resourceName:)"
+          }
+        ],
+        "id" : "DB6B7A619B0A53A233A604D8F9AB27AB1",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "_"
+          },
+          {
+            "type" : "MKAnnotation",
+            "name" : "annotation",
+            "sel" : "viewFor"
+          }
+        ],
+        "returnType" : "MKAnnotationView",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D3C8B3DD88ED18418719A4338D50A8D0D" : {
+        "name" : "tableView",
+        "invokes" : [
+
+        ],
+        "id" : "D3C8B3DD88ED18418719A4338D50A8D0D",
+        "params" : [
+          {
+            "type" : "UITableView",
+            "name" : "tableView",
+            "sel" : "_"
+          },
+          {
+            "type" : "Int",
+            "name" : "section",
+            "sel" : "numberOfRowsInSection"
+          }
+        ],
+        "returnType" : "Int",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DC9712E15EDD8A4C439B7D6E0371BD418" : {
+        "name" : "tableView",
+        "invokes" : [
+          {
+            "formatedName" : "removeOverlays(_:)"
+          },
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "formatedName" : "removeAnnotation(_:)"
+          },
+          {
+            "formatedName" : "endEditing(_:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D070757B118AF5BA9E3F97B3924C4FA2D"
+          },
+          {
+            "formatedName" : "menuBtnPressed(_:)"
+          },
+          {
+            "formatedName" : "NotificationBanner(title:, subtitle:, style:)"
+          },
+          {
+            "formatedName" : "show()"
+          },
+          {
+            "formatedName" : "PassengerAnnotation(coordinate:, withKey:)"
+          },
+          {
+            "formatedName" : "addAnnotation(_:)"
+          },
+          {
+            "formatedName" : "cellForRow(at:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D5CE1D8EA3987FF7F2404F6F827645BAA"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "DCCE15870C40F429477FAB240F9B24AC8"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D732E0D33C7B5AA5DC1A41C0BD8197D3C"
+          },
+          {
+            "formatedName" : "showOnView(_:, spinnerColor:, overlay:, overlayColor:)"
+          },
+          {
+            "formatedName" : "addSubview(_:)"
+          },
+          {
+            "formatedName" : "child(_:).updateChildValues(_:)"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "withAlphaComponent(_:)"
+          }
+        ],
+        "id" : "DC9712E15EDD8A4C439B7D6E0371BD418",
+        "params" : [
+          {
+            "type" : "UITableView",
+            "name" : "tableView",
+            "sel" : "_"
+          },
+          {
+            "type" : "IndexPath",
+            "name" : "indexPath",
+            "sel" : "didSelectRowAt"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D312D9FB3A172CB9ACBDF994AB816DFE2" : {
+        "name" : "centerBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D71E506FB5805AF5D191E8F0AAD635358"
+          },
+          {
+            "formatedName" : "fadeTo(alphaValue:, withDuration:)"
+          },
+          {
+            "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+            "methodId" : "D5A15A3C8603A7B52E40D83AE24D83CAE"
+          }
+        ],
+        "id" : "D312D9FB3A172CB9ACBDF994AB816DFE2",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DCCE15870C40F429477FAB240F9B24AC8" : {
+        "name" : "searchMapKitForResultsWithPolyline",
+        "invokes" : [
+          {
+            "formatedName" : "MKDirectionsRequest()"
+          },
+          {
+            "formatedName" : "forCurrentLocation()"
+          },
+          {
+            "formatedName" : "MKDirections(request:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "add(_:)"
+          },
+          {
+            "formatedName" : "dismiss()"
+          }
+        ],
+        "id" : "DCCE15870C40F429477FAB240F9B24AC8",
+        "params" : [
+          {
+            "type" : "MKMapItem",
+            "name" : "mapLocation",
+            "sel" : "forMapLocation"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D2CCA01C1888CBA2E3A8A4ACC3D11670A",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "NSObject",
+    "name" : "PassengerAnnotation",
+    "protocols" : [
+      {
+        "id" : "D04213495D24181B422BA1ECE687C675E",
+        "name" : "MKAnnotation"
+      }
+    ],
+    "methods" : {
+      "DE9A0AC4DF466E3894BE67D55AE947D4D" : {
+        "name" : "init",
+        "invokes" : [
+
+        ],
+        "id" : "DE9A0AC4DF466E3894BE67D55AE947D4D",
+        "params" : [
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "coordinate",
+            "sel" : "coordinate"
+          },
+          {
+            "type" : "String",
+            "name" : "key",
+            "sel" : "withKey"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "DB04A03C93B3842880CF48E3F22790CB5",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "DB04A03C93B3842880CF48E3F22790CB5",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIImageView",
+    "name" : "RoundImageView",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DFFD3537C2CB6DFA3F8ABAE5EC6F6641A" : {
+        "name" : "awakeFromNib",
+        "invokes" : [
+          {
+            "classId" : "DF51100201A7AF32DC78FA98D7C1CB839",
+            "methodId" : "D7B5914DAF1EF01565B64147A44C84895"
+          }
+        ],
+        "id" : "DFFD3537C2CB6DFA3F8ABAE5EC6F6641A",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "DF51100201A7AF32DC78FA98D7C1CB839",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D7B5914DAF1EF01565B64147A44C84895" : {
+        "name" : "setupView",
+        "invokes" : [
+
+        ],
+        "id" : "D7B5914DAF1EF01565B64147A44C84895",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "DF51100201A7AF32DC78FA98D7C1CB839",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "DF51100201A7AF32DC78FA98D7C1CB839",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIViewController",
+    "name" : "ContainerVC",
+    "protocols" : [
+      {
+        "id" : "D66195B029A2C900E1E6D846E6DC19B18",
+        "name" : "CenterVCDelegate"
+      }
+    ],
+    "methods" : {
+      "D24C472C268DA0571FAF1DDF28FEF062B" : {
+        "name" : "addChildSidePanelViewController",
+        "invokes" : [
+          {
+            "formatedName" : "insertSubview(_:, at:)"
+          },
+          {
+            "formatedName" : "addChildViewController(_:)"
+          },
+          {
+            "formatedName" : "didMove(toParentViewController:)"
+          }
+        ],
+        "id" : "D24C472C268DA0571FAF1DDF28FEF062B",
+        "params" : [
+          {
+            "type" : "LeftSidePanelVC",
+            "name" : "sidePanelController",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D5E6989E9EBB3EF6EE268239F1CD578D1" : {
+        "name" : "hideWhiteCoverView",
+        "invokes" : [
+          {
+            "formatedName" : "removeGestureRecognizer(_:)"
+          },
+          {
+            "formatedName" : "animate(withDuration:, animations:, completion:)"
+          },
+          {
+            "formatedName" : "removeFromSuperview()"
+          }
+        ],
+        "id" : "D5E6989E9EBB3EF6EE268239F1CD578D1",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D3CB511C6011D3043390BCE80E9A0D35A" : {
+        "name" : "shouldShowShadowForCenterViewController",
+        "invokes" : [
+
+        ],
+        "id" : "D3CB511C6011D3043390BCE80E9A0D35A",
+        "params" : [
+          {
+            "type" : "Bool",
+            "name" : "status",
+            "sel" : "status"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D73B11C9CDDB5005EDAC03C233AA9424C" : {
+        "name" : "animateLeftPanel",
+        "invokes" : [
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D074762FB235C7090366B3B68468B9D1F"
+          },
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D1E76CF417141A9998CDC7C0D3A7F1BFF"
+          },
+          {
+            "formatedName" : "animateCenterPanelXPosition(targetPosition:)"
+          },
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D5E6989E9EBB3EF6EE268239F1CD578D1"
+          },
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D2FD5DBC8D4C412685698426CC711D95F"
+          },
+          {
+            "formatedName" : "value(forKey:)"
+          },
+          {
+            "formatedName" : "removeFromMapView()"
+          }
+        ],
+        "id" : "D73B11C9CDDB5005EDAC03C233AA9424C",
+        "params" : [
+          {
+            "type" : "Bool",
+            "name" : "shouldExpand",
+            "sel" : "shouldExpand"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D9249371DE61278B1F3A56C5B9F631148" : {
+        "name" : "initCenter",
+        "invokes" : [
+          {
+            "formatedName" : "homeVC()"
+          },
+          {
+            "formatedName" : "removeFromSuperview()"
+          },
+          {
+            "formatedName" : "removeFromParentViewController()"
+          },
+          {
+            "formatedName" : "addSubview(_:)"
+          },
+          {
+            "formatedName" : "addChildViewController(_:)"
+          },
+          {
+            "formatedName" : "didMove(toParentViewController:)"
+          }
+        ],
+        "id" : "D9249371DE61278B1F3A56C5B9F631148",
+        "params" : [
+          {
+            "type" : "ShowWhichVC",
+            "name" : "screen",
+            "sel" : "screen"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D353A02F49B72BD08F3106E95C605BD47" : {
+        "name" : "viewDidLoad",
+        "invokes" : [
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D353A02F49B72BD08F3106E95C605BD47"
+          },
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D9249371DE61278B1F3A56C5B9F631148"
+          }
+        ],
+        "id" : "D353A02F49B72BD08F3106E95C605BD47",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D2FD5DBC8D4C412685698426CC711D95F" : {
+        "name" : "animateCenterPanelXPosition",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:, delay:, usingSpringWithDamping:, initialSpringVelocity:, options:, animations:, completion:)"
+          }
+        ],
+        "id" : "D2FD5DBC8D4C412685698426CC711D95F",
+        "params" : [
+          {
+            "type" : "CGFloat",
+            "name" : "targetPosition",
+            "sel" : "targetPosition"
+          },
+          {
+            "type" : "((Bool)->Void)",
+            "name" : "completion",
+            "sel" : "completion"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D67DE048C7073BD71D0B2B83A82A54642" : {
+        "name" : "addLeftPanelViewController",
+        "invokes" : [
+          {
+            "formatedName" : "leftViewController()"
+          },
+          {
+            "formatedName" : "addChildSidePanelViewController(_:)"
+          }
+        ],
+        "id" : "D67DE048C7073BD71D0B2B83A82A54642",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D1E76CF417141A9998CDC7C0D3A7F1BFF" : {
+        "name" : "setupWhiteCoverView",
+        "invokes" : [
+          {
+            "formatedName" : "UIView(frame:)"
+          },
+          {
+            "formatedName" : "addSubview(_:)"
+          },
+          {
+            "formatedName" : "fadeTo(alphaValue:, withDuration:)"
+          },
+          {
+            "formatedName" : "UITapGestureRecognizer(target:, action:)"
+          },
+          {
+            "formatedName" : "addGestureRecognizer(_:)"
+          },
+          {
+            "formatedName" : "CGRect(x:, y:, width:, height:)"
+          },
+          {
+            "formatedName" : "selector(_:)"
+          }
+        ],
+        "id" : "D1E76CF417141A9998CDC7C0D3A7F1BFF",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D074762FB235C7090366B3B68468B9D1F" : {
+        "name" : "animateStatusBar",
+        "invokes" : [
+          {
+            "formatedName" : "animate(withDuration:, delay:, usingSpringWithDamping:, initialSpringVelocity:, options:, animations:)"
+          },
+          {
+            "formatedName" : "setNeedsStatusBarAppearanceUpdate()"
+          }
+        ],
+        "id" : "D074762FB235C7090366B3B68468B9D1F",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DFD12C436734C1F14F5CE714E405CDAC4" : {
+        "name" : "toggleLeftPanel",
+        "invokes" : [
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D67DE048C7073BD71D0B2B83A82A54642"
+          },
+          {
+            "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+            "methodId" : "D73B11C9CDDB5005EDAC03C233AA9424C"
+          }
+        ],
+        "id" : "DFD12C436734C1F14F5CE714E405CDAC4",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D1421FB0850A34D3C8AF1B63D7668AFFD",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIViewController",
+    "name" : "PickupVC",
+    "protocols" : [
+      {
+        "id" : "DF81342FD89DFF7A969843B91C372536B",
+        "name" : "MKMapViewDelegate"
+      }
+    ],
+    "methods" : {
+      "D852CA537CEACE7ED310330F0B815BCFB" : {
+        "name" : "viewDidLoad",
+        "invokes" : [
+          {
+            "classId" : "D862BE148540D7A087F54EBDE515C9810",
+            "methodId" : "D852CA537CEACE7ED310330F0B815BCFB"
+          },
+          {
+            "formatedName" : "MKPlacemark(coordinate:)"
+          },
+          {
+            "classId" : "D862BE148540D7A087F54EBDE515C9810",
+            "methodId" : "DAFFDBB8A7D917913B71DB68703BF1603"
+          },
+          {
+            "formatedName" : "MKMapItem(placemark:)"
+          },
+          {
+            "formatedName" : "searchMapKitForResultsWithPolyline(forSourceLocation:, forDestinationLocation:)"
+          },
+          {
+            "formatedName" : "add(_:)"
+          },
+          {
+            "formatedName" : "child(_:).observe(_:)"
+          },
+          {
+            "formatedName" : "exists()"
+          },
+          {
+            "formatedName" : "childSnapshot(forPath:)"
+          },
+          {
+            "formatedName" : "dismiss(animated:, completion:)"
+          },
+          {
+            "formatedName" : "child(_:).observe(_:, with:)"
+          },
+          {
+            "formatedName" : "guard(_:)"
+          }
+        ],
+        "id" : "D852CA537CEACE7ED310330F0B815BCFB",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D367EC710C19BB3A1C8C171B29C9B4452" : {
+        "name" : "mapView",
+        "invokes" : [
+          {
+            "formatedName" : "MKPolylineRenderer(overlay:)"
+          },
+          {
+            "formatedName" : "UIColor(red:, green:, blue:, alpha:)"
+          },
+          {
+            "classId" : "D862BE148540D7A087F54EBDE515C9810",
+            "methodId" : "D9F25BBA1DE5054820C0C74878133C63C"
+          }
+        ],
+        "id" : "D367EC710C19BB3A1C8C171B29C9B4452",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "_"
+          },
+          {
+            "type" : "MKOverlay",
+            "name" : "overlay",
+            "sel" : "rendererFor"
+          }
+        ],
+        "returnType" : "MKOverlayRenderer",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DC63101442F8B90BA27CB2157311313A0" : {
+        "name" : "initData",
+        "invokes" : [
+
+        ],
+        "id" : "DC63101442F8B90BA27CB2157311313A0",
+        "params" : [
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "passengerCoordinate",
+            "sel" : "passengerCoordinate"
+          },
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "destinationCoordinate",
+            "sel" : "destinationCoordinate"
+          },
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "currentCoordinate",
+            "sel" : "currentCoordinate"
+          },
+          {
+            "type" : "String",
+            "name" : "passengerKey",
+            "sel" : "passengerKey"
+          },
+          {
+            "type" : "String",
+            "name" : "driverKey",
+            "sel" : "driverKey"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D2471E981CDA671E8714DF64F577349ED" : {
+        "name" : "centerMapOnTrip",
+        "invokes" : [
+          {
+            "classId" : "D862BE148540D7A087F54EBDE515C9810",
+            "methodId" : "D9F25BBA1DE5054820C0C74878133C63C"
+          }
+        ],
+        "id" : "D2471E981CDA671E8714DF64F577349ED",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D9F25BBA1DE5054820C0C74878133C63C" : {
+        "name" : "zoom",
+        "invokes" : [
+          {
+            "formatedName" : "CLLocationCoordinate2D(latitude:, longitude:)"
+          },
+          {
+            "formatedName" : "isKind(of:)"
+          },
+          {
+            "formatedName" : "fmin(_:, _:)"
+          },
+          {
+            "formatedName" : "fmax(_:, _:)"
+          },
+          {
+            "formatedName" : "MKCoordinateRegion(center:, span:)"
+          },
+          {
+            "formatedName" : "regionThatFits(_:)"
+          },
+          {
+            "formatedName" : "setRegion(_:, animated:)"
+          },
+          {
+            "formatedName" : "CLLocationCoordinate2DMake(_:, _:)"
+          },
+          {
+            "formatedName" : "MKCoordinateSpan(latitudeDelta:, longitudeDelta:)"
+          }
+        ],
+        "id" : "D9F25BBA1DE5054820C0C74878133C63C",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "toFitAnntationsFromMapView"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D6A5F875BCAB7BFF27FBD84045B476EC3" : {
+        "name" : "cancelBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "dismiss(animated:, completion:)"
+          }
+        ],
+        "id" : "D6A5F875BCAB7BFF27FBD84045B476EC3",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DFEC350A8237D9A5C3E92162292F682B2" : {
+        "name" : "mapView",
+        "invokes" : [
+          {
+            "formatedName" : "dequeueReusableAnnotationView(withIdentifier:)"
+          },
+          {
+            "formatedName" : "MKAnnotationView(annotation:, reuseIdentifier:)"
+          },
+          {
+            "formatedName" : "imageLiteral(resourceName:)"
+          }
+        ],
+        "id" : "DFEC350A8237D9A5C3E92162292F682B2",
+        "params" : [
+          {
+            "type" : "MKMapView",
+            "name" : "mapView",
+            "sel" : "_"
+          },
+          {
+            "type" : "MKAnnotation",
+            "name" : "annotation",
+            "sel" : "viewFor"
+          }
+        ],
+        "returnType" : "MKAnnotationView",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DAFFDBB8A7D917913B71DB68703BF1603" : {
+        "name" : "dropPinFor",
+        "invokes" : [
+          {
+            "formatedName" : "removeAnnotation(_:)"
+          },
+          {
+            "formatedName" : "MKPointAnnotation()"
+          },
+          {
+            "formatedName" : "addAnnotation(_:)"
+          },
+          {
+            "formatedName" : "DriverAnnotation(coordinate:, withKey:)"
+          },
+          {
+            "formatedName" : "PassengerAnnotation(coordinate:, withKey:)"
+          }
+        ],
+        "id" : "DAFFDBB8A7D917913B71DB68703BF1603",
+        "params" : [
+          {
+            "type" : "Dictionary",
+            "name" : "placemarks",
+            "sel" : "placemarks"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D5401929978355124BA6ACD9C2408552C" : {
+        "name" : "acceptTripBtnPressed",
+        "invokes" : [
+          {
+            "formatedName" : "acceptTrip(withPassengerKey:, withDriverKey:)"
+          },
+          {
+            "formatedName" : "asyncAfter(deadline:)"
+          },
+          {
+            "formatedName" : "UIStoryboard(name:, bundle:).instantiateViewController(withIdentifier:)"
+          },
+          {
+            "formatedName" : "animateButton(shouldLoad:, withMessage:)"
+          },
+          {
+            "formatedName" : "dismiss(animated:, completion:)"
+          },
+          {
+            "formatedName" : "now()"
+          }
+        ],
+        "id" : "D5401929978355124BA6ACD9C2408552C",
+        "params" : [
+          {
+            "type" : "Any",
+            "name" : "sender",
+            "sel" : "_"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D862BE148540D7A087F54EBDE515C9810",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D862BE148540D7A087F54EBDE515C9810",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "",
+    "name" : "UpdateService",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DDD142ECC92D8CB4504B9412A66ABF5CD" : {
+        "name" : "acceptTrip",
+        "invokes" : [
+          {
+            "formatedName" : "child(_:).observeSingleEvent(of:)"
+          },
+          {
+            "formatedName" : "child(_:).updateChildValues(_:)"
+          },
+          {
+            "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+            "methodId" : "D184C6B515A47B47250DCA9DC6E205744"
+          },
+          {
+            "formatedName" : "set(_:, forKey:)"
+          }
+        ],
+        "id" : "DDD142ECC92D8CB4504B9412A66ABF5CD",
+        "params" : [
+          {
+            "type" : "String",
+            "name" : "passengerkey",
+            "sel" : "withPassengerKey"
+          },
+          {
+            "type" : "String",
+            "name" : "driverKey",
+            "sel" : "withDriverKey"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D2BD54EFF3DAC2C9CB1E244FD172DA786" : {
+        "name" : "updateDriverLocation",
+        "invokes" : [
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "observeSingleEvent(of:, with:)"
+          },
+          {
+            "formatedName" : "set(_:, value:)"
+          },
+          {
+            "formatedName" : "failure(_:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "childSnapshot(forPath:)"
+          },
+          {
+            "formatedName" : "child(_:)"
+          },
+          {
+            "formatedName" : "updateChildValues(_:)"
+          }
+        ],
+        "id" : "D2BD54EFF3DAC2C9CB1E244FD172DA786",
+        "params" : [
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "coordinate",
+            "sel" : "withCoordinate"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D4B00DF9A36E7A172BE65979D74F57E17" : {
+        "name" : "cancelTrip",
+        "invokes" : [
+          {
+            "formatedName" : "child(_:)"
+          },
+          {
+            "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+            "methodId" : "D184C6B515A47B47250DCA9DC6E205744"
+          }
+        ],
+        "id" : "D4B00DF9A36E7A172BE65979D74F57E17",
+        "params" : [
+          {
+            "type" : "String",
+            "name" : "passengerkey",
+            "sel" : "withPassengerKey"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DAE124C238A19D6A25521ACCC0A059C31" : {
+        "name" : "finishTrip",
+        "invokes" : [
+
+        ],
+        "id" : "DAE124C238A19D6A25521ACCC0A059C31",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D3C7EC5739DCD01D3339FC596B7F870FD" : {
+        "name" : "cancelTrip",
+        "invokes" : [
+          {
+            "formatedName" : "child(_:)"
+          },
+          {
+            "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+            "methodId" : "D184C6B515A47B47250DCA9DC6E205744"
+          },
+          {
+            "formatedName" : "child(_:).child(_:).setValue(_:)"
+          }
+        ],
+        "id" : "D3C7EC5739DCD01D3339FC596B7F870FD",
+        "params" : [
+          {
+            "type" : "String",
+            "name" : "passengerkey",
+            "sel" : "withPassengerKey"
+          },
+          {
+            "type" : "String",
+            "name" : "driverKey",
+            "sel" : "withDriverKey"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D184C6B515A47B47250DCA9DC6E205744" : {
+        "name" : "errorPresent",
+        "invokes" : [
+          {
+            "formatedName" : "NotificationBanner(title:, subtitle:, style:)"
+          },
+          {
+            "formatedName" : "show()"
+          },
+          {
+            "formatedName" : "print(_:)"
+          }
+        ],
+        "id" : "D184C6B515A47B47250DCA9DC6E205744",
+        "params" : [
+          {
+            "type" : "Error",
+            "name" : "error",
+            "sel" : "withError"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D3DE94878E3096D1A13B26B3199C2A25C" : {
+        "name" : "updateTripForPassengerRequest",
+        "invokes" : [
+          {
+            "formatedName" : "observeSingleEvent(of:)"
+          },
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "hasChild(_:)"
+          },
+          {
+            "formatedName" : "child(_:).updateChildValues(_:)"
+          },
+          {
+            "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+            "methodId" : "D184C6B515A47B47250DCA9DC6E205744"
+          }
+        ],
+        "id" : "D3DE94878E3096D1A13B26B3199C2A25C",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DBF596CE68B9AE586F03604FCB96BE593" : {
+        "name" : "updatePassengerLocation",
+        "invokes" : [
+          {
+            "formatedName" : "auth()"
+          },
+          {
+            "formatedName" : "observeSingleEvent(of:, with:)"
+          },
+          {
+            "formatedName" : "set(_:, value:)"
+          },
+          {
+            "formatedName" : "failure(_:)"
+          },
+          {
+            "formatedName" : "print(_:)"
+          },
+          {
+            "formatedName" : "child(_:)"
+          },
+          {
+            "formatedName" : "updateChildValues(_:)"
+          }
+        ],
+        "id" : "DBF596CE68B9AE586F03604FCB96BE593",
+        "params" : [
+          {
+            "type" : "CLLocationCoordinate2D",
+            "name" : "coordinate",
+            "sel" : "withCoordinate"
+          }
+        ],
+        "returnType" : "",
+        "classId" : "D37BA772852FD6651DAEA7550C7221A41",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D37BA772852FD6651DAEA7550C7221A41",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UIView",
+    "name" : "RoundedShadowView",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "DFF500AA94F732428F546AD771301110E" : {
+        "name" : "awakeFromNib",
+        "invokes" : [
+          {
+            "classId" : "DDC8BB235E33CBE321272E5B9B26F9A40",
+            "methodId" : "D12843AA7F6D090E662CFC75171B12F21"
+          }
+        ],
+        "id" : "DFF500AA94F732428F546AD771301110E",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "DDC8BB235E33CBE321272E5B9B26F9A40",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D12843AA7F6D090E662CFC75171B12F21" : {
+        "name" : "setupShadow",
+        "invokes" : [
+          {
+            "formatedName" : "CGSize(width:, height:)"
+          }
+        ],
+        "id" : "D12843AA7F6D090E662CFC75171B12F21",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "DDC8BB235E33CBE321272E5B9B26F9A40",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "DDC8BB235E33CBE321272E5B9B26F9A40",
+    "type" : "class",
+    "isSwift" : true
+  },
+  {
+    "super" : "UITextField",
+    "name" : "RoundedCornerTextField",
+    "protocols" : [
+
+    ],
+    "methods" : {
+      "D5FD250A93C88035548E5F1EE20B5EFA2" : {
+        "name" : "placeholderRect",
+        "invokes" : [
+          {
+            "formatedName" : "CGRect(x:, y:, width:, height:)"
+          }
+        ],
+        "id" : "D5FD250A93C88035548E5F1EE20B5EFA2",
+        "params" : [
+          {
+            "type" : "CGRect",
+            "name" : "bounds",
+            "sel" : "forBounds"
+          }
+        ],
+        "returnType" : "CGRect",
+        "classId" : "D4678AA2D36753159539C111F9A97163D",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DAC75AFF5D56163FE51E3EC194DD02E3C" : {
+        "name" : "setupView",
+        "invokes" : [
+
+        ],
+        "id" : "DAC75AFF5D56163FE51E3EC194DD02E3C",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D4678AA2D36753159539C111F9A97163D",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D2762788E1F46D0A38CCE95F4ACAE5463" : {
+        "name" : "editingRect",
+        "invokes" : [
+          {
+            "formatedName" : "CGRect(x:, y:, width:, height:)"
+          }
+        ],
+        "id" : "D2762788E1F46D0A38CCE95F4ACAE5463",
+        "params" : [
+          {
+            "type" : "CGRect",
+            "name" : "bounds",
+            "sel" : "forBounds"
+          }
+        ],
+        "returnType" : "CGRect",
+        "classId" : "D4678AA2D36753159539C111F9A97163D",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "D1276F02F64F4C0FCE25449F71D33D00E" : {
+        "name" : "awakeFromNib",
+        "invokes" : [
+          {
+            "classId" : "D4678AA2D36753159539C111F9A97163D",
+            "methodId" : "DAC75AFF5D56163FE51E3EC194DD02E3C"
+          }
+        ],
+        "id" : "D1276F02F64F4C0FCE25449F71D33D00E",
+        "params" : [
+
+        ],
+        "returnType" : "",
+        "classId" : "D4678AA2D36753159539C111F9A97163D",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      },
+      "DF882D18F71B743A7645632D0EA1D437E" : {
+        "name" : "textRect",
+        "invokes" : [
+          {
+            "formatedName" : "CGRect(x:, y:, width:, height:)"
+          }
+        ],
+        "id" : "DF882D18F71B743A7645632D0EA1D437E",
+        "params" : [
+          {
+            "type" : "CGRect",
+            "name" : "bounds",
+            "sel" : "forBounds"
+          }
+        ],
+        "returnType" : "CGRect",
+        "classId" : "D4678AA2D36753159539C111F9A97163D",
+        "static" : false,
+        "type" : "method",
+        "isSwift" : true
+      }
+    },
+    "id" : "D4678AA2D36753159539C111F9A97163D",
+    "type" : "class",
+    "isSwift" : true
+  }
+]
+    </script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+<script type="text/javascript" src="bundle.js"></script></body>
+</html>

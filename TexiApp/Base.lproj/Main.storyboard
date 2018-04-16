@@ -15,7 +15,7 @@
         <!--HomeVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="HomeVC" id="BYZ-38-t0r" customClass="HomeVC" customModule="TexiApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="HomeVC" customModule="TexiApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -398,7 +398,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="leY-os-KX3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="117"/>
+            <point key="canvasLocation" x="-692" y="117"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="bja-Wq-euR">
@@ -576,7 +576,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wK7-gs-z7R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1594" y="117"/>
+            <point key="canvasLocation" x="-1484" y="117"/>
         </scene>
         <!--PickupVC-->
         <scene sceneID="t49-zv-D1X">
@@ -596,7 +596,7 @@
                                 </constraints>
                                 <state key="normal" image="cancelBtn"/>
                                 <connections>
-                                    <action selector="cancelBtnPressed:" destination="eLc-Dh-er0" eventType="touchUpInside" id="BpU-wW-dRl"/>
+                                    <segue destination="bhw-bv-Cv7" kind="unwind" unwindAction="closeToHomeWithSegue:" id="Rsf-MS-Kqg"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xts-eW-Mkd">
@@ -633,6 +633,7 @@
                                         </state>
                                         <connections>
                                             <action selector="acceptTripBtnPressed:" destination="eLc-Dh-er0" eventType="touchUpInside" id="ajp-TQ-WzP"/>
+                                            <segue destination="bhw-bv-Cv7" kind="unwind" identifier="acceptTrip" unwindAction="closeToHomeWithSegue:" id="pMB-3P-q1D"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -742,8 +743,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g4Y-Sk-9YA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="bhw-bv-Cv7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2405.5999999999999" y="116.74876847290641"/>
+            <point key="canvasLocation" x="894" y="117"/>
         </scene>
     </scenes>
     <resources>

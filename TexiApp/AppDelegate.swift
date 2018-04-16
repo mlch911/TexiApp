@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = containerVC
         window?.makeKeyAndVisible()
         
+        FirebaseDataService.FRinstance.checkUserStatus()
+        
         return true
     }
 

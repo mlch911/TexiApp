@@ -139,8 +139,12 @@ class UpdateService {
                                 if let error = error {
                                     self.errorPresent(withError: error)
                                 }
-                                UserDefaults.standard.set(true, forKey: "driverIsOnTrip")
                             }
+                            UserDefaults.standard.set(true, forKey: "driverIsOnTrip")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+//                                let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+//                                homeVC?.actionBtn.animateButton(shouldLoad: false, withMessage: "Successfully Accepted")
+                            })
                             return
                         }
                     }

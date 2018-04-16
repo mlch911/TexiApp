@@ -109,6 +109,12 @@ class HomeVC: UIViewController {
     let queue_Utility = DispatchQueue.init(label: "tech.mluoc.queueUtility", qos: .utility, attributes: .concurrent)
     let queue_Background = DispatchQueue.init(label: "tech.mluoc.queueBackground", qos: .background, attributes: .concurrent)
     
+    let isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool
+    let driverIsOnTrip = UserDefaults.standard.value(forKey: "driverIsOnTrip") as? Bool
+    let isPickupModeEnable = UserDefaults.standard.value(forKey: "isPickupModeEnable") as? Bool
+    let hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool
+    let requireClean = UserDefaults.standard.value(forKey: "requireClean") as? Bool
+    
     var tableView = UITableView()
     var matchingLocations: [MKMapItem] = [MKMapItem]()
     
@@ -135,14 +141,12 @@ class HomeVC: UIViewController {
         queue_UserInitiated.async{
             self.centerMapOnUserLocation()
         }
+        
         view.addSubview(self.revealingSplashView)
         revealingSplashView.animationType = .heartBeat
         revealingSplashView.startAnimation()
         revealingSplashView.heartAttack = true
         
-        queue_Background.async {
-            FirebaseDataService.FRinstance.checkUserStatus()
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -153,21 +157,21 @@ class HomeVC: UIViewController {
         checkLocationAuthStatus()
         queue_Background.async {
             self.loadDriverAnnotations()
-            if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == false {
+            if self.hasUserData == false {
                 self.removeFromMapView()
                 return
             }
-            if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
-                if UserDefaults.standard.value(forKey: "isDriver") as! Bool && UserDefaults.standard.value(forKey: "driverIsOnTrip") as! Bool == true {
-                self.showWayToPassenger(wayTo: .passenger)
+            if self.hasUserData == true {
+                if self.isDriver == true && self.driverIsOnTrip == true {
+                    self.showWayToPassenger(wayTo: .passenger)
                 }
             }
-            if UserDefaults.standard.value(forKey: "requireClean") as? Bool == true {
+            if self.requireClean == true {
                 self.removeFromMapView()
                 UserDefaults.standard.set(false, forKey: "requireClean")
             }
+            self.observeRideRequest()
         }
-        observeRideRequest()
     }
     
     func checkLocationAuthStatus() {
@@ -221,9 +225,9 @@ class HomeVC: UIViewController {
     }
     
     func observeRideRequest() {
-        if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
-            if UserDefaults.standard.value(forKey: "driverIsOnTrip") as? Bool == false {
-                if UserDefaults.standard.value(forKey: "isPickupModeEnable") as? Bool == true {
+        if isDriver == true {
+            if driverIsOnTrip == false {
+                if isPickupModeEnable == true {
                     queue_Background.async {
                         UpdateService.instance.observeTrips(handler: { (tripDict) in
                             if let tripDict = tripDict {
@@ -263,6 +267,14 @@ class HomeVC: UIViewController {
                         case .passenger:
                             self.dropPinFor(placemarks: [pickupPlacemark: .passenger, destinationPlacemark: .destination])
                             self.searchMapKitForResultsWithPolyline(forMapLocation: MKMapItem(placemark: pickupPlacemark))
+                            UpdateService.instance.trips.child(trip.key).updateChildValues(["step" : "Accepted"], withCompletionBlock: { (error, reference) in
+                                if let error = error {
+                                    let banner = NotificationBanner(title: "Error!", subtitle: error.localizedDescription, style: .danger)
+                                    banner.show()
+                                    print(error.localizedDescription)
+                                }
+                                self.actionBtn.animateButton(shouldLoad: false, withMessage: "Arrive to Pickup Point")
+                            })
                         case .destination:
 //                            self.dropPinFor(placemarks: [pickupPlacemark: .passenger, destinationPlacemark: .destination])
                             self.searchMapKitForResultsWithPolyline(forMapLocation: MKMapItem(placemark: destinationPlacemark))
@@ -277,6 +289,10 @@ class HomeVC: UIViewController {
             banner.show()
             print(error.localizedDescription)
         }
+    }
+    
+    @IBAction func closeToHome(segue: UIStoryboardSegue) {
+        
     }
 }
 
@@ -299,7 +315,7 @@ extension HomeVC: CLLocationManagerDelegate {
 //MARK:  /**********MKMapViewDelegate**********/
 extension HomeVC: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
+        if isDriver == true {
             UpdateService.instance.updateDriverLocation(withCoordinate: userLocation.coordinate)
         } else {
             UpdateService.instance.updatePassengerLocation(withCoordinate: userLocation.coordinate)
@@ -539,7 +555,12 @@ extension HomeVC: UITextFieldDelegate {
     func removeFromMapView() {
         mapView.removeOverlays(mapView.overlays)
         for annotation in mapView.annotations {
-            mapView.removeAnnotation(annotation)
+            if annotation.isKind(of: PassengerAnnotation.self) {
+                mapView.removeAnnotation(annotation)
+            } else if annotation.isKind(of: MKPointAnnotation.self) {
+                mapView.removeAnnotation(annotation)
+            }
+            
         }
         UserDefaults.standard.set(false, forKey: "requireClean")
     }
@@ -596,7 +617,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
                 mapView.removeAnnotation(annotation)
             }
         }
-        if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == false {
+        if hasUserData == false {
             destinationTextField.text = ""
             view.endEditing(true)
             cancel()
@@ -604,7 +625,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             let banner = NotificationBanner(title: "请登录或注册。", subtitle: "点击下方Sign in/Login来登录或注册账号。", style: .warning)
             banner.show()
         }
-        if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
+        if isDriver == true {
             view.endEditing(true)
             let banner = NotificationBanner(title: "You're a Driver.", subtitle: "Driver can't request for a ride.", style: .warning)
             banner.show()
