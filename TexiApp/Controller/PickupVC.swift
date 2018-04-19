@@ -58,6 +58,7 @@ class PickupVC: UIViewController {
         let passengerMapItem = MKMapItem(placemark: passengerPlacemark)
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
         let currentMapItem = MKMapItem(placemark: currentPlacemark)
+        
         searchMapKitForResultsWithPolyline(forSourceLocation: passengerMapItem, forDestinationLocation: destinationMapItem) { (route) in
             self.route1 = route
             self.pickupMapView.add(self.route1.polyline)

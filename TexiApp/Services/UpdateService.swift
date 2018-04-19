@@ -77,7 +77,7 @@ class UpdateService {
     }
     
     func observeTrips(handler: @escaping(_ coordinateDict: Dictionary<String, AnyObject>?) -> Void) {
-        trips.observe(.value) { (snapshot) in
+        trips.observe(.childAdded) { (snapshot) in
             if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for trip in tripSnapshot {
                     if trip.hasChild("passengerKey") && trip.hasChild("tripIsAccepted") {
