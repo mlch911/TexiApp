@@ -27,7 +27,6 @@
 		F77F65A5202446BE008925A8 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F65A4202446BE008925A8 /* ContainerVC.swift */; };
 		F77F65A820244A5C008925A8 /* CenterVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F65A720244A5C008925A8 /* CenterVCDelegate.swift */; };
 		F7815803204050CD008C268A /* PassengerAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7815802204050CD008C268A /* PassengerAnnotation.swift */; };
-		F781580520407D78008C268A /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F781580420407D78008C268A /* UIViewControllerExt.swift */; };
 		F7945E12209EF1B1005C697D /* LeanCloudModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7945E11209EF1B1005C697D /* LeanCloudModel.swift */; };
 		F79FCD452026160900171051 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FCD442026160900171051 /* DataService.swift */; };
 		F79FCD4B2027821400171051 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F79FCD4A2027821400171051 /* GoogleService-Info.plist */; };
@@ -60,7 +59,6 @@
 		F77F65A4202446BE008925A8 /* ContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
 		F77F65A720244A5C008925A8 /* CenterVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterVCDelegate.swift; sourceTree = "<group>"; };
 		F7815802204050CD008C268A /* PassengerAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerAnnotation.swift; sourceTree = "<group>"; };
-		F781580420407D78008C268A /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		F7945E11209EF1B1005C697D /* LeanCloudModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeanCloudModel.swift; sourceTree = "<group>"; };
 		F79FCD442026160900171051 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		F79FCD4A2027821400171051 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				F7447DEF2025926F009FA72A /* UIViewExt.swift */,
-				F781580420407D78008C268A /* UIViewControllerExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -350,7 +347,6 @@
 				F77F659B2023A196008925A8 /* RoundImageView.swift in Sources */,
 				F7F40E6120459EEF0021907C /* PickupVC.swift in Sources */,
 				F7F40E6320459FE30021907C /* RoundMapView.swift in Sources */,
-				F781580520407D78008C268A /* UIViewControllerExt.swift in Sources */,
 				F7945E12209EF1B1005C697D /* LeanCloudModel.swift in Sources */,
 				F77F659D2023A2C7008925A8 /* RoundedShadowView.swift in Sources */,
 				F7447DF42025A1FE009FA72A /* RoundedCornerTextField.swift in Sources */,

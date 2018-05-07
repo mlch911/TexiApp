@@ -71,21 +71,6 @@ class PickupVC: UIViewController {
 //            self.pickupMapView.add(self.route2.polyline)
 //        }
         queue_Background.async {
-//            UpdateService.instance.trips.child(self.passengerKey).observe(.value) { (snapshot) in
-//                if snapshot.exists() {
-//                    if snapshot.childSnapshot(forPath: "isTripAccepted").value as? Bool == true {
-//                        self.dismiss(animated: true, completion: nil)
-//                    }
-//                } else {
-//                    self.dismiss(animated: true, completion: nil)
-//                }
-//            }
-//            UpdateService.instance.drivers.child(self.driverKey).observe(.value, with: { (snapshot) in
-//                guard !(snapshot.childSnapshot(forPath: "isOnTrip").value as! Bool) && snapshot.childSnapshot(forPath: "isPickupModeEnable").value as! Bool else {
-//                    self.dismiss(animated: true, completion: nil)
-//                    return
-//                }
-//            })
             var query = LCQuery(className: "Trip")
             query.whereKey("objectID", .equalTo(self.tripKey))
             query.find({ (result) in

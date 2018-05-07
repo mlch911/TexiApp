@@ -17,13 +17,6 @@ class UpdateService {
     static var instance = UpdateService()
     var trips: [Trip]!
     
-//    let drivers = FirebaseDataService.FRinstance.REF_DRIVERS
-//    let passengers = FirebaseDataService.FRinstance.REF_PASSENGERS
-//    let trips = FirebaseDataService.FRinstance.REF_TRIPS
-//    let drivers = LCQuery(className: "_User")
-//    let passengers = LCQuery(className: "_User")
-//    let trips = LCQuery(className: "Trip")
-    
     func updateUserLocation(withCoordinate coordinate: CLLocationCoordinate2D) {
         if let user = LCUser.current {
             user.set("coordinate", value: [coordinate.latitude, coordinate.longitude])
@@ -40,24 +33,7 @@ class UpdateService {
     }
     
     func observeTrips(handler: @escaping(_ trip: Trip) -> Void) {
-//        trips.observe(.childAdded) { (snapshot) in
-//            if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                for trip in tripSnapshot {
-//                    if trip.hasChild("passengerKey") && trip.hasChild("isTripAccepted") {
-//                        if let isTripAccepted = trip.childSnapshot(forPath: "isTripAccepted").value as? Bool {
-//                            guard isTripAccepted else {
-//                                if let tripDict = trip.value as? Dictionary<String, AnyObject> {
-//                                    handler(tripDict)
-//                                }
-//                                return
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
-//        let date = Date(timeIntervalSinceNow: -60)
+//        let date = Date(timeIntervalSinceNow: -5)
         let query = LCQuery(className: "Trip")
         
 //        query.whereKey("addTime", .greaterThanOrEqualTo(date))
@@ -78,33 +54,6 @@ class UpdateService {
     }
     
     func updateTripForPassengerRequest() {
-//        passengers.observeSingleEvent(of: .value) { (snapshot) in
-//            if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                for user in userSnapshot {
-//                    if user.key == Auth.auth().currentUser?.uid {
-//                        if !user.hasChild("isDriver") {
-//                            if let userDict = user.value as? Dictionary<String, AnyObject> {
-//                                let pickupArray = userDict["coordinate"] as! NSArray
-//                                let destinationArray = userDict["tripCoordinate"] as! NSArray
-//
-//                                self.trips.child(user.key).updateChildValues(
-//                                    [
-//                                        "pickupCoordinate": [pickupArray[0], pickupArray[1]],
-//                                        "destinationCoordinate": [destinationArray[0], destinationArray[1]],
-//                                        "passengerKey": user.key,
-//                                        "isTripAccepted": false
-//                                ]) { (error, reference) in
-//                                    if let error = error {
-//                                        self.errorPresent(withError: error)
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        
         if UserDefaults.standard.value(forKey: "isDriver") as! Bool == false {
             let query = LCQuery(className: "_User")
             query.get((LCUser.current?.objectId)!) { (result) in
@@ -132,30 +81,6 @@ class UpdateService {
     }
     
     func acceptTrip(withPassengerKey passengerKey: String, withDriverKey driverKey: String, handler: @escaping(_ finished: Bool) -> Void) {
-//        trips.child(passengerKey).observeSingleEvent(of: .value) { (snapshot) in
-//            if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                for trip in tripSnapshot {
-//                    if trip.key == "isTripAccepted" {
-//                        guard trip.value as! Bool else {
-//                            self.trips.child(passengerkey).updateChildValues(["driverKey": driverKey, "isTripAccepted": true]) { (error, reference) in
-//                                if let error = error {
-//                                    self.errorPresent(withError: error)
-//                                }
-//                            }
-//                            self.drivers.child(driverKey).updateChildValues(["isOnTrip": true]) { (error, reference) in
-//                                if let error = error {
-//                                    self.errorPresent(withError: error)
-//                                }
-//                            }
-//
-//                            return
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        handler(true)
-        
         let query = LCQuery(className: "Trip")
         query.whereKey("passengerKey", .equalTo(passengerKey))
         query.find { (result) in
@@ -200,7 +125,7 @@ class UpdateService {
         }
     }
     
-    func cancelTrip(isDriver: Bool) {
+    func cancelTripForPassenger() {
         let query = LCQuery(className: "Trip")
         query.whereKey("passengerKey", .equalTo((LCUser.current?.objectId)!))
         query.find { (result) in
@@ -242,49 +167,9 @@ class UpdateService {
                 self.errorPresent(withError: result.error)
             }
         }
-        
-//        query.get(passengerKey) { (result) in
-//            if result.isSuccess {
-//                let trip = result.object as! Trip
-//                let query = LCQuery(className: "_User")
-//                query.get(trip.passengerKey, completion: { (result) in
-//                    if result.isSuccess {
-//                        let passenger = result.object as! Driver
-//                        passenger.set("tripCoordinate", value: nil)
-//                        passenger.save({ (result) in
-//                            if result.isSuccess {
-//                                UserDefaults.standard.set(false, forKey: "isOnTrip")
-//                            } else {
-//                                self.errorPresent(withError: result.error)
-//                            }
-//                        })
-//                    } else {
-//                        self.errorPresent(withError: result.error)
-//                    }
-//                })
-//                trip.delete({ (result) in
-//                    if result.isFailure {
-//                        self.errorPresent(withError: result.error)
-//                    }
-//                })
-//            } else {
-//                self.errorPresent(withError: result.error)
-//            }
-//        }
-        
-//        trips.child(passengerkey).removeValue { (error, reference) in
-//            if let error = error {
-//                self.errorPresent(withError: error)
-//            }
-//        }
-//        passengers.child(passengerkey).child("tripCoordinate").removeValue { (error, reference) in
-//            if let error = error {
-//                self.errorPresent(withError: error)
-//            }
-//        }
     }
     
-    func cancelTrip() {
+    func cancelTripForDriver() {
         let query = LCQuery(className: "Trip")
         query.whereKey("driverKey", .equalTo((LCUser.current?.objectId)!))
         query.find { (result) in
@@ -324,22 +209,6 @@ class UpdateService {
                 self.errorPresent(withError: result.error)
             }
         }
-        
-//        trips.child(passengerkey).removeValue { (error, reference) in
-//            if let error = error {
-//                self.errorPresent(withError: error)
-//            }
-//        }
-//        passengers.child(passengerkey).child("tripCoordinate").removeValue { (error, reference) in
-//            if let error = error {
-//                self.errorPresent(withError: error)
-//            }
-//        }
-//        drivers.child(driverKey).child("isOnTrip").setValue(false) { (error, reference) in
-//            if let error = error {
-//                self.errorPresent(withError: error)
-//            }
-//        }
     }
     
     func finishTrip() {

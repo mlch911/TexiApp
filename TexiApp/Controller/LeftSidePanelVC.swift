@@ -143,105 +143,7 @@ class LeftSidePanelVC: UIViewController {
         }
     }
     
-    //MARK:  /**********Firebase**********/
-//    func observeFirebaseUser() {
-//        if let user = Auth.auth().currentUser {
-//            FirebaseDataService.FRinstance.REF_PASSENGERS.observeSingleEvent(of: .value, with: { (snapshot) in
-//                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                    for snap in snapshot {
-//                        if snap.key == user.uid {
-//                            self.emailLabel.text = user.email
-//                            self.userTypeLabel.text = "Passenger"
-//                            self.pickUpModeSwitch.isHidden = true
-//                            self.pickUpModeLabel.isHidden = true
-//                            UserDefaults.standard.set(true, forKey: "hasUserData")
-//                        }
-//                    }
-//                }
-//            })
-//            FirebaseDataService.FRinstance.REF_DRIVERS.observeSingleEvent(of: .value, with: { (snapshot) in
-//                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                    for snap in snapshot {
-//                        if snap.key == user.uid {
-//                            self.emailLabel.text = user.email
-//                            self.userTypeLabel.text = "Driver"
-//                            self.pickUpModeSwitch.isHidden = false
-//                            self.pickUpModeSwitch.isOn = snap.childSnapshot(forPath: "isPickupModeEnable").value as! Bool
-//                            self.pickUpModeLabel.isHidden = false
-//                            UserDefaults.standard.set(true, forKey: "hasUserData")
-//                            if let isPickupModeEnable = FirebaseDataService.FRinstance.REF_DRIVERS.child(snap.key).value(forKey: "isPickupModeEnable") as? Bool {
-//                                UserDefaults.standard.set(isPickupModeEnable, forKey: "isPickupModeEnable")
-//                            }
-//                            if let driverIsOnTrip = FirebaseDataService.FRinstance.REF_DRIVERS.child(snap.key).value(forKey: "driverIsOnTrip") as? Bool {
-//                                UserDefaults.standard.set(driverIsOnTrip, forKey: "driverIsOnTrip")
-//                            }
-//                        }
-//                    }
-//                }
-//            })
-//            emailLabel.isHidden = false
-//            userTypeLabel.isHidden = false
-//            loginBtn.setTitle("Log Out", for: .normal)
-//            userImageView.isHidden = false
-//        } else {
-//            if let username = UserDefaults.standard.value(forKey: "name") as? String, let password = UserDefaults.standard.value(forKey: "password") as? String {
-//                Auth.auth().signIn(withEmail: username, password: password, completion: { (user, error) in
-//                    if error == nil {
-//                        if let user = user {
-//                            FirebaseDataService.FRinstance.REF_PASSENGERS.observeSingleEvent(of: .value, with: { (snapshot) in
-//                                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                                    for snap in snapshot {
-//                                        if snap.key == user.uid {
-//                                            self.emailLabel.text = user.email
-//                                            self.userTypeLabel.text = "Passenger"
-//                                            self.pickUpModeSwitch.isHidden = true
-//                                            self.pickUpModeLabel.isHidden = true
-//                                            UserDefaults.standard.set(true, forKey: "hasUserData")
-//                                        }
-//                                    }
-//                                }
-//                            })
-//                            FirebaseDataService.FRinstance.REF_DRIVERS.observeSingleEvent(of: .value, with: { (snapshot) in
-//                                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                                    for snap in snapshot {
-//                                        if snap.key == user.uid {
-//                                            self.emailLabel.text = user.email
-//                                            self.userTypeLabel.text = "Driver"
-//                                            self.pickUpModeSwitch.isHidden = false
-//                                            self.pickUpModeSwitch.isOn = snap.childSnapshot(forPath: "isPickupModeEnable").value as! Bool
-//                                            self.pickUpModeLabel.isHidden = false
-//                                            UserDefaults.standard.set(true, forKey: "hasUserData")
-//                                            if let isPickupModeEnable = FirebaseDataService.FRinstance.REF_DRIVERS.child(snap.key).value(forKey: "isPickupModeEnable") as? Bool {
-//                                                UserDefaults.standard.set(isPickupModeEnable, forKey: "isPickupModeEnable")
-//                                            }
-//                                            if let driverIsOnTrip = FirebaseDataService.FRinstance.REF_DRIVERS.child(snap.key).value(forKey: "driverIsOnTrip") as? Bool {
-//                                                UserDefaults.standard.set(driverIsOnTrip, forKey: "driverIsOnTrip")
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            })
-//                        }
-//                    }
-//                })
-//            }
-//        }
-//    }
-    
     @IBAction func pickUpModeSwitchPressed(_ sender: Any) {
-//        if Auth.auth().currentUser != nil {
-//            FirebaseDataService.FRinstance.REF_DRIVERS.observeSingleEvent(of: .value, with: { (snapshot) in
-//                if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                    for user in userSnapshot {
-//                        if user.key == Auth.auth().currentUser?.uid {
-//                            FirebaseDataService.FRinstance.REF_DRIVERS.child(user.key).updateChildValues(["isPickupModeEnable": self.pickUpModeSwitch.isOn])
-//                            UserDefaults.standard.set(self.pickUpModeSwitch.isOn, forKey: "isPickupModeEnable")
-//                        }
-//                    }
-//                }
-//            })
-//        }
-        
         if let user = LCUser.current {
             user.set("isPickupModeEnable", value: self.pickUpModeSwitch.isOn)
             user.save { result in
@@ -262,11 +164,6 @@ class LeftSidePanelVC: UIViewController {
     
     @IBAction func loginBtnPressed(_ sender: Any) {
         if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
-//            do {
-//                try Auth.auth().signOut()
-//            } catch(let error) {
-//                print(error.localizedDescription)
-//            }
             LCUser.logOut()
             pickUpModeSwitch.isOn = false
             pickUpModeSwitch.isHidden = true

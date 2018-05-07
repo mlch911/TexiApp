@@ -183,6 +183,28 @@ class DataService {
         }
     }
     
+    func syncUserStatus() {
+        if LCUser.current != nil {
+            let query1 = LCQuery(className: "_User")
+            query1.whereKey("objectID", .equalTo((LCUser.current?.objectId)!))
+            query1.didChangeValue(forKey: "isPickupModeEnable")
+            let query2 = LCQuery(className: "_User")
+            query2.whereKey("objectID", .equalTo((LCUser.current?.objectId)!))
+            query2.didChangeValue(forKey: "isOnTrip")
+            let query = query1.or(query2)
+            query.find { (result) in
+                if result.isSuccess {
+                    if let user = result.objects?.first as? Driver {
+                        UserDefaults.standard.set(user.isPickupModeEnable.rawValue as? Bool, forKey: "isPickupModeEnable")
+                        UserDefaults.standard.set(user.isOnTrip.rawValue as? Bool, forKey: "isOnTrip")
+                    }
+                } else {
+                    self.errorPresent(withError: result.error)
+                }
+            }
+        }
+    }
+    
     //MARK:  /**********errorPresent**********/
     func errorPresent(withError error: Error?) {
         if let error = error {
