@@ -13,7 +13,6 @@
 		F7447DF42025A1FE009FA72A /* RoundedCornerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7447DF32025A1FE009FA72A /* RoundedCornerTextField.swift */; };
 		F766B214202E180F00176408 /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F766B213202E180F00176408 /* UpdateService.swift */; };
 		F766B216202ED58E00176408 /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F766B215202ED58E00176408 /* DriverAnnotation.swift */; };
-		F77B14E320285C0900ECD53E /* LeanCloudModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B14E220285C0900ECD53E /* LeanCloudModel.swift */; };
 		F77F656620231606008925A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F656520231606008925A8 /* AppDelegate.swift */; };
 		F77F656820231606008925A8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F656720231606008925A8 /* HomeVC.swift */; };
 		F77F656B20231606008925A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F77F656920231606008925A8 /* Main.storyboard */; };
@@ -29,6 +28,7 @@
 		F77F65A820244A5C008925A8 /* CenterVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F65A720244A5C008925A8 /* CenterVCDelegate.swift */; };
 		F7815803204050CD008C268A /* PassengerAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7815802204050CD008C268A /* PassengerAnnotation.swift */; };
 		F781580520407D78008C268A /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F781580420407D78008C268A /* UIViewControllerExt.swift */; };
+		F7945E12209EF1B1005C697D /* LeanCloudModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7945E11209EF1B1005C697D /* LeanCloudModel.swift */; };
 		F79FCD452026160900171051 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FCD442026160900171051 /* DataService.swift */; };
 		F79FCD4B2027821400171051 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F79FCD4A2027821400171051 /* GoogleService-Info.plist */; };
 		F7F40E6120459EEF0021907C /* PickupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F40E6020459EEF0021907C /* PickupVC.swift */; };
@@ -44,7 +44,6 @@
 		F7447DF32025A1FE009FA72A /* RoundedCornerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerTextField.swift; sourceTree = "<group>"; };
 		F766B213202E180F00176408 /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
 		F766B215202ED58E00176408 /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
-		F77B14E220285C0900ECD53E /* LeanCloudModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeanCloudModel.swift; sourceTree = "<group>"; };
 		F77F656220231606008925A8 /* TexiApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TexiApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F77F656520231606008925A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F77F656720231606008925A8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
@@ -62,6 +61,7 @@
 		F77F65A720244A5C008925A8 /* CenterVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterVCDelegate.swift; sourceTree = "<group>"; };
 		F7815802204050CD008C268A /* PassengerAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerAnnotation.swift; sourceTree = "<group>"; };
 		F781580420407D78008C268A /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
+		F7945E11209EF1B1005C697D /* LeanCloudModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeanCloudModel.swift; sourceTree = "<group>"; };
 		F79FCD442026160900171051 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		F79FCD4A2027821400171051 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F7F40E6020459EEF0021907C /* PickupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupVC.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		F77F659720239DCC008925A8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F77B14E220285C0900ECD53E /* LeanCloudModel.swift */,
+				F7945E11209EF1B1005C697D /* LeanCloudModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,7 +341,6 @@
 				F766B214202E180F00176408 /* UpdateService.swift in Sources */,
 				F766B216202ED58E00176408 /* DriverAnnotation.swift in Sources */,
 				F77F65A12023A73F008925A8 /* RoundedShadowButton.swift in Sources */,
-				F77B14E320285C0900ECD53E /* LeanCloudModel.swift in Sources */,
 				F7447DF22025A0A0009FA72A /* LoginVC.swift in Sources */,
 				F77F65A320244642008925A8 /* LeftSidePanelVC.swift in Sources */,
 				F77F659F2023A3DA008925A8 /* CircleView.swift in Sources */,
@@ -352,6 +351,7 @@
 				F7F40E6120459EEF0021907C /* PickupVC.swift in Sources */,
 				F7F40E6320459FE30021907C /* RoundMapView.swift in Sources */,
 				F781580520407D78008C268A /* UIViewControllerExt.swift in Sources */,
+				F7945E12209EF1B1005C697D /* LeanCloudModel.swift in Sources */,
 				F77F659D2023A2C7008925A8 /* RoundedShadowView.swift in Sources */,
 				F7447DF42025A1FE009FA72A /* RoundedCornerTextField.swift in Sources */,
 				F77F656620231606008925A8 /* AppDelegate.swift in Sources */,

@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import Firebase
+//import Firebase
 import LeanCloud
 import IQKeyboardManagerSwift
+import NotificationBannerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,15 +20,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate var containerVC = ContainerVC()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
-//        LeanCloud.initialize(applicationID: "XPpQiSHNcvLCzCbnzptdnGvI-gzGzoHsz", applicationKey: "8xb9rijslYcwWisswTwJ0J1j")
+//        FirebaseApp.configure()
+        LeanCloud.initialize(applicationID: "XPpQiSHNcvLCzCbnzptdnGvI-gzGzoHsz", applicationKey: "8xb9rijslYcwWisswTwJ0J1j")
         
-        IQKeyboardManager.sharedManager().enable = true
+//        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.shared.enable = true
         
         window?.rootViewController = containerVC
         window?.makeKeyAndVisible()
         
-        FirebaseDataService.FRinstance.checkUserStatus()
+        if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
+            LCUser.logIn(username: UserDefaults.standard.value(forKey: "name") as! String, password: UserDefaults.standard.value(forKey: "password") as! String) { (result) in
+                if result.isSuccess {
+                    DataService.instance.checkUserStatus()
+                } else {
+                    print(result.error.debugDescription)
+                    UserDefaults.standard.set(false, forKey: "hasUserData")
+                    LCUser.logOut()
+                    let banner = NotificationBanner(title: "Error!", subtitle: "网络错误，请重新登录。", style: .danger)
+                    banner.show()
+                }
+            }
+        }
+//        DataService.instance.checkUserStatus()
         
         return true
     }

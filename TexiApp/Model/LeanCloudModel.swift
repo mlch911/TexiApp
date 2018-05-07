@@ -9,23 +9,24 @@
 import Foundation
 import LeanCloud
 
-class Passenger: LCObject {
-    @objc dynamic var id: LCString?
-    @objc dynamic var email: LCString?
-    
-    override static func objectClassName() -> String {
-        return "Passenger"
-    }
+class Driver: LCUser {
+    @objc dynamic var isDriver: LCBool!
+    @objc dynamic var isPickupModeEnable: LCBool!
+    @objc dynamic var isOnTrip: LCBool!
+//    @objc dynamic var coordinate: [Double]?
+//    @objc dynamic var tripCoordinate: [Double]?
 }
 
+class Trip: LCObject {
+//    @objc dynamic var destinationCoordinate: [Double]!
+//    @objc dynamic var pickupCoordinate: [Double]!
+    @objc dynamic var passengerKey: LCString!
+    @objc dynamic var driverKey: LCString?
+    @objc dynamic var isTripAccepted: LCBool!
+    @objc dynamic var step: LCString?
+    @objc dynamic var addTime: LCDate!
 
-class Driver: LCObject {
-    @objc dynamic var id: LCString?
-    @objc dynamic var email: LCString?
-    @objc dynamic var isPickupModeEnable: LCBool?
-    @objc dynamic var driverIsOnTrip: LCBool?
-    
     override static func objectClassName() -> String {
-        return "Driver"
+        return "Trip"
     }
 }

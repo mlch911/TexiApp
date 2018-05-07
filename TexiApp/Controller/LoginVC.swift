@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+//import Firebase
 import LeanCloud
 
 class LoginVC: UIViewController, UITextFieldDelegate {
@@ -27,208 +27,226 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             if let email = emailField.text, let password = passwordField.text {
                 
                 //MARK:  /**********LeanCloud**********/
-//                let user = LCUser()
-//                user.username = LCString(email)
-//                user.email = LCString(email)
-//                user.password = LCString(password)
-//
-//                LCUser.logIn(username: email, password: password, completion: { result in
-//                    switch result {
-//                    case .success(let result):
-//                        LCUser.current = result
-//                        if self.segmentControl.selectedSegmentIndex == 0 {
-//                            let user = LCUser.current!
-//                            user.set("isDriver", value: false)
-//                            user.email = LCString(email)
-//                            user.save { result in
-//                                switch result {
-//                                case .success:
-//                                    print("LeanCloud上传数据成功")
-//                                    UserDefaults.standard.set(false, forKey: "isDriver")
-//                                    UserDefaults.standard.set(email, forKey: "name")
-//                                    UserDefaults.standard.set(password, forKey: "password")
-//                                case .failure(let error):
-//                                    print("LeanCloud上传数据失败:\(error)")
-//                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
-//                                }
-//                            }
-//                        } else {
-//                            let user = LCUser.current!
-//                            user.set("isDriver", value: true)
-//                            user.email = LCString(email)
+                let user = LCUser()
+                user.username = LCString(email)
+                user.email = LCString(email)
+                user.password = LCString(password)
+
+                LCUser.logIn(username: email, password: password, completion: { result in
+                    switch result {
+                    case .success(let result):
+                        LCUser.current = result
+                        if self.segmentControl.selectedSegmentIndex == 0 {
+                            let user = LCUser.current!
+                            user.set("isDriver", value: false)
+                            user.email = LCString(email)
+                            user.save { result in
+                                switch result {
+                                case .success:
+                                    print("LeanCloud上传数据成功")
+                                    UserDefaults.standard.set(true, forKey: "hasUserData")
+                                    UserDefaults.standard.set(false, forKey: "isDriver")
+                                    UserDefaults.standard.set(email, forKey: "name")
+                                    UserDefaults.standard.set(password, forKey: "password")
+                                    print("LeanCloud登录成功")
+                                    DataService.instance.checkUserStatus()
+                                case .failure(let error):
+                                    print("LeanCloud上传数据失败:\(error)")
+                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
+                                }
+                            }
+                        } else {
+                            let user = LCUser.current!
+                            user.set("isDriver", value: true)
+                            user.email = LCString(email)
 //                            user.set("isOnTrip", value: false)
-//                            user.set("isPickUpModeEnable", value: false)
-//                            user.save { result in
-//                                switch result {
-//                                case .success:
-////                                    user.objectId
-//                                    print("LeanCloud上传数据成功")
-//                                    UserDefaults.standard.set(true, forKey: "isDriver")
-//                                    UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-//                                    UserDefaults.standard.set(false, forKey: "isOnTrip")
-//                                    UserDefaults.standard.set(email, forKey: "name")
-//                                    UserDefaults.standard.set(password, forKey: "password")
-//                                case .failure(let error):
-//                                    print("LeanCloud上传数据失败:\(error)")
-//                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
-//                                }
-//                            }
-//                        }
-//                        UserDefaults.standard.set(true, forKey: "hasUserData")
-//                        print("LeanCloud登录成功")
-//                        self.authBtn.animateButton(shouldLoad: false, withMessage: "登录成功")
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//                            self.dismiss(animated: true, completion: nil)
-//                        }
-//                    case .failure:
-//                        user.signUp({ result in
-//                            switch result {
-//                            case .success:
-//                                LCUser.current = user
-//                                if self.segmentControl.selectedSegmentIndex == 0 {
-//                                    let user = LCUser.current!
-//                                    user.set("isDriver", value: false)
-//                                    user.email = LCString(email)
-//                                    user.save { result in
-//                                        switch result {
-//                                        case .success:
-//                                            print("LeanCloud上传数据成功")
-//                                            UserDefaults.standard.set(false, forKey: "isDriver")
-//                                            UserDefaults.standard.set(email, forKey: "name")
-//                                            UserDefaults.standard.set(password, forKey: "password")
-//                                        case .failure(let error):
-//                                            print("LeanCloud上传数据失败:\(error)")
-//                                            self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
-//                                        }
-//                                    }
-//                                } else {
-//                                    let user = LCUser.current!
-//                                    user.set("isDriver", value: true)
-//                                    user.email = LCString(email)
-//                                    user.set("isOnTrip", value: false)
-//                                    user.set("isPickUpModeEnable", value: false)
-//                                    user.save { result in
-//                                        switch result {
-//                                        case .success:
-//                                            print("LeanCloud上传数据成功")
-//                                            UserDefaults.standard.set(true, forKey: "isDriver")
-//                                            UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-//                                            UserDefaults.standard.set(false, forKey: "isOnTrip")
-//                                            UserDefaults.standard.set(email, forKey: "name")
-//                                            UserDefaults.standard.set(password, forKey: "password")
-//                                        case .failure(let error):
-//                                            print("LeanCloud上传数据失败:\(error)")
-//                                            self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
-//                                        }
-//                                    }
-//                                }
-//                                UserDefaults.standard.set(true, forKey: "hasUserData")
-//                                print("LeanCloud注册成功")
-//                                self.authBtn.animateButton(shouldLoad: false, withMessage: "注册成功")
-//                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//                                    self.dismiss(animated: true, completion: nil)
-//                                }
-//                            case .failure(let error):
-//                                switch error.code {
-//                                case 125:
-//                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "电子邮箱地址无效")
-//                                case 202:
-//                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
-//                                case 203:
-//                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
-//                                default:
-//                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "未知错误")
-//                                    print(error.reason)
-//                                }
-//                                print("LeanCloud注册失败:\(error.reason ?? "未知错误")")
-//                            }
-//                        })
-//                    }
-//                })
-                
-                //MARK:  /**********Firebase**********/
-                Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-                    if error == nil {
-                        if let user = user {
-                            if self.segmentControl.selectedSegmentIndex == 0 {
-                                let userData = ["name": email, "isOnTrip": false] as [String: Any]
-                                FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
-                                UserDefaults.standard.set(false, forKey: "isDriver")
-                                UserDefaults.standard.set(false, forKey: "isOnTrip")
-                            } else {
-                                let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "isOnTrip": false] as [String: Any]
-                                FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
-                                UserDefaults.standard.set(true, forKey: "isDriver")
-                                UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-                                UserDefaults.standard.set(false, forKey: "isOnTrip")
+                            user.set("isPickUpModeEnable", value: false)
+                            user.save { result in
+                                switch result {
+                                case .success:
+                                    print("LeanCloud上传数据成功")
+                                    UserDefaults.standard.set(true, forKey: "hasUserData")
+                                    UserDefaults.standard.set(true, forKey: "isDriver")
+                                    if user.get("isPickupModeEnable")?.rawValue as? Bool == true {
+                                        UserDefaults.standard.set(true, forKey: "isPickupModeEnable")
+                                    } else {
+                                        UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
+                                    }
+                                    if user.get("isOnTrip")?.rawValue as? Bool == true {
+                                        UserDefaults.standard.set(true, forKey: "isOnTrip")
+                                    } else {
+                                        UserDefaults.standard.set(false, forKey: "isOnTrip")
+                                    }
+                                    UserDefaults.standard.set(email, forKey: "name")
+                                    UserDefaults.standard.set(password, forKey: "password")
+                                    print("LeanCloud登录成功")
+                                case .failure(let error):
+                                    print("LeanCloud上传数据失败:\(error)")
+                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
+                                }
                             }
                         }
-                        UserDefaults.standard.set(email, forKey: "name")
-                        UserDefaults.standard.set(password, forKey: "password")
-                        UserDefaults.standard.set(true, forKey: "hasUserData")
-                        print("Firebase登录成功")
+//                        UserDefaults.standard.set(true, forKey: "hasUserData")
+//                        print("LeanCloud登录成功")
+//                        UserDefaults.standard.set(true, forKey: "isDriver")
+//                        let isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool
+//                        print(isDriver!)
+//                        DataService.instance.checkUserStatus()
                         self.authBtn.animateButton(shouldLoad: false, withMessage: "登录成功")
-                        DispatchQueue.main.async {
-                            let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-                            homeVC?.delegate?.toggleLeftPanel()
-                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             self.dismiss(animated: true, completion: nil)
                         }
-                    } else {
-                        print("Firebase登录失败:\(error?.localizedDescription ?? "未知错误")")
-                        Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
-                            if error != nil {
-                                if let errorCode = AuthErrorCode(rawValue: error!._code) {
-                                    switch errorCode {
-                                    case .invalidEmail:
-                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
-                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "电子邮箱地址无效")
-                                    case .emailAlreadyInUse:
-                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
-                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
-                                    case .wrongPassword:
-                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
-                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
-                                    case .weakPassword:
-                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
-                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "弱密码")
-                                    default:
-                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
-                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "未知错误")
+                    case .failure:
+                        user.signUp({ result in
+                            switch result {
+                            case .success:
+                                LCUser.current = user
+                                if self.segmentControl.selectedSegmentIndex == 0 {
+                                    let user = LCUser.current!
+                                    user.set("isDriver", value: false)
+                                    user.set("isOnTrip", value: false)
+                                    user.email = LCString(email)
+                                    user.save { result in
+                                        switch result {
+                                        case .success:
+                                            print("LeanCloud上传数据成功")
+                                            UserDefaults.standard.set(true, forKey: "hasUserData")
+                                            UserDefaults.standard.set(false, forKey: "isDriver")
+                                            UserDefaults.standard.set(email, forKey: "name")
+                                            UserDefaults.standard.set(false, forKey: "isOnTrip")
+                                        case .failure(let error):
+                                            print("LeanCloud上传数据失败:\(error)")
+                                            self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
+                                        }
+                                    }
+                                } else {
+                                    let user = LCUser.current!
+                                    user.set("isDriver", value: true)
+                                    user.email = LCString(email)
+                                    user.set("isOnTrip", value: false)
+                                    user.set("isPickUpModeEnable", value: false)
+                                    user.save { result in
+                                        switch result {
+                                        case .success:
+                                            print("LeanCloud上传数据成功")
+                                            UserDefaults.standard.set(true, forKey: "hasUserData")
+                                            UserDefaults.standard.set(true, forKey: "isDriver")
+                                            UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
+                                            UserDefaults.standard.set(false, forKey: "isOnTrip")
+                                            UserDefaults.standard.set(email, forKey: "name")
+                                        case .failure(let error):
+                                            print("LeanCloud上传数据失败:\(error)")
+                                            self.authBtn.animateButton(shouldLoad: false, withMessage: "上传数据失败")
+                                        }
                                     }
                                 }
-                            } else {
-                                if let user = user {
-                                    if self.segmentControl.selectedSegmentIndex == 0 {
-                                        let userData = ["name": email, "isOnTrip": false] as [String: Any]
-                                        FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
-                                        UserDefaults.standard.set(false, forKey: "isDriver")
-                                        UserDefaults.standard.set(false, forKey: "isOnTrip")
-                                    } else {
-                                        let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "isOnTrip": false] as [String: Any]
-                                        FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
-                                        UserDefaults.standard.set(true, forKey: "isDriver")
-                                        UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
-                                        UserDefaults.standard.set(false, forKey: "isOnTrip")
-                                    }
-                                }
-                                UserDefaults.standard.set(email, forKey: "name")
-                                UserDefaults.standard.set(password, forKey: "password")
                                 UserDefaults.standard.set(true, forKey: "hasUserData")
-                                print("Firebase注册成功")
+                                print("LeanCloud注册成功")
                                 self.authBtn.animateButton(shouldLoad: false, withMessage: "注册成功")
-                                DispatchQueue.main.async {
-                                    let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-                                    homeVC?.delegate?.toggleLeftPanel()
-                                }
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                     self.dismiss(animated: true, completion: nil)
                                 }
+                            case .failure(let error):
+                                switch error.code {
+                                case 125:
+                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "电子邮箱地址无效")
+                                case 202:
+                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
+                                case 203:
+                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
+                                default:
+                                    self.authBtn.animateButton(shouldLoad: false, withMessage: "未知错误")
+                                    print(error.reason ?? "未知错误")
+                                }
+                                print("LeanCloud注册失败:\(error.reason ?? "未知错误")")
                             }
                         })
                     }
                 })
+                
+                //MARK:  /**********Firebase**********/
+//                Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
+//                    if error == nil {
+//                        if let user = user {
+//                            if self.segmentControl.selectedSegmentIndex == 0 {
+//                                let userData = ["name": email, "isOnTrip": false] as [String: Any]
+//                                FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
+//                                UserDefaults.standard.set(false, forKey: "isDriver")
+//                                UserDefaults.standard.set(false, forKey: "isOnTrip")
+//                            } else {
+//                                let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "isOnTrip": false] as [String: Any]
+//                                FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
+//                                UserDefaults.standard.set(true, forKey: "isDriver")
+//                                UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
+//                                UserDefaults.standard.set(false, forKey: "isOnTrip")
+//                            }
+//                        }
+//                        UserDefaults.standard.set(email, forKey: "name")
+//                        UserDefaults.standard.set(password, forKey: "password")
+//                        UserDefaults.standard.set(true, forKey: "hasUserData")
+//                        print("Firebase登录成功")
+//                        self.authBtn.animateButton(shouldLoad: false, withMessage: "登录成功")
+//                        DispatchQueue.main.async {
+//                            let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+//                            homeVC?.delegate?.toggleLeftPanel()
+//                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                            self.dismiss(animated: true, completion: nil)
+//                        }
+//                    } else {
+//                        print("Firebase登录失败:\(error?.localizedDescription ?? "未知错误")")
+//                        Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
+//                            if error != nil {
+//                                if let errorCode = AuthErrorCode(rawValue: error!._code) {
+//                                    switch errorCode {
+//                                    case .invalidEmail:
+//                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
+//                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "电子邮箱地址无效")
+//                                    case .emailAlreadyInUse:
+//                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
+//                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
+//                                    case .wrongPassword:
+//                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
+//                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "密码错误")
+//                                    case .weakPassword:
+//                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
+//                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "弱密码")
+//                                    default:
+//                                        print("Firebase注册失败:\(error?.localizedDescription ?? "未知错误")")
+//                                        self.authBtn.animateButton(shouldLoad: false, withMessage: "未知错误")
+//                                    }
+//                                }
+//                            } else {
+//                                if let user = user {
+//                                    if self.segmentControl.selectedSegmentIndex == 0 {
+//                                        let userData = ["name": email, "isOnTrip": false] as [String: Any]
+//                                        FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: false)
+//                                        UserDefaults.standard.set(false, forKey: "isDriver")
+//                                        UserDefaults.standard.set(false, forKey: "isOnTrip")
+//                                    } else {
+//                                        let userData = ["name": email, "isDriver": true, "isPickupModeEnable": false, "isOnTrip": false] as [String: Any]
+//                                        FirebaseDataService.FRinstance.createFirebaseDBUser(uid: user.uid, userData: userData, isDriver: true)
+//                                        UserDefaults.standard.set(true, forKey: "isDriver")
+//                                        UserDefaults.standard.set(false, forKey: "isPickupModeEnable")
+//                                        UserDefaults.standard.set(false, forKey: "isOnTrip")
+//                                    }
+//                                }
+//                                UserDefaults.standard.set(email, forKey: "name")
+//                                UserDefaults.standard.set(password, forKey: "password")
+//                                UserDefaults.standard.set(true, forKey: "hasUserData")
+//                                print("Firebase注册成功")
+//                                self.authBtn.animateButton(shouldLoad: false, withMessage: "注册成功")
+//                                DispatchQueue.main.async {
+//                                    let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+//                                    homeVC?.delegate?.toggleLeftPanel()
+//                                }
+//                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                                    self.dismiss(animated: true, completion: nil)
+//                                }
+//                            }
+//                        })
+//                    }
+//                })
             }
         }
     }

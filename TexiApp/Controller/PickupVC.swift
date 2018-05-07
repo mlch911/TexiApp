@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 import JHSpinner
+import LeanCloud
+import NotificationBannerSwift
 
 enum annotationType {
     case driver
@@ -41,6 +43,7 @@ class PickupVC: UIViewController {
     var currentCoordinate: CLLocationCoordinate2D!
     var passengerKey: String!
     var driverKey: String!
+    var tripKey: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,30 +71,62 @@ class PickupVC: UIViewController {
 //            self.pickupMapView.add(self.route2.polyline)
 //        }
         queue_Background.async {
-            UpdateService.instance.trips.child(self.passengerKey).observe(.value) { (snapshot) in
-                if snapshot.exists() {
-                    if snapshot.childSnapshot(forPath: "tripIsAccepted").value as? Bool == true {
-                        self.dismiss(animated: true, completion: nil)
+//            UpdateService.instance.trips.child(self.passengerKey).observe(.value) { (snapshot) in
+//                if snapshot.exists() {
+//                    if snapshot.childSnapshot(forPath: "isTripAccepted").value as? Bool == true {
+//                        self.dismiss(animated: true, completion: nil)
+//                    }
+//                } else {
+//                    self.dismiss(animated: true, completion: nil)
+//                }
+//            }
+//            UpdateService.instance.drivers.child(self.driverKey).observe(.value, with: { (snapshot) in
+//                guard !(snapshot.childSnapshot(forPath: "isOnTrip").value as! Bool) && snapshot.childSnapshot(forPath: "isPickupModeEnable").value as! Bool else {
+//                    self.dismiss(animated: true, completion: nil)
+//                    return
+//                }
+//            })
+            var query = LCQuery(className: "Trip")
+            query.whereKey("objectID", .equalTo(self.tripKey))
+            query.find({ (result) in
+                if result.isSuccess {
+                    if let trip = result.objects?.first as? Trip {
+                        if trip.isTripAccepted == true {
+                            self.dismiss(animated: true, completion: nil)
+                        }
                     }
                 } else {
-                    self.dismiss(animated: true, completion: nil)
+                    let banner = NotificationBanner(title: "Error!", subtitle: result.error.debugDescription, style: .danger)
+                    banner.show()
+                    print(result.error.debugDescription)
                 }
-            }
-            UpdateService.instance.drivers.child(self.driverKey).observe(.value, with: { (snapshot) in
-                guard !(snapshot.childSnapshot(forPath: "isOnTrip").value as! Bool) && snapshot.childSnapshot(forPath: "isPickupModeEnable").value as! Bool else {
-                    self.dismiss(animated: true, completion: nil)
-                    return
+            })
+            query = LCQuery(className: "_User")
+            query.whereKey("objectID", .equalTo(self.driverKey))
+            query.find({ (result) in
+                if result.isSuccess {
+                    if let driver = result.objects?.first as? Driver {
+                        guard !(driver.isOnTrip.boolValue!) && driver.isPickupModeEnable.boolValue! else {
+                            self.dismiss(animated: true, completion: nil)
+                            return
+                        }
+                    }
+                } else {
+                    let banner = NotificationBanner(title: "Error!", subtitle: result.error.debugDescription, style: .danger)
+                    banner.show()
+                    print(result.error.debugDescription)
                 }
             })
         }
     }
     
-    func initData(passengerCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, currentCoordinate: CLLocationCoordinate2D, passengerKey: String, driverKey: String) {
+    func initData(passengerCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, currentCoordinate: CLLocationCoordinate2D, passengerKey: String, driverKey: String, tripKey: String) {
         self.passengerCoordinate = passengerCoordinate
         self.destinationCoordinate = destinationCoordinate
         self.currentCoordinate = currentCoordinate
         self.passengerKey = passengerKey
         self.driverKey = driverKey
+        self.tripKey = tripKey
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -102,8 +137,6 @@ class PickupVC: UIViewController {
 //                dest.spinner = JHSpinnerView.showOnView(dest.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
             }
         }
-//        print(segue.destination,segue.source)mlch1995123
-        
     }
 }
 

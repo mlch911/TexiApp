@@ -190,6 +190,14 @@
                                     <constraint firstAttribute="trailingMargin" secondItem="ZC3-1j-StD" secondAttribute="trailing" constant="20" id="h4T-Z1-7DI"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7d-wE-Wxr">
+                                <rect key="frame" x="139.66666666666666" y="684" width="97" height="38"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
+                                <state key="normal" title="Cancel Trip"/>
+                                <connections>
+                                    <action selector="cancelBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HuF-Zm-rnE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -197,12 +205,14 @@
                             <constraint firstItem="slw-cV-sW5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="3vE-cV-HP2"/>
                             <constraint firstItem="tLf-Lz-tb7" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.19" id="9FB-BV-4nD"/>
                             <constraint firstItem="H3r-lN-21K" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="9sJ-va-SK5"/>
+                            <constraint firstItem="H3r-lN-21K" firstAttribute="top" secondItem="R7d-wE-Wxr" secondAttribute="bottom" constant="10" id="Ayp-Q2-gST"/>
                             <constraint firstItem="PFj-Mw-MRV" firstAttribute="trailing" secondItem="slw-cV-sW5" secondAttribute="trailing" id="HBv-5s-ypg"/>
                             <constraint firstItem="PFj-Mw-MRV" firstAttribute="top" secondItem="slw-cV-sW5" secondAttribute="bottom" constant="8" symbolic="YES" id="LF3-Hf-Knx"/>
                             <constraint firstItem="PFj-Mw-MRV" firstAttribute="leading" secondItem="slw-cV-sW5" secondAttribute="leading" id="N1G-a4-PtL"/>
                             <constraint firstItem="tLf-Lz-tb7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Pm2-dd-Puq"/>
                             <constraint firstItem="PIJ-Ld-0ag" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Pml-JM-nqz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tLf-Lz-tb7" secondAttribute="trailing" id="QJ3-5R-2gB"/>
+                            <constraint firstItem="R7d-wE-Wxr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TS0-az-LHB"/>
                             <constraint firstItem="H3r-lN-21K" firstAttribute="top" secondItem="ez0-Ni-E9P" secondAttribute="bottom" constant="10" id="ZlB-Mg-Dlq"/>
                             <constraint firstAttribute="bottom" secondItem="PIJ-Ld-0ag" secondAttribute="bottom" id="b3q-rl-gPm"/>
                             <constraint firstItem="PIJ-Ld-0ag" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cqh-07-Sqh"/>
@@ -219,6 +229,7 @@
                     </view>
                     <connections>
                         <outlet property="actionBtn" destination="ZC3-1j-StD" id="M7g-nS-ofs"/>
+                        <outlet property="cancelBtn" destination="R7d-wE-Wxr" id="oHZ-Lc-dnE"/>
                         <outlet property="centerBtn" destination="ez0-Ni-E9P" id="OCS-7G-R9j"/>
                         <outlet property="destinationCircle" destination="ZCA-rt-6XN" id="51b-iD-44k"/>
                         <outlet property="destinationTextField" destination="3Xm-NF-piv" id="A9e-ZF-q0l"/>

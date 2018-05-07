@@ -39,13 +39,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>1</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>2</string>
-	<key>NSLocationUsageDescription</key>
-	<string>3</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>4</string>
+	<string>TexiApp需要定位权限来获取你的位置，以提供更好的用户体验。</string>
 </dict>
 </plist>
