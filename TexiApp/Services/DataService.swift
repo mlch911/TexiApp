@@ -116,7 +116,7 @@ class DataService {
                 query.whereKey("isPickupModeEnable", .selected)
                 query.get((LCUser.current?.objectId)!) { (result) in
                     if result.isSuccess {
-                        if let driver = result.object as? Driver {
+                        if let driver = result.object as? User {
                             if let isOnTrip = driver.isOnTrip {
                                 UserDefaults.standard.set(isOnTrip.rawValue, forKey: "isOnTrip")
                             }
@@ -153,7 +153,7 @@ class DataService {
                 let query = LCQuery(className: "_User")
                 query.get((LCUser.current?.objectId)!) { (result) in
                     if result.isSuccess {
-                        if let driver = result.object as? Driver {
+                        if let driver = result.object as? User {
                             if let isOnTrip = driver.isOnTrip {
                                 UserDefaults.standard.set(isOnTrip.rawValue, forKey: "isOnTrip")
                             }
@@ -194,13 +194,67 @@ class DataService {
             let query = query1.or(query2)
             query.find { (result) in
                 if result.isSuccess {
-                    if let user = result.objects?.first as? Driver {
+                    if let user = result.objects?.first as? User {
                         UserDefaults.standard.set(user.isPickupModeEnable.rawValue as? Bool, forKey: "isPickupModeEnable")
                         UserDefaults.standard.set(user.isOnTrip.rawValue as? Bool, forKey: "isOnTrip")
                     }
                 } else {
                     self.errorPresent(withError: result.error)
                 }
+            }
+        }
+    }
+    
+    func loadDriverAnnotations(handler: @escaping (_ isSuccess: Bool, _ drivers: Dictionary<String , [Double]>?) -> Void ) {
+        let query = LCQuery(className: "_User")
+        query.whereKey("isDriver", .equalTo(true))
+        query.whereKey("isPickupModeEnable", .equalTo(true))
+        query.didChangeValue(forKey: "coordinateUpdateTime")
+        query.whereKey("isOnTrip", .equalTo(false))
+        query.whereKey("coordinate", .existed)
+        query.whereKey("coordinate", .selected)
+        query.find { (result) in
+            if result.isSuccess {
+                var drivers = Dictionary<String , [Double]>()
+                for driver in result.objects! {
+                    if let coordinate = driver.get("coordinate")?.rawValue as? [Double] {
+                        if coordinate.count == 2 && coordinate[0] > -90 && coordinate[0] < 90 && coordinate[1] > -180 && coordinate[1] < 180 {
+                            drivers[(driver.objectId?.stringValue)!] = coordinate
+                        }
+                    }
+                }
+                if drivers.count > 0 {
+                    handler(true, drivers)
+                } else {
+                    handler(false, nil)
+                }
+            } else {
+                self.errorPresent(withError: result.error)
+                handler(false, nil)
+            }
+        }
+    }
+    
+    func checkTripStep(handler: @escaping(_ isAccepted: Bool, _ driverKey: String?) -> Void) {
+        let query = LCQuery(className: "Trip")
+        query.whereKey("passengerKey", .equalTo((LCUser.current?.objectId)!))
+        query.find { (result) in
+            if result.isSuccess {
+                if let trip = result.objects?.first as? Trip {
+                    if trip.isTripAccepted.rawValue as? Bool == true {
+                        let tripStep = TripStep(rawValue: (trip.step?.stringValue)!)
+                        let driverKey = trip.driverKey?.stringValue
+                        UserDefaults.standard.set(tripStep, forKey: "tripStep")
+                        handler(true, driverKey)
+                    } else {
+                        handler(false, nil)
+                    }
+                } else {
+                    handler(false, nil)
+                }
+            } else {
+                handler(false, nil)
+                self.errorPresent(withError: result.error)
             }
         }
     }

@@ -9,16 +9,6 @@
 import UIKit
 import QuartzCore
 
-enum SlideOutState {
-    case collapsed
-    case leftPanelExpanded
-}
-
-enum ShowWhichVC{
-    case HomeVC
-    case PaymentVC
-}
-
 var showVC: ShowWhichVC = .HomeVC
 
 class ContainerVC: UIViewController {

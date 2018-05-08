@@ -12,12 +12,6 @@ import JHSpinner
 import LeanCloud
 import NotificationBannerSwift
 
-enum annotationType {
-    case driver
-    case passenger
-    case destination
-}
-
 class PickupVC: UIViewController {
     
     @IBOutlet weak var pickupMapView: RoundMapView!
@@ -31,6 +25,10 @@ class PickupVC: UIViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
                     self.performSegue(withIdentifier: "acceptTrip", sender: self)
                 })
+            } else {
+                let banner = NotificationBanner(title: "Error", subtitle: "请求失败，请重试！", style: .danger)
+                banner.show()
+                self.acceptBtn.animateButton(shouldLoad: false, withMessage: "Accept Trip")
             }
         }
     }
@@ -90,7 +88,7 @@ class PickupVC: UIViewController {
             query.whereKey("objectID", .equalTo(self.driverKey))
             query.find({ (result) in
                 if result.isSuccess {
-                    if let driver = result.objects?.first as? Driver {
+                    if let driver = result.objects?.first as? User {
                         guard !(driver.isOnTrip.boolValue!) && driver.isPickupModeEnable.boolValue! else {
                             self.dismiss(animated: true, completion: nil)
                             return
@@ -118,7 +116,7 @@ class PickupVC: UIViewController {
         if segue.identifier == "acceptTrip" {
             if let dest = segue.destination as? HomeVC {
                 dest.actionBtn.animateButton(shouldLoad: true, withMessage: nil)
-                dest.showWayToPassenger(wayTo: .passenger)
+                dest.showWayTo(wayTo: .passenger)
 //                dest.spinner = JHSpinnerView.showOnView(dest.view, spinnerColor: UIColor.red, overlay: .roundedSquare, overlayColor: UIColor.white.withAlphaComponent(0.6))
             }
         }
@@ -166,7 +164,7 @@ extension PickupVC: MKMapViewDelegate {
         zoom(toFitAnntationsFromMapView: pickupMapView)
     }
     
-    func dropPinFor(placemarks: Dictionary<MKPlacemark, annotationType>) {
+    func dropPinFor(placemarks: Dictionary<MKPlacemark, AnnotationType>) {
         for annotation in pickupMapView.annotations {
             pickupMapView.removeAnnotation(annotation)
         }

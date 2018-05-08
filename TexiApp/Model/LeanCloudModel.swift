@@ -9,7 +9,7 @@
 import Foundation
 import LeanCloud
 
-class Driver: LCUser {
+class User: LCUser {
     @objc dynamic var isDriver: LCBool!
     @objc dynamic var isPickupModeEnable: LCBool!
     @objc dynamic var isOnTrip: LCBool!

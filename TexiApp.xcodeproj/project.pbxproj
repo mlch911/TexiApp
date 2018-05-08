@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		323E484B5584CF628CD150DF /* Pods_TexiApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6605D35AEB4235574BA2102 /* Pods_TexiApp.framework */; };
+		F740A79B20A1AD6C002D30A4 /* EnumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F740A79A20A1AD6C002D30A4 /* EnumModel.swift */; };
 		F7447DF02025926F009FA72A /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7447DEF2025926F009FA72A /* UIViewExt.swift */; };
 		F7447DF22025A0A0009FA72A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7447DF12025A0A0009FA72A /* LoginVC.swift */; };
 		F7447DF42025A1FE009FA72A /* RoundedCornerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7447DF32025A1FE009FA72A /* RoundedCornerTextField.swift */; };
@@ -38,6 +39,7 @@
 		1402BE61C0641B1ADA3F62C5 /* Pods-TexiApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TexiApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TexiApp/Pods-TexiApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B2418D5FFA6F82C5E2CC7E27 /* Pods-TexiApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TexiApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-TexiApp/Pods-TexiApp.release.xcconfig"; sourceTree = "<group>"; };
 		B6605D35AEB4235574BA2102 /* Pods_TexiApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TexiApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F740A79A20A1AD6C002D30A4 /* EnumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumModel.swift; sourceTree = "<group>"; };
 		F7447DEF2025926F009FA72A /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		F7447DF12025A0A0009FA72A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		F7447DF32025A1FE009FA72A /* RoundedCornerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerTextField.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				F7945E11209EF1B1005C697D /* LeanCloudModel.swift */,
+				F740A79A20A1AD6C002D30A4 /* EnumModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				F77F656820231606008925A8 /* HomeVC.swift in Sources */,
 				F77F659B2023A196008925A8 /* RoundImageView.swift in Sources */,
 				F7F40E6120459EEF0021907C /* PickupVC.swift in Sources */,
+				F740A79B20A1AD6C002D30A4 /* EnumModel.swift in Sources */,
 				F7F40E6320459FE30021907C /* RoundMapView.swift in Sources */,
 				F7945E12209EF1B1005C697D /* LeanCloudModel.swift in Sources */,
 				F77F659D2023A2C7008925A8 /* RoundedShadowView.swift in Sources */,

@@ -53,30 +53,21 @@ class UpdateService {
         }
     }
     
-    func updateTripForPassengerRequest() {
+    func updateTripForPassengerRequest(handler: @escaping(_ isSuccess: Bool) -> Void) {
         if UserDefaults.standard.value(forKey: "isDriver") as! Bool == false {
-            let query = LCQuery(className: "_User")
-            query.get((LCUser.current?.objectId)!) { (result) in
+            let trip = Trip()
+            trip.addTime = LCDate()
+            trip.passengerKey = LCUser.current?.objectId
+            trip.isTripAccepted = false
+            trip.set("pickupCoordinate", value: LCUser.current?.get("coordinate")?.rawValue as? [Double])
+            trip.set("destinationCoordinate", value: LCUser.current?.get("tripCoordinate")?.rawValue as? [Double])
+            trip.save({ (result) in
                 if result.isSuccess {
-                    if let passenger = result.object as? Driver {
-                        let trip = Trip()
-                        trip.addTime = LCDate()
-//                        trip.pickupCoordinate = passenger.get("coordinate")?.rawValue as? [Double]
-//                        trip.destinationCoordinate = passenger.get("tripCoordinate")?.rawValue as? [Double]
-                        trip.passengerKey = LCUser.current?.objectId
-                        trip.isTripAccepted = false
-                        trip.set("pickupCoordinate", value: passenger.get("coordinate")?.rawValue as? [Double])
-                        trip.set("destinationCoordinate", value: passenger.get("tripCoordinate")?.rawValue as? [Double])
-                        trip.save({ (result) in
-                            if result.isFailure {
-                                self.errorPresent(withError: result.error)
-                            }
-                        })
-                    }
+                    handler(true)
                 } else {
                     self.errorPresent(withError: result.error)
                 }
-            }
+            })
         }
     }
     
@@ -89,22 +80,14 @@ class UpdateService {
                 if trip.isTripAccepted == false {
                     trip.driverKey = LCString(driverKey)
                     trip.isTripAccepted = true
+                    trip.step = "accepted"
                     trip.save({ (result) in
                         if result.isSuccess {
-                            let query = LCQuery(className: "_User")
-                            query.get(driverKey, completion: { (result) in
+                            LCUser.current?.set("isOnTrip", value: true)
+                            LCUser.current?.save({ (result) in
                                 if result.isSuccess {
-                                    let driver = result.object as! Driver
-                                    driver.isOnTrip = true
-                                    driver.save({ (result) in
-                                        if result.isSuccess {
-                                            UserDefaults.standard.set(true, forKey: "isOnTrip")
-                                            handler(true)
-                                        } else {
-                                            self.errorPresent(withError: result.error)
-                                            handler(false)
-                                        }
-                                    })
+                                    UserDefaults.standard.set(true, forKey: "isOnTrip")
+                                    handler(true)
                                 } else {
                                     self.errorPresent(withError: result.error)
                                     handler(false)
@@ -130,39 +113,41 @@ class UpdateService {
         query.whereKey("passengerKey", .equalTo((LCUser.current?.objectId)!))
         query.find { (result) in
             if result.isSuccess {
-                if let trip = result.objects?.first as? Trip {
-                    if trip.isTripAccepted.rawValue as? Bool == true {
-                        let query = LCQuery(className: "_User")
-                        query.get(trip.driverKey!) { (result) in
-                            if result.isSuccess {
-                                if let driver = result.object as? Driver {
-                                    driver.isOnTrip = false
-                                    driver.save({ (result) in
-                                        if result.isFailure {
-                                            self.errorPresent(withError: result.error)
-                                        }
-                                    })
+                if (result.objects?.count)! > 0 {
+                    if let trip = result.objects?.first as? Trip {
+                        if trip.isTripAccepted.rawValue as? Bool == true {
+                            let query = LCQuery(className: "_User")
+                            query.get(trip.driverKey!) { (result) in
+                                if result.isSuccess {
+                                    if let driver = result.object as? User {
+                                        driver.isOnTrip = false
+                                        driver.save({ (result) in
+                                            if result.isFailure {
+                                                self.errorPresent(withError: result.error)
+                                            }
+                                        })
+                                    }
+                                } else {
+                                    self.errorPresent(withError: result.error)
                                 }
+                            }
+                        }
+                        trip.delete({ (result) in
+                            if result.isSuccess {
+                                let banner = NotificationBanner(title: "Success", subtitle: "取消成功！", style: .success)
+                                banner.show()
                             } else {
                                 self.errorPresent(withError: result.error)
                             }
-                        }
+                        })
                     }
-                    LCUser.current?.set("isOnTrip", value: false)
-                    LCUser.current?.save({ (result) in
-                        if result.isFailure {
-                            self.errorPresent(withError: result.error)
-                        }
-                    })
-                    trip.delete({ (result) in
-                        if result.isSuccess {
-                            let banner = NotificationBanner(title: "Success", subtitle: "取消成功！", style: .success)
-                            banner.show()
-                        } else {
-                            self.errorPresent(withError: result.error)
-                        }
-                    })
                 }
+                LCUser.current?.set("isOnTrip", value: false)
+                LCUser.current?.save({ (result) in
+                    if result.isFailure {
+                        self.errorPresent(withError: result.error)
+                    }
+                })
             } else {
                 self.errorPresent(withError: result.error)
             }
@@ -178,7 +163,7 @@ class UpdateService {
                     let query = LCQuery(className: "_User")
                     query.get(trip.passengerKey) { (result) in
                         if result.isSuccess {
-                            if let passenger = result.object as? Driver {
+                            if let passenger = result.object as? User {
                                 passenger.isOnTrip = false
                                 passenger.save({ (result) in
                                     if result.isFailure {
@@ -219,7 +204,7 @@ class UpdateService {
     func errorPresent(withError error: Error?) {
         var banner: NotificationBanner
         if error != nil {
-            banner = NotificationBanner(title: "Error!", subtitle: error?.localizedDescription, style: .danger)
+            banner = NotificationBanner(title: "Error!", subtitle: (error?.localizedDescription)!, style: .danger)
         } else {
             banner = NotificationBanner(title: "Error!", subtitle: "Unexpected Error!", style: .danger)
         }

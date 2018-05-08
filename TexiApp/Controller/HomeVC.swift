@@ -24,6 +24,8 @@ class HomeVC: UIViewController {
     @IBOutlet weak var destinationCircle: CircleView!
     @IBOutlet weak var cancelBtn: UIButton!
     
+    @IBAction func closeToHome(segue: UIStoryboardSegue) {}
+    
     @IBAction func actionBtnPressed(_ sender: Any) {
         actionBtn.animateButton(shouldLoad: true, withMessage: nil)
         if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
@@ -32,7 +34,7 @@ class HomeVC: UIViewController {
                     actionBtn.animateButton(shouldLoad: false, withMessage: "Pickup Passenger")
                 } else {
                     if actionBtn.titleLabel?.text == "Pickup Passenger" {
-                        showWayToPassenger(wayTo: .destination)
+                        showWayTo(wayTo: .destination)
                         actionBtn.animateButton(shouldLoad: false, withMessage: "Arrival Destination")
                     } else {
                         if actionBtn.titleLabel?.text == "Arrival Destination" {
@@ -50,18 +52,24 @@ class HomeVC: UIViewController {
                         hasDestination = true
                     }
                 }
-                guard hasDestination else {
-                    queue_Background.async {
-                        for annotation in self.mapView.annotations {
-                            guard annotation.isKind(of: MKPointAnnotation.self) else {
-                                self.mapView.removeAnnotation(annotation)
-                                return
+                if hasDestination {
+                    mapView.removeAnnotations(mapView.annotations)
+                    UpdateService.instance.updateTripForPassengerRequest { (isSuccess) in
+                        if isSuccess {
+                            self.cancelBtn.isHidden = false
+                            self.queue_Background.async {
+                                for _ in 1...999 {
+                                    self.checkTripStep()
+                                }
                             }
+                        } else {
+                            let banner = NotificationBanner(title: "Error", subtitle: "请求失败，请重试！", style: .danger)
+                            banner.show()
+                            self.actionBtn.animateButton(shouldLoad: false, withMessage: "Request Ride")
                         }
                     }
-                    UpdateService.instance.updateTripForPassengerRequest()
+                } else {
                     actionBtn.animateButton(shouldLoad: false, withMessage: "Destination Required")
-                    return
                 }
             }
         } else {
@@ -101,6 +109,7 @@ class HomeVC: UIViewController {
         } else {
             UpdateService.instance.cancelTripForPassenger()
         }
+        cancelBtn.isHidden = true
     }
     
     var delegate: CenterVCDelegate?
@@ -151,14 +160,14 @@ class HomeVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         checkLocationAuthStatus()
-        if UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
+        if LCUser.current?.get("isOnTrip")?.rawValue as? Bool == true {
             self.cancelBtn.isHidden = false
         }
         queue_Background.async {
             for _ in 1...999 {
-                if UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == false {
+                if LCUser.current?.get("isOnTrip")?.rawValue as? Bool == false {
                     self.loadDriverAnnotations()
-                    if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
+                    if LCUser.current?.get("isDriver")?.rawValue as? Bool == true {
                         self.observeRideRequest()
                     }
                 }
@@ -171,7 +180,7 @@ class HomeVC: UIViewController {
             }
             if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true && UserDefaults.standard.value(forKey: "isDriver") as? Bool == true && UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
                 self.queue_Background.asyncAfter(deadline: .now() + 0.5, execute: {
-                    self.showWayToPassenger(wayTo: .passenger)
+                    self.showWayTo(wayTo: .passenger)
                 })
             }
             if UserDefaults.standard.value(forKey: "requireClean") as? Bool == true {
@@ -191,38 +200,20 @@ class HomeVC: UIViewController {
     }
     
     func loadDriverAnnotations() {
-        let query = LCQuery(className: "_User")
-        query.whereKey("isDriver", .equalTo(true))
-//        let secondQuery = LCQuery(className: "_User")
-        query.whereKey("isPickupModeEnable", .equalTo(true))
-//        let thirdQuery = LCQuery(className: "_User")
-        query.didChangeValue(forKey: "coordinateUpdateTime")
-//        let fourthQuery = LCQuery(className: "_User")
-        query.whereKey("isOnTrip", .equalTo(false))
-//        let fifthQuery = LCQuery(className: "_User")
-        query.whereKey("coordinate", .existed)
-        
-//        let query = firstQuery.and(secondQuery).and(thirdQuery).and(fourthQuery).and(fifthQuery)
-        query.whereKey("coordinate", .selected)
-//        query.whereKey("coordinate", .selected)
-        query.find { (result) in
-            if result.isSuccess {
+        DataService.instance.loadDriverAnnotations(handler: { (isSuccess, drivers) in
+            if isSuccess {
                 for annotation in self.mapView.annotations {
                     if annotation.isKind(of: DriverAnnotation.self) {
                         self.mapView.removeAnnotation(annotation)
                     }
                 }
-                for driver in result.objects! {
-                    let coordinate = driver.get("coordinate")?.rawValue as? [Double]
-                    let latitude = coordinate![0]
-                    let longtitude = coordinate![1]
-                    let driverCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
-                    let annotation = DriverAnnotation(coordinate: driverCoordinate, withKey: (driver.objectId?.stringValue)!)
-                    
+                for driver in drivers! {
+                    let driverCoordinate = CLLocationCoordinate2D(latitude: driver.value[0], longitude: driver.value[1])
+                    let annotation = DriverAnnotation(coordinate: driverCoordinate, withKey: driver.key)
                     var driverIsVisible: Bool {
                         return self.mapView.annotations.contains(where: { (annotation) -> Bool in
                             if let driverAnnotation = annotation as? DriverAnnotation {
-                                if driverAnnotation.key == driver.objectId?.stringValue {
+                                if driverAnnotation.key == driver.key {
                                     driverAnnotation.update(annotationPosition: driverAnnotation, withCoordinate: driverCoordinate)
                                     return true
                                 }
@@ -234,12 +225,8 @@ class HomeVC: UIViewController {
                         self.mapView.addAnnotation(annotation)
                     }
                 }
-            } else {
-                let banner = NotificationBanner(title: "Error!", subtitle: result.error.debugDescription, style: .danger)
-                banner.show()
-                print(result.error.debugDescription)
             }
-        }
+        })
     }
     
     func observeRideRequest() {
@@ -272,11 +259,10 @@ class HomeVC: UIViewController {
         secondQuery.didChangeValue(forKey: "addTime")
     }
     
-    func showWayToPassenger(wayTo: annotationType) {
+    func showWayTo(wayTo: AnnotationType) {
         if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
             let query = LCQuery(className: "Trip")
             query.whereKey("driverKey", .equalTo((LCUser.current?.objectId)!))
-            
             query.find { (result) in
                 if result.isSuccess {
                     if let trip = result.objects?.first as? Trip {
@@ -324,7 +310,7 @@ class HomeVC: UIViewController {
                             let query = LCQuery(className: "_User")
                             query.get(trip.driverKey!, completion: { (result) in
                                 if result.isSuccess {
-                                    if let driver = result.object as? Driver {
+                                    if let driver = result.object as? User {
                                         self.mapView.removeAnnotations(self.mapView.annotations)
                                         self.mapView.removeOverlays(self.mapView.overlays)
                                         let driverCoordinateArray = driver.get("coordinate")?.rawValue as! [Double]
@@ -373,7 +359,50 @@ class HomeVC: UIViewController {
         }
     }
     
-    @IBAction func closeToHome(segue: UIStoryboardSegue) {}
+    func checkTripStep() {
+        if UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
+            DataService.instance.checkTripStep { (isAccepted, driverKey) in
+                if isAccepted {
+                    self.actionBtn.isUserInteractionEnabled = false
+                    if let tripStep = UserDefaults.standard.value(forKey: "tripStep") as? TripStep {
+                        switch tripStep {
+                        case .accepted:
+                            self.acitonBtnTextAnimating(withMessage: "Driver is Coming")
+                            self.showWayTo(wayTo: .driver)
+                        case .driverArrived:
+                            self.acitonBtnTextAnimating(withMessage: "Driver is Waiting")
+                            self.showWayTo(wayTo: .driver)
+                        case .inTravel:
+                            self.acitonBtnTextAnimating(withMessage: "In Traveling")
+                            self.showWayTo(wayTo: .destination)
+                        case .end:
+                            UpdateService.instance.finishTrip()
+                            self.actionBtn.animateButton(shouldLoad: false, withMessage: "Travel Completed")
+                            self.queue_Background.asyncAfter(deadline: .now() + 1.0, execute: {
+                                self.actionBtn.animateButton(shouldLoad: false, withMessage: "Request Ride")
+                                self.actionBtn.isUserInteractionEnabled = true
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func acitonBtnTextAnimating(withMessage message: String) {
+        for i in 1...4 {
+            var x = ""
+            let b = "."
+            if i >= 2 {
+                for _ in 2...i {
+                    x += b
+                }
+            }
+            queue_Background.asyncAfter(deadline: .now() + 0.2) {
+                self.actionBtn.animateButton(shouldLoad: false, withMessage: message + x)
+            }
+        }
+    }
 }
 
 //MARK:  /**********CLLocationManagerDelegate**********/
@@ -470,9 +499,7 @@ extension HomeVC: MKMapViewDelegate {
         }
     }
     
-    func dropPinFor(placemarks: Dictionary<MKPlacemark, annotationType>) {
-//        selectedLocationPlacemark = placemark
-        
+    func dropPinFor(placemarks: Dictionary<MKPlacemark, AnnotationType>) {
         for annotation in mapView.annotations {
             if annotation.isKind(of: MKPointAnnotation.self) {
                 mapView.removeAnnotation(annotation)
