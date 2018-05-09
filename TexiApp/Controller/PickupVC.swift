@@ -64,42 +64,29 @@ class PickupVC: UIViewController {
             self.route1 = route
             self.pickupMapView.add(self.route1.polyline)
         }
-//        searchMapKitForResultsWithPolyline(forSourceLocation: currentMapItem, forDestinationLocation: passengerMapItem) { (route) in
-//            self.route2 = route
-//            self.pickupMapView.add(self.route2.polyline)
-//        }
         queue_Background.async {
-            var query = LCQuery(className: "Trip")
-            query.whereKey("objectID", .equalTo(self.tripKey))
-            query.find({ (result) in
-                if result.isSuccess {
-                    if let trip = result.objects?.first as? Trip {
-                        if trip.isTripAccepted == true {
+            for _ in 1...999 {
+                let query = LCQuery(className: "Trip")
+                query.whereKey("passengerKey", .equalTo(self.passengerKey))
+                query.find({ (result) in
+                    if result.isSuccess {
+                        if (result.objects?.count)! > 0 {
+                            if let trip = result.objects?.first as? Trip {
+                                if trip.isTripAccepted.rawValue as? Bool == true {
+                                    self.dismiss(animated: true, completion: nil)
+                                }
+                            }
+                        } else {
                             self.dismiss(animated: true, completion: nil)
                         }
+                    } else {
+                        let banner = NotificationBanner(title: "Error!", subtitle: result.error.debugDescription, style: .danger)
+                        banner.show()
+                        print(result.error.debugDescription)
                     }
-                } else {
-                    let banner = NotificationBanner(title: "Error!", subtitle: result.error.debugDescription, style: .danger)
-                    banner.show()
-                    print(result.error.debugDescription)
-                }
-            })
-            query = LCQuery(className: "_User")
-            query.whereKey("objectID", .equalTo(self.driverKey))
-            query.find({ (result) in
-                if result.isSuccess {
-                    if let driver = result.objects?.first as? User {
-                        guard !(driver.isOnTrip.boolValue!) && driver.isPickupModeEnable.boolValue! else {
-                            self.dismiss(animated: true, completion: nil)
-                            return
-                        }
-                    }
-                } else {
-                    let banner = NotificationBanner(title: "Error!", subtitle: result.error.debugDescription, style: .danger)
-                    banner.show()
-                    print(result.error.debugDescription)
-                }
-            })
+                })
+                sleep(5)
+            }
         }
     }
     

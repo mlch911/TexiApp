@@ -15,8 +15,7 @@ import NotificationBannerSwift
 
 class UpdateService {
     static var instance = UpdateService()
-    var trips: [Trip]!
-    
+
     func updateUserLocation(withCoordinate coordinate: CLLocationCoordinate2D) {
         if let user = LCUser.current {
             user.set("coordinate", value: [coordinate.latitude, coordinate.longitude])
@@ -32,27 +31,6 @@ class UpdateService {
         }
     }
     
-    func observeTrips(handler: @escaping(_ trip: Trip) -> Void) {
-//        let date = Date(timeIntervalSinceNow: -5)
-        let query = LCQuery(className: "Trip")
-        
-//        query.whereKey("addTime", .greaterThanOrEqualTo(date))
-        query.find { (result) in
-            if result.isSuccess {
-                self.trips = result.objects as! [Trip]
-                if self.trips.count >= 0 {
-                    for trip in self.trips {
-                        if trip.isTripAccepted == false {
-                            handler(trip)
-                        }
-                    }
-                }
-            } else {
-                self.errorPresent(withError: result.error)
-            }
-        }
-    }
-    
     func updateTripForPassengerRequest(handler: @escaping(_ isSuccess: Bool) -> Void) {
         if UserDefaults.standard.value(forKey: "isDriver") as! Bool == false {
             let trip = Trip()
@@ -63,9 +41,18 @@ class UpdateService {
             trip.set("destinationCoordinate", value: LCUser.current?.get("tripCoordinate")?.rawValue as? [Double])
             trip.save({ (result) in
                 if result.isSuccess {
-                    handler(true)
+                    LCUser.current?.set("isOnTrip", value: true)
+                    LCUser.current?.save({ (result) in
+                        if result.isSuccess {
+                            handler(true)
+                        } else {
+                            self.errorPresent(withError: result.error)
+                            handler(false)
+                        }
+                    })
                 } else {
                     self.errorPresent(withError: result.error)
+                    handler(false)
                 }
             })
         }
@@ -99,7 +86,31 @@ class UpdateService {
                         }
                     })
                 } else {
+                    let banner = NotificationBanner(title: "Sorry!", subtitle: "已经被别人抢先了！", style: .danger)
                     handler(false)
+                }
+            } else {
+                self.errorPresent(withError: result.error)
+                handler(false)
+            }
+        }
+    }
+    
+    func updateTripStep(withTripStep tripStep: String, handler: @escaping(_ isSuccess: Bool) -> Void) {
+        let query = LCQuery(className: "Trip")
+        query.whereKey("driverKey", .equalTo((LCUser.current?.objectId)!))
+        query.find { (result) in
+            if result.isSuccess {
+                if let trip = result.objects?.first as? Trip {
+                    trip.step = LCString(tripStep)
+                    trip.save({ (result) in
+                        if result.isSuccess {
+                            handler(true)
+                        } else {
+                            self.errorPresent(withError: result.error)
+                            handler(false)
+                        }
+                    })
                 }
             } else {
                 self.errorPresent(withError: result.error)
@@ -161,9 +172,10 @@ class UpdateService {
             if result.isSuccess {
                 if let trip = result.objects?.first as? Trip {
                     let query = LCQuery(className: "_User")
-                    query.get(trip.passengerKey) { (result) in
+                    query.whereKey("objectId", .equalTo(trip.passengerKey))
+                    query.find({ (result) in
                         if result.isSuccess {
-                            if let passenger = result.object as? User {
+                            if let passenger = result.objects?.first as? User {
                                 passenger.isOnTrip = false
                                 passenger.save({ (result) in
                                     if result.isFailure {
@@ -172,12 +184,6 @@ class UpdateService {
                                 })
                             }
                         } else {
-                            self.errorPresent(withError: result.error)
-                        }
-                    }
-                    LCUser.current?.set("isOnTrip", value: false)
-                    LCUser.current?.save({ (result) in
-                        if result.isFailure {
                             self.errorPresent(withError: result.error)
                         }
                     })
@@ -190,14 +196,79 @@ class UpdateService {
                         }
                     })
                 }
+                LCUser.current?.set("isOnTrip", value: false)
+                LCUser.current?.save({ (result) in
+                    if result.isFailure {
+                        self.errorPresent(withError: result.error)
+                    }
+                })
             } else {
                 self.errorPresent(withError: result.error)
             }
         }
     }
     
-    func finishTrip() {
-        
+    func finishTrip(handler: @escaping(_ isSuccess: Bool) -> Void) {
+        if UserDefaults.standard.value(forKey: "isDriver") as? Bool == false {
+            let query = LCQuery(className: "Trip")
+            query.whereKey("passengerKey", .equalTo((LCUser.current?.objectId)!))
+            query.find { (result) in
+                if result.isSuccess {
+                    if let trip = result.objects?.first as? Trip {
+                        let endTrip = LCObject(className: "EndTrip")
+                        endTrip.set("passengerKey", value: trip.passengerKey)
+                        endTrip.set("driverKey", value: trip.driverKey)
+                        endTrip.set("addTime", value: trip.addTime)
+                        endTrip.set("pickupCoordinate", value: trip.get("pickupCoordinate")?.rawValue)
+                        endTrip.set("destinationCoordinate", value: trip.get("destinationCoordinate")?.rawValue)
+                        endTrip.save({ (result) in
+                            if result.isSuccess {
+                                LCUser.current?.set("isOnTrip", value: false)
+                                LCUser.current?.save({ (result) in
+                                    if result.isFailure {
+                                        self.errorPresent(withError: result.error)
+                                    }
+                                })
+                                trip.delete({ (result) in
+                                    if result.isSuccess {
+                                        let banner = NotificationBanner(title: "Success", subtitle: "Travel Completed!", style: .success)
+                                        banner.show()
+                                        handler(true)
+                                    } else {
+                                        self.errorPresent(withError: result.error)
+                                        handler(false)
+                                    }
+                                })
+                            } else {
+                                self.errorPresent(withError: result.error)
+                                handler(false)
+                            }
+                        })
+                    }
+                } else {
+                    self.errorPresent(withError: result.error)
+                    handler(false)
+                }
+            }
+        } else {
+            updateTripStep(withTripStep: "end") { (isSuccess) in
+                if isSuccess {
+                    LCUser.current?.set("isOnTrip", value: false)
+                    LCUser.current?.save({ (result) in
+                        if result.isSuccess {
+                            let banner = NotificationBanner(title: "Success", subtitle: "Travel Completed!", style: .success)
+                            banner.show()
+                            handler(true)
+                        } else {
+                            self.errorPresent(withError: result.error)
+                            handler(false)
+                        }
+                    })
+                } else {
+                    handler(false)
+                }
+            }
+        }
     }
     
     //MARK:  /**********errorPresent**********/

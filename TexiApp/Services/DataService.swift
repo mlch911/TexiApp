@@ -14,60 +14,10 @@ import NotificationBannerSwift
 //let DB_BASE = Database.database().reference()
 class DataService {
     static let instance = DataService()
-
-//    private var _REF_BASE = DB_BASE
-//    private var _REF_PASSENGERS = DB_BASE.child("passenger")
-//    private var _REF_DRIVERS = DB_BASE.child("driver")
-//    private var _REF_TRIPS = DB_BASE.child("trip")
-
-//    var REF_BASE: DatabaseReference {
-//        return _REF_BASE
-//    }
-//    var REF_PASSENGERS: DatabaseReference {
-//        return _REF_PASSENGERS
-//    }
-//    var REF_DRIVERS: DatabaseReference {
-//        return _REF_DRIVERS
-//    }
-//    var REF_TRIPS: DatabaseReference {
-//        return _REF_TRIPS
-//    }
-
-//    func createFirebaseDBUser(uid: String, userData: Dictionary<String, Any>, isDriver: Bool) {
-//        if isDriver {
-//            DB_BASE.child("driver").child(uid).updateChildValues(userData, withCompletionBlock: { (error, reference) in
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                }
-//            })
-//        } else {
-//            DB_BASE.child("passenger").child(uid).updateChildValues(userData, withCompletionBlock: { (error, reference) in
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                }
-//            })
-//        }
-//    }
+    
+    var trips: [Trip]!
     
     func isOnTrip(userKey: String, isDriver: Bool, handler: @escaping (_ status: Bool, _ driverKey: String?, _ passengerKey: String?, _ tripKey: String?) ->Void) {
-//        REF_DRIVERS.child(driverKey).observeSingleEvent(of: .value) { (snapshot) in
-//            if let isOnTrip = snapshot.childSnapshot(forPath: "isOnTrip").value as? Bool {
-//                if isOnTrip {
-//                    self.REF_TRIPS.observeSingleEvent(of: .value, with: { (snapshot) in
-//                        if let tripSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                            for trip in tripSnapshot {
-//                                if trip.childSnapshot(forPath: "driverKey").value as? String == driverKey {
-//                                    handler(true, driverKey, trip.key)
-//                                }
-//                            }
-//                        }
-//                    })
-//                } else {
-//                    handler(false, nil, nil)
-//                }
-//            }
-//        }
-        
         let query = LCQuery(className: "_User")
         query.get(userKey) { (result) in
             if result.isSuccess {
@@ -131,24 +81,6 @@ class DataService {
                         self.errorPresent(withError: result.error)
                     }
                 }
-//                FirebaseDataService.FRinstance.REF_DRIVERS.child(Auth.auth().currentUser!.uid).observe(.value, with: { (snapshot) in
-//                    if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                        for userProperty in userSnapshot {
-//                            switch userProperty.key {
-//                            case "isOnTrip":
-//                                UserDefaults.standard.set(userProperty.value, forKey: "isOnTrip")
-//                            case "isDriver":
-//                                UserDefaults.standard.set(userProperty.value, forKey: "isDriver")
-//                            case "isPickupModeEnable":
-//                                UserDefaults.standard.set(userProperty.value, forKey: "isPickupModeEnable")
-//                            default:
-//                                break
-//                            }
-//                        }
-//                    }
-//                }, withCancel: { (error) in
-//                    self.errorPresent(withError: error)
-//                })
             } else {
                 let query = LCQuery(className: "_User")
                 query.get((LCUser.current?.objectId)!) { (result) in
@@ -166,20 +98,6 @@ class DataService {
                     }
                 }
             }
-//                FirebaseDataService.FRinstance.REF_PASSENGERS.child(Auth.auth().currentUser!.uid).observe(.value, with: { (snapshot) in
-//                    if let userSnapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                        for userProperty in userSnapshot {
-//                            switch userProperty.key {
-//                            case "isOnTrip":
-//                                UserDefaults.standard.set(userProperty.value, forKey: "isOnTrip")
-//                            default:
-//                                break
-//                            }
-//                        }
-//                    }
-//                }) { (error) in
-//                    self.errorPresent(withError: error)
-//                }
         }
     }
     
@@ -235,14 +153,35 @@ class DataService {
         }
     }
     
+    func observeTrips(handler: @escaping(_ trip: Trip) -> Void) {
+        let date = Date(timeIntervalSinceNow: -8)
+        let query = LCQuery(className: "Trip")
+        
+        query.whereKey("addTime", .greaterThanOrEqualTo(date))
+        query.find { (result) in
+            if result.isSuccess {
+                self.trips = result.objects as! [Trip]
+                if self.trips.count >= 0 {
+                    for trip in self.trips {
+                        if trip.isTripAccepted == false {
+                            handler(trip)
+                        }
+                    }
+                }
+            } else {
+                self.errorPresent(withError: result.error)
+            }
+        }
+    }
+    
     func checkTripStep(handler: @escaping(_ isAccepted: Bool, _ driverKey: String?) -> Void) {
         let query = LCQuery(className: "Trip")
         query.whereKey("passengerKey", .equalTo((LCUser.current?.objectId)!))
         query.find { (result) in
             if result.isSuccess {
                 if let trip = result.objects?.first as? Trip {
-                    if trip.isTripAccepted.rawValue as? Bool == true {
-                        let tripStep = TripStep(rawValue: (trip.step?.stringValue)!)
+                    if trip.isTripAccepted?.rawValue as? Bool == true {
+                        let tripStep = trip.step?.stringValue
                         let driverKey = trip.driverKey?.stringValue
                         UserDefaults.standard.set(tripStep, forKey: "tripStep")
                         handler(true, driverKey)

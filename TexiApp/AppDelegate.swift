@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
             LCUser.logIn(username: UserDefaults.standard.value(forKey: "name") as! String, password: UserDefaults.standard.value(forKey: "password") as! String) { (result) in
                 if result.isSuccess {
+                    LCUser.current = result.object
                     DataService.instance.checkUserStatus()
                 } else {
                     print(result.error.debugDescription)
