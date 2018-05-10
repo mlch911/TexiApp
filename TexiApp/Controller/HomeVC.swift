@@ -47,12 +47,16 @@ class HomeVC: UIViewController {
                                 self.banner.show()
                                 self.queue_Background.async {
                                     for _ in 1...999 {
-                                        if self.actionBtn.titleLabel?.text == "Arrival Destination" {
-                                            self.queue_UserInteractive.async {
-                                                self.showWayTo(wayTo: .destination)
+                                        if UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
+                                            DispatchQueue.main.async {
+                                                if self.actionBtn.titleLabel?.text == "Arrival Destination" {
+                                                    self.queue_UserInteractive.async {
+                                                        self.showWayTo(wayTo: .destination)
+                                                    }
+                                                }
                                             }
-                                            sleep(5)
                                         }
+                                        sleep(5)
                                     }
                                 }
                             }
@@ -63,6 +67,9 @@ class HomeVC: UIViewController {
                                 if isSuccess {
                                     self.mapView.removeOverlays(self.mapView.overlays)
                                     self.mapView.removeAnnotations(self.mapView.annotations)
+                                    self.actionBtn.animateButton(shouldLoad: false, withMessage: "Travel Successed")
+                                    self.cancelBtn.isHidden = true
+                                    self.centerMapOnUserLocation()
                                 }
                             }
                         } else {
@@ -135,6 +142,7 @@ class HomeVC: UIViewController {
         if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
             UpdateService.instance.cancelTripForDriver()
             removeFromMapView()
+            centerMapOnUserLocation()
             actionBtn.animateButton(shouldLoad: false, withMessage: "Request Ride")
         } else {
             UserDefaults.standard.set(false, forKey: "isOnTrip")
@@ -232,14 +240,31 @@ class HomeVC: UIViewController {
                 DataService.instance.syncUserStatus()
                 sleep(5)
             }
+        }
+        queue_Background.asyncAfter(deadline: .now() + 2.0) {
             if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == false {
                 self.removeFromMapView()
                 return
             } else {
-                if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true && UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
-                    self.queue_Background.asyncAfter(deadline: .now() + 0.5, execute: {
-                        self.showWayTo(wayTo: .passenger)
-                    })
+                if LCUser.current?.get("isOnTrip")?.rawValue as? Bool == true {
+                    if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
+                        DispatchQueue.main.async {
+                            self.actionBtn.animateButton(shouldLoad: true, withMessage: nil)
+                            self.cancelBtn.isHidden = false
+                        }
+                        self.checkTripStepForDriver()
+                    } else {
+                        DispatchQueue.main.async {
+                            self.actionBtn.animateButton(shouldLoad: true, withMessage: nil)
+                            self.cancelBtn.isHidden = false
+                        }
+                        self.queue_Background.async {
+                            for _ in 1...999 {
+                                self.checkTripStep()
+                                sleep(5)
+                            }
+                        }
+                    }
                 }
             }
             if UserDefaults.standard.value(forKey: "requireClean") as? Bool == true {
@@ -339,8 +364,10 @@ class HomeVC: UIViewController {
                         case "end":
                             UpdateService.instance.finishTrip(handler: { (isSuccess) in
                                 if isSuccess {
+                                    UserDefaults.standard.set(false, forKey: "isOnTrip")
                                     self.mapView.removeOverlays(self.mapView.overlays)
                                     self.mapView.removeAnnotations(self.mapView.annotations)
+                                    self.cancelBtn.isHidden = true
                                 }
                             })
                             DispatchQueue.main.async {
@@ -348,11 +375,59 @@ class HomeVC: UIViewController {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                                     self.actionBtn.animateButton(shouldLoad: false, withMessage: "Request Ride")
                                     self.actionBtn.isUserInteractionEnabled = true
+                                    self.centerMapOnUserLocation()
                                 })
                             }
                         default:
                             break
                         }
+                    }
+                }
+            }
+        }
+    }
+    
+    func checkTripStepForDriver() {
+        if UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
+            DataService.instance.checkTripStepForDriver { (isSuccess, step) in
+                if isSuccess {
+                    switch step {
+                    case "accepted":
+                        self.showWayTo(wayTo: .passenger)
+                        DispatchQueue.main.async {
+                            self.actionBtn.animateButton(shouldLoad: false, withMessage: "Arrive to Pickup Point")
+                        }
+                    case "driverArrived":
+                        self.showWayTo(wayTo: .destination)
+                        DispatchQueue.main.async {
+                            self.actionBtn.animateButton(shouldLoad: false, withMessage: "Pickup Passenger")
+                        }
+                    case "inTravel":
+                        self.showWayTo(wayTo: .destination)
+                        DispatchQueue.main.async {
+                            self.actionBtn.animateButton(shouldLoad: false, withMessage: "Arrival Destination")
+                        }
+                        self.queue_Background.async {
+                            for _ in 1...999 {
+                                if UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
+                                    DispatchQueue.main.async {
+                                        if self.actionBtn.titleLabel?.text == "Arrival Destination" {
+                                            self.showWayTo(wayTo: .destination)
+                                        }
+                                    }
+                                }
+                                sleep(5)
+                            }
+                        }
+                    case "end":
+                        UpdateService.instance.finishTrip(handler: { (isSuccess) in
+                            if isSuccess {
+                                self.mapView.removeOverlays(self.mapView.overlays)
+                                self.mapView.removeAnnotations(self.mapView.annotations)
+                            }
+                        })
+                    default:
+                        break
                     }
                 }
             }
@@ -455,9 +530,13 @@ extension HomeVC: MKMapViewDelegate {
     }
     
     func dropPinFor(placemarks: Dictionary<MKPlacemark, AnnotationType>) {
-        for annotation in mapView.annotations {
-            if annotation.isKind(of: MKPointAnnotation.self) {
-                mapView.removeAnnotation(annotation)
+        if UserDefaults.standard.value(forKey: "isOnTrip") as? Bool == true {
+            mapView.removeAnnotations(mapView.annotations)
+        } else {
+            for annotation in mapView.annotations {
+                if annotation.isKind(of: MKPointAnnotation.self) {
+                    mapView.removeAnnotation(annotation)
+                }
             }
         }
         
@@ -493,7 +572,7 @@ extension HomeVC: MKMapViewDelegate {
                 return
             }
             self.route = response.routes[0]
-            
+            self.mapView.removeOverlays(self.mapView.overlays)
             self.mapView.add(self.route.polyline)
             
             for subview in self.view.subviews {
@@ -587,7 +666,6 @@ extension HomeVC: MKMapViewDelegate {
                                 if result.isSuccess {
                                     if let driver = result.object as? User {
                                         self.mapView.removeAnnotations(self.mapView.annotations)
-                                        self.mapView.removeOverlays(self.mapView.overlays)
                                         let driverCoordinateArray = driver.get("coordinate")?.rawValue as! [Double]
                                         let driverCoordinate = CLLocationCoordinate2D(latitude: driverCoordinateArray[0], longitude: driverCoordinateArray[1])
                                         let driverPlacemark = MKPlacemark(coordinate: driverCoordinate)
@@ -607,7 +685,6 @@ extension HomeVC: MKMapViewDelegate {
                                 if result.isSuccess {
                                     if let trip = result.objects?.first as? Trip {
                                         self.mapView.removeAnnotations(self.mapView.annotations)
-                                        self.mapView.removeOverlays(self.mapView.overlays)
                                         let destinationCoordinateArray = trip.get("destinationCoordinate")?.rawValue as! [Double]
                                         let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationCoordinateArray[0], longitude: destinationCoordinateArray[1])
                                         let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)

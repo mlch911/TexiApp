@@ -198,6 +198,27 @@ class DataService {
         }
     }
     
+    func checkTripStepForDriver(handler: @escaping(_ isSuccess: Bool, _ step: String?) -> Void) {
+        let query = LCQuery(className: "Trip")
+        query.whereKey("driverKey", .equalTo((LCUser.current?.objectId)!))
+        query.find { (result) in
+            if result.isSuccess {
+                if let trip = result.objects?.first as? Trip {
+                    if let step = trip.step?.rawValue as? String {
+                        handler(true, step)
+                    } else {
+                        handler(false,nil)
+                    }
+                } else {
+                    handler(false,nil)
+                }
+            } else {
+                self.errorPresent(withError: result.error)
+                handler(false,nil)
+            }
+        }
+    }
+    
     //MARK:  /**********errorPresent**********/
     func errorPresent(withError error: Error?) {
         if let error = error {
