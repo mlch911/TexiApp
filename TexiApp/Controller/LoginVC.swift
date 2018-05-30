@@ -181,7 +181,22 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         emailField.returnKeyType = .next
         passwordField.returnKeyType = .join
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 1003 {
+            passwordField.becomeFirstResponder()
+            return false
+        } else {
+            textField.resignFirstResponder()
+            self.authBtn.animateButton(shouldLoad: true, withMessage: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.authBtnPressed(self)
+            }
+            return true
+        }
+    }
 
+//MARK:  /**********StatusBar**********/
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return UIStatusBarAnimation.slide
     }
@@ -202,19 +217,5 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
         })
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.tag == 1003 {
-            passwordField.becomeFirstResponder()
-            return false
-        } else {
-            textField.resignFirstResponder()
-            self.authBtn.animateButton(shouldLoad: true, withMessage: nil)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.authBtnPressed(self)
-            }
-            return true
-        }
     }
 }

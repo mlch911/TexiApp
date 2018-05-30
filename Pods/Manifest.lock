@@ -1,56 +1,14 @@
 PODS:
   - Alamofire (4.7.2)
-  - Firebase/Auth (4.13.0):
-    - Firebase/Core
-    - FirebaseAuth (= 4.6.1)
-  - Firebase/Core (4.13.0):
-    - FirebaseAnalytics (= 4.2.0)
-    - FirebaseCore (= 4.0.20)
-  - Firebase/Database (4.13.0):
-    - Firebase/Core
-    - FirebaseDatabase (= 4.1.5)
-  - FirebaseAnalytics (4.2.0):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - nanopb (~> 0.3)
-  - FirebaseAuth (4.6.1):
-    - FirebaseAnalytics (~> 4.2)
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.20):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseDatabase (4.1.5):
-    - FirebaseAnalytics (~> 4.1)
-    - FirebaseCore (~> 4.0)
-    - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.10):
-    - FirebaseCore (~> 4.0)
-  - GoogleToolboxForMac/DebugUtils (2.1.4):
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - GoogleToolboxForMac/Defines (2.1.4)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
-    - GoogleToolboxForMac/DebugUtils (= 2.1.4)
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
-  - GTMSessionFetcher/Core (1.1.15)
-  - IQKeyboardManagerSwift (6.0.2)
+  - BulletinBoard (1.3.0)
+  - IQKeyboardManagerSwift (6.0.3)
   - JHSpinner (0.2.1)
   - LeanCloud (11.0.1):
     - LeanCloud/Storage (= 11.0.1)
   - LeanCloud/Storage (11.0.1):
     - Alamofire (~> 4.7)
-  - leveldb-library (1.20)
   - MarqueeLabel/Swift (3.1.4)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
-  - NotificationBannerSwift (1.6.2):
+  - NotificationBannerSwift (1.6.3):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
   - RevealingSplashView (0.5.0)
@@ -60,9 +18,7 @@ PODS:
     - Sparrow/Core
 
 DEPENDENCIES:
-  - Firebase/Auth
-  - Firebase/Core
-  - Firebase/Database
+  - BulletinBoard
   - IQKeyboardManagerSwift
   - JHSpinner
   - LeanCloud
@@ -73,20 +29,11 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseAuth
-    - FirebaseCore
-    - FirebaseDatabase
-    - FirebaseInstanceID
-    - GoogleToolboxForMac
-    - GTMSessionFetcher
+    - BulletinBoard
     - IQKeyboardManagerSwift
     - JHSpinner
     - LeanCloud
-    - leveldb-library
     - MarqueeLabel
-    - nanopb
     - NotificationBannerSwift
     - RevealingSplashView
     - SnapKit
@@ -102,25 +49,16 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
-  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
-  FirebaseAuth: bf22cacf22c60ab454bf2636f556d8892b10b53f
-  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
-  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
-  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
-  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
-  IQKeyboardManagerSwift: 59d4b0e140bc546c3c76ae5bb35b3dafd10b8172
+  BulletinBoard: 23c9d98cac654fd484d76f2a0655669974e9bd9c
+  IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
   JHSpinner: bf7cc91a7e0ccad6336d2b0a3429dd34e7325e65
   LeanCloud: f9776746a4cd62bdb441f2768017a91c9516d219
-  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  NotificationBannerSwift: 4eceb2add9d5eaa0596c63d49690b4d6476e74ec
+  NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
   RevealingSplashView: 0794eecad3a8983ac11a1fe474e9a9b51b926780
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Sparrow: 86b8f0d7598dc52ff2b06bb1df05feb297d1821f
 
-PODFILE CHECKSUM: d10a502c130125831d08ac44e6c712665fb46e1d
+PODFILE CHECKSUM: 36e50a32320cbb8bf71b22cb50ab06876c8c3ea4
 
 COCOAPODS: 1.5.0

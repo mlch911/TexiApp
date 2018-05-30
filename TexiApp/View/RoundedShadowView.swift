@@ -21,5 +21,4 @@ class RoundedShadowView: UIView {
         self.layer.shadowRadius = 5.0
         self.layer.shadowOffset = CGSize(width: 0, height: 5)
     }
-
 }

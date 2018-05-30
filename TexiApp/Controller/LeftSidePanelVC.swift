@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import Firebase
 import LeanCloud
 
 class LeftSidePanelVC: UIViewController {
@@ -17,6 +16,42 @@ class LeftSidePanelVC: UIViewController {
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var pickUpModeSwitch: UISwitch!
     @IBOutlet weak var pickUpModeLabel: UILabel!
+    
+    @IBAction func pickUpModeSwitchPressed(_ sender: Any) {
+        if let user = LCUser.current {
+            user.set("isPickupModeEnable", value: self.pickUpModeSwitch.isOn)
+            user.save { result in
+                switch result {
+                case .success:
+                    UserDefaults.standard.set(self.pickUpModeSwitch.isOn, forKey: "isPickupModeEnable")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        UserDefaults.standard.set(!(UserDefaults.standard.value(forKey: "isPickupModeEnable")as! Bool), forKey: "isPickupModeEnable")
+        let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
+        homeVC?.observeRideRequest()
+    }
+    
+    @IBAction func loginBtnPressed(_ sender: Any) {
+        if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
+            LCUser.logOut()
+            pickUpModeSwitch.isOn = false
+            pickUpModeSwitch.isHidden = true
+            pickUpModeLabel.isHidden = true
+            emailLabel.isHidden = true
+            userTypeLabel.isHidden = true
+            userImageView.isHidden = true
+            loginBtn.setTitle("Sign Up / Login", for: .normal)
+            UserDefaults.standard.set(false, forKey: "hasUserData")
+            UserDefaults.standard.set(true, forKey: "requireClean")
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+            present(loginVC!, animated: true, completion: nil)
+        }
+    }
     
     var myContext = NSObject()
     
@@ -140,44 +175,6 @@ class LeftSidePanelVC: UIViewController {
                     }
                 }
             }
-        }
-    }
-    
-    @IBAction func pickUpModeSwitchPressed(_ sender: Any) {
-        if let user = LCUser.current {
-            user.set("isPickupModeEnable", value: self.pickUpModeSwitch.isOn)
-            user.save { result in
-                switch result {
-                case .success:
-                    UserDefaults.standard.set(self.pickUpModeSwitch.isOn, forKey: "isPickupModeEnable")
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
-        UserDefaults.standard.set(!(UserDefaults.standard.value(forKey: "isPickupModeEnable")as! Bool), forKey: "isPickupModeEnable")
-        let homeVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC
-        homeVC?.observeRideRequest()
-        
-    }
-    
-    @IBAction func loginBtnPressed(_ sender: Any) {
-        if UserDefaults.standard.value(forKey: "hasUserData") as? Bool == true {
-            LCUser.logOut()
-            pickUpModeSwitch.isOn = false
-            pickUpModeSwitch.isHidden = true
-            pickUpModeLabel.isHidden = true
-            emailLabel.isHidden = true
-            userTypeLabel.isHidden = true
-            userImageView.isHidden = true
-            loginBtn.setTitle("Sign Up / Login", for: .normal)
-            UserDefaults.standard.set(false, forKey: "hasUserData")
-            UserDefaults.standard.set(true, forKey: "requireClean")
-        } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-            present(loginVC!, animated: true, completion: nil)
         }
     }
 }

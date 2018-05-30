@@ -14,13 +14,6 @@ enum AnnotationType {
     case destination
 }
 
-//enum TripStep: String {
-//    case accepted = "accepted"
-//    case driverArrived = "driverArrived"
-//    case inTravel = "inTravel"
-//    case end = "end"
-//}
-
 enum SlideOutState {
     case collapsed
     case leftPanelExpanded

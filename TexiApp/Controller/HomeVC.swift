@@ -14,6 +14,7 @@ import Sparrow
 import LeanCloud
 import JHSpinner
 import NotificationBannerSwift
+import BulletinBoard
 
 class HomeVC: UIViewController {
 
@@ -111,6 +112,7 @@ class HomeVC: UIViewController {
             menuBtnPressed(self)
             banner = NotificationBanner(title: "请登录或注册。", subtitle: "点击下方Sign in/Login来登录或注册账号。", style: .warning)
             banner.show()
+            self.actionBtn.animateButton(shouldLoad: false, withMessage: "Request Ride")
         }
     }
     
@@ -136,7 +138,6 @@ class HomeVC: UIViewController {
     @IBAction func userImagePressed(_ sender: Any) {
         delegate?.toggleLeftPanel()
     }
-    
     
     @IBAction func cancelBtnPressed(_ sender: Any) {
         if UserDefaults.standard.value(forKey: "isDriver") as? Bool == true {
@@ -170,24 +171,18 @@ class HomeVC: UIViewController {
         cancelBtn.isHidden = true
     }
     
-    var delegate: CenterVCDelegate?
-    
-    var manager: CLLocationManager?
-    
     let queue_UserInteractive = DispatchQueue.init(label: "tech.mluoc.queueUserInteractive", qos: .userInteractive, attributes: .concurrent)
     let queue_UserInitiated = DispatchQueue.init(label: "tech.mluoc.queueUserInitiated", qos: .userInitiated, attributes: .concurrent)
     let queue_Utility = DispatchQueue.init(label: "tech.mluoc.queueUtility", qos: .utility, attributes: .concurrent)
     let queue_Background = DispatchQueue.init(label: "tech.mluoc.queueBackground", qos: .background, attributes: .concurrent)
     
-//    var isDriver = UserDefaults.standard.value(forKey: "isDriver") as? Bool
-//    var isOnTrip = UserDefaults.standard.value(forKey: "isOnTrip") as? Bool
-//    var isPickupModeEnable = UserDefaults.standard.value(forKey: "isPickupModeEnable") as? Bool
     var hasUserData = UserDefaults.standard.value(forKey: "hasUserData") as? Bool
-//    var requireClean = UserDefaults.standard.value(forKey: "requireClean") as? Bool
     var isDriver = LCUser.current?.get("isDriver")?.rawValue as? Bool
     var isOnTrip = LCUser.current?.get("isOnTrip")?.rawValue as? Bool
     var isPickupModeEnable = LCUser.current?.get("isPickupModeEnable")?.rawValue as? Bool
     
+    var delegate: CenterVCDelegate?
+    var manager: CLLocationManager?
     var tableView = UITableView()
     var matchingLocations: [MKMapItem] = [MKMapItem]()
     let revealingSplashView = RevealingSplashView(iconImage: #imageLiteral(resourceName: "launchScreenIcon"), iconInitialSize: CGSize.init(width: 100, height: 100), backgroundColor: UIColor.white)
@@ -197,6 +192,8 @@ class HomeVC: UIViewController {
     var route: MKRoute!
     var search: MKLocalSearch!
     var banner: NotificationBanner!
+    let page = PageBulletinItem(title: "Push Notifications")
+    lazy var bulletinManager = BulletinManager(rootItem: page)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -272,6 +269,23 @@ class HomeVC: UIViewController {
                 UserDefaults.standard.set(false, forKey: "requireClean")
             }
         }
+    }
+    
+    func initBulletinBoard() {
+        page.image = #imageLiteral(resourceName: "launchScreenIcon")
+        page.descriptionText = "Receive push notifications when new photos of pets are available."
+        page.actionButtonTitle = "Subscribe"
+        page.alternativeButtonTitle = "Not now"
+        page.actionHandler = { (item: PageBulletinItem) in
+            self.bulletinManager.dismissBulletin(animated: true)
+        }
+        page.alternativeHandler = { (item: PageBulletinItem) in
+            self.bulletinManager.dismissBulletin(animated: true)
+        }
+        
+        bulletinManager.backgroundViewStyle = .blurredDark
+        bulletinManager.prepare()
+        bulletinManager.presentBulletin(above: self, animated: true, completion: nil)
     }
     
     func checkLocationAuthStatus() {
@@ -376,6 +390,9 @@ class HomeVC: UIViewController {
                                     self.actionBtn.animateButton(shouldLoad: false, withMessage: "Request Ride")
                                     self.actionBtn.isUserInteractionEnabled = true
                                     self.centerMapOnUserLocation()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                                        self.initBulletinBoard()
+                                    })
                                 })
                             }
                         default:
@@ -747,7 +764,6 @@ extension HomeVC: UITextFieldDelegate {
                 self.destinationCircle.borderColor = UIColor.init(red: 199/255, green: 0/255, blue: 0/255, alpha: 1.0)
             })
         }
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -770,7 +786,6 @@ extension HomeVC: UITextFieldDelegate {
                 }
             }
         }
-        
         return true
     }
     

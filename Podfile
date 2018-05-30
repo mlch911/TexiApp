@@ -7,14 +7,15 @@ target 'TexiApp' do
 
   # Pods for TexiApp
 
-  pod 'Firebase/Core'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Database'
+#  pod 'Firebase/Core'
+#  pod 'Firebase/Auth'
+#  pod 'Firebase/Database'
   pod 'RevealingSplashView'
   pod 'LeanCloud'
   pod 'IQKeyboardManagerSwift'
   pod 'Sparrow/Modules/RequestPermission', :git => 'https://github.com/IvanVorobei/Sparrow.git'
   pod 'JHSpinner'
   pod 'NotificationBannerSwift'
+  pod 'BulletinBoard'
 
 end
